@@ -137,11 +137,11 @@
         return; // stop loop; will restart on next user action
       }
       var easedProgress = 1 - Math.pow(1 - progress, 3);
-      speed = 10 * (1 - easedProgress);
+      speed = 20 * (1 - easedProgress);
       angle += speed;
     } else if (!revealed) {
       // Idle rotation
-      angle += 0.24;
+      angle += 0.48;
     }
     layoutCards();
     animId = requestAnimationFrame(tick);
@@ -242,7 +242,7 @@
     // Start new spin
     spinning = true;
     spinStartTime = Date.now();
-    speed = 10;
+    speed = 20;
     instruction.classList.add('hidden');
     startLoop();
   }
