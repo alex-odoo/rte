@@ -1,7 +1,7 @@
 // ── Angel Messages Carousel — Game Logic ──
 (function () {
   const NUM_VISIBLE = 12;
-  const SPIN_DURATION = 4000; // 4 seconds total spin time
+  const SPIN_DURATION = 4000;
   const container = document.getElementById('container');
   const carousel = document.getElementById('carousel');
   const revealedCard = document.getElementById('revealedCard');
@@ -10,7 +10,6 @@
   const glowRing = document.getElementById('glowRing');
   const particlesEl = document.getElementById('particles');
 
-  // Responsive radius
   function getRadius() {
     const w = window.innerWidth;
     if (w < 400) return 200;
@@ -24,10 +23,14 @@
   let spinning = false;
   let revealed = false;
   let animId = null;
-  let touchStartX = 0;
-  let touchStartTime = 0;
-  let isDragging = false;
   let spinStartTime = 0;
+
+  // Touch state
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartTime = 0;
+  let isTouchDrag = false;
+  let lastTouchTime = 0; // prevent ghost click after touch
 
   // ── Stars ──
   (function createStars() {
@@ -46,20 +49,20 @@
     }
   })();
 
-  // ── Angel ring (replaces zodiac) ──
+  // ── Angel ring ──
   (function createAngelRing() {
     const ring = document.getElementById('angelRing');
     const symbols = ['\u2721', '\u2726', '\u2605', '\u2720', '\u2741', '\u273F', '\u2742', '\u2743', '\u2727', '\u2736', '\u2733', '\u2734'];
     const ringSize = ring.offsetWidth || 380;
     const r = (ringSize / 2) - 15;
-    symbols.forEach((sym, i) => {
+    symbols.forEach(function (sym, i) {
       const el = document.createElement('div');
       el.className = 'angel-char';
       el.textContent = sym;
       const a = (i / symbols.length) * 360;
       const rad = a * Math.PI / 180;
-      el.style.left = (ringSize/2 + Math.cos(rad) * r - 8) + 'px';
-      el.style.top = (ringSize/2 + Math.sin(rad) * r - 8) + 'px';
+      el.style.left = (ringSize / 2 + Math.cos(rad) * r - 8) + 'px';
+      el.style.top = (ringSize / 2 + Math.sin(rad) * r - 8) + 'px';
       ring.appendChild(el);
     });
   })();
@@ -80,7 +83,7 @@
   // ── Build carousel cards ──
   function buildCarousel() {
     carousel.innerHTML = '';
-    const shuffled = [...CARDS].sort(() => Math.random() - 0.5);
+    const shuffled = CARDS.slice().sort(function () { return Math.random() - 0.5; });
     for (let i = 0; i < NUM_VISIBLE; i++) {
       const card = shuffled[i % shuffled.length];
       const el = document.createElement('div');
@@ -90,104 +93,113 @@
       el.dataset.displayName = card.displayName;
       el.dataset.meaning = card.meaning;
       el.dataset.num = card.num;
-      el.innerHTML = `
-        <div class="card-face">
-          <div class="cf-border"></div>
-          <div class="cf-num">${card.num}</div>
-          <div class="cf-icon">${CARD_SVGS[card.name] || ''}</div>
-          <div class="cf-divider"></div>
-          <div class="cf-name">${card.displayName}</div>
-          <div class="cf-meaning">${card.meaning}</div>
-        </div>`;
+      el.innerHTML =
+        '<div class="card-face">' +
+          '<div class="cf-border"></div>' +
+          '<div class="cf-num">' + card.num + '</div>' +
+          '<div class="cf-icon">' + (CARD_SVGS[card.name] || '') + '</div>' +
+          '<div class="cf-divider"></div>' +
+          '<div class="cf-name">' + card.displayName + '</div>' +
+          '<div class="cf-meaning">' + card.meaning + '</div>' +
+        '</div>';
       carousel.appendChild(el);
     }
   }
 
   // ── Position cards in 3D circle ──
   function layoutCards() {
-    const cards = carousel.querySelectorAll('.card');
-    const step = 360 / NUM_VISIBLE;
-    cards.forEach((c, i) => {
-      const a = angle + i * step;
-      const rad = (a * Math.PI) / 180;
-      const x = Math.sin(rad) * RADIUS;
-      const z = Math.cos(rad) * RADIUS - RADIUS;
-      const scale = (z + RADIUS * 2) / (RADIUS * 3);
-      const opacity = 0.25 + scale * 0.75;
-      c.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${0.45 + scale * 0.55})`;
+    var cards = carousel.children;
+    var step = 360 / NUM_VISIBLE;
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      var a = angle + i * step;
+      var rad = (a * Math.PI) / 180;
+      var x = Math.sin(rad) * RADIUS;
+      var z = Math.cos(rad) * RADIUS - RADIUS;
+      var scale = (z + RADIUS * 2) / (RADIUS * 3);
+      var opacity = 0.25 + scale * 0.75;
+      c.style.transform = 'translateX(' + x + 'px) translateZ(' + z + 'px) scale(' + (0.45 + scale * 0.55) + ')';
       c.style.opacity = opacity;
       c.style.zIndex = Math.round(scale * 100);
-    });
+    }
   }
 
-  // ── Animation loop with time-based 4-second spin ──
-  function animate() {
+  // ── Single unified animation loop ──
+  function tick() {
     if (spinning) {
-      const elapsed = Date.now() - spinStartTime;
-      const progress = Math.min(elapsed / SPIN_DURATION, 1);
-      // Ease-out: fast start, smooth deceleration
-      const easedProgress = 1 - Math.pow(1 - progress, 3);
-      // Speed starts at 10 (2x original) and decelerates to 0
-      speed = 10 * (1 - easedProgress);
-      angle += speed;
-
+      var elapsed = Date.now() - spinStartTime;
+      var progress = elapsed / SPIN_DURATION;
       if (progress >= 1) {
         spinning = false;
         speed = 0;
+        layoutCards();
         revealCard();
-        return;
+        return; // stop loop; will restart on next user action
       }
+      var easedProgress = 1 - Math.pow(1 - progress, 3);
+      speed = 10 * (1 - easedProgress);
+      angle += speed;
+    } else if (!revealed) {
+      // Idle rotation
+      angle += 0.24;
     }
     layoutCards();
-    animId = requestAnimationFrame(animate);
+    animId = requestAnimationFrame(tick);
+  }
+
+  function startLoop() {
+    if (animId) cancelAnimationFrame(animId);
+    animId = requestAnimationFrame(tick);
   }
 
   // ── Find the front card ──
   function getFrontCard() {
-    const cards = carousel.querySelectorAll('.card');
-    let best = null;
-    let bestZ = -Infinity;
-    const step = 360 / NUM_VISIBLE;
-    cards.forEach((c, i) => {
-      const a = ((angle + i * step) % 360 + 360) % 360;
-      const rad = (a * Math.PI) / 180;
-      const z = Math.cos(rad) * RADIUS;
-      if (z > bestZ) { bestZ = z; best = c; }
-    });
+    var cards = carousel.children;
+    var best = null;
+    var bestZ = -Infinity;
+    var step = 360 / NUM_VISIBLE;
+    for (var i = 0; i < cards.length; i++) {
+      var a = ((angle + i * step) % 360 + 360) % 360;
+      var rad = (a * Math.PI) / 180;
+      var z = Math.cos(rad) * RADIUS;
+      if (z > bestZ) { bestZ = z; best = cards[i]; }
+    }
     return best;
   }
 
   // ── Reveal the chosen card ──
   function revealCard() {
-    const front = getFrontCard();
+    var front = getFrontCard();
     if (!front) return;
     revealed = true;
     document.getElementById('cardNumber').textContent = front.dataset.num;
     document.getElementById('cardImage').innerHTML = CARD_SVGS[front.dataset.name] || '';
     document.getElementById('cardName').textContent = front.dataset.displayName;
     document.getElementById('cardMeaning').textContent = front.dataset.meaning;
-    const svg = document.getElementById('cardImage').querySelector('svg');
+    var svg = document.getElementById('cardImage').querySelector('svg');
     if (svg) svg.classList.add('card-icon-svg');
     revealedCard.classList.add('show');
     glowRing.classList.add('show');
     tapAgain.classList.add('show');
     spawnParticles();
+    // Keep loop alive for particles / potential interactions
+    startLoop();
   }
 
   // ── Particles burst ──
   function spawnParticles() {
     particlesEl.innerHTML = '';
-    const count = window.innerWidth < 500 ? 18 : 30;
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('div');
+    var count = window.innerWidth < 500 ? 18 : 30;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('div');
       p.className = 'particle';
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      const a = Math.random() * Math.PI * 2;
-      const dist = 60 + Math.random() * 140;
-      const tx = Math.cos(a) * dist;
-      const ty = Math.sin(a) * dist;
-      const size = 2 + Math.random() * 3;
+      var cx = window.innerWidth / 2;
+      var cy = window.innerHeight / 2;
+      var a = Math.random() * Math.PI * 2;
+      var dist = 60 + Math.random() * 140;
+      var tx = Math.cos(a) * dist;
+      var ty = Math.sin(a) * dist;
+      var size = 2 + Math.random() * 3;
       p.style.width = p.style.height = size + 'px';
       p.style.left = cx + 'px';
       p.style.top = cy + 'px';
@@ -195,7 +207,7 @@
       particlesEl.appendChild(p);
       p.animate([
         { transform: 'translate(0,0) scale(1)', opacity: 1 },
-        { transform: `translate(${tx}px,${ty}px) scale(0)`, opacity: 0 }
+        { transform: 'translate(' + tx + 'px,' + ty + 'px) scale(0)', opacity: 0 }
       ], { duration: 800 + Math.random() * 600, easing: 'cubic-bezier(0.25,0.46,0.45,0.94)', fill: 'forwards', delay: Math.random() * 200 });
     }
   }
@@ -211,59 +223,74 @@
     buildCarousel();
     angle = Math.random() * 360;
     layoutCards();
+    startLoop();
   }
 
-  // ── Spin action ──
-  function startSpin() {
-    if (revealed) { reset(); return; }
+  // ── Core spin / reveal / reset action ──
+  function handleAction() {
+    if (revealed) {
+      reset();
+      return;
+    }
     if (spinning) {
-      // User clicked/tapped during spin — immediately reveal
+      // Tap during spin = immediate reveal
       spinning = false;
       speed = 0;
-      if (animId) cancelAnimationFrame(animId);
       revealCard();
       return;
     }
+    // Start new spin
     spinning = true;
     spinStartTime = Date.now();
-    speed = 10; // 2x original speed
+    speed = 10;
     instruction.classList.add('hidden');
-    if (animId) cancelAnimationFrame(animId);
-    animate();
+    startLoop();
   }
 
-  // ── Click handler ──
-  container.addEventListener('click', function(e) {
-    if (!isDragging) startSpin();
-  });
+  // ══════════════════════════════════════════
+  // ── EVENT HANDLING (ghost-click-proof) ──
+  // ══════════════════════════════════════════
 
-  // ── Touch support with swipe ──
-  container.addEventListener('touchstart', function(e) {
+  // On mobile, a tap fires: touchstart → touchend → (300ms) click.
+  // We handle the tap in touchend and block the synthetic click.
+
+  container.addEventListener('click', function (e) {
+    // Block ghost clicks that follow a touch event
+    if (Date.now() - lastTouchTime < 500) return;
+    handleAction();
+  }, false);
+
+  container.addEventListener('touchstart', function (e) {
     touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
     touchStartTime = Date.now();
-    isDragging = false;
+    isTouchDrag = false;
   }, { passive: true });
 
-  container.addEventListener('touchmove', function(e) {
-    const dx = e.touches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 10) isDragging = true;
-    if (!spinning && !revealed && isDragging) {
+  container.addEventListener('touchmove', function (e) {
+    var dx = e.touches[0].clientX - touchStartX;
+    var dy = e.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 8 || Math.abs(dy) > 8) isTouchDrag = true;
+    if (!spinning && !revealed && isTouchDrag) {
       angle += dx * 0.3;
       touchStartX = e.touches[0].clientX;
       layoutCards();
     }
   }, { passive: true });
 
-  container.addEventListener('touchend', function(e) {
-    const dt = Date.now() - touchStartTime;
-    if (!isDragging && dt < 300) {
-      startSpin();
+  container.addEventListener('touchend', function (e) {
+    lastTouchTime = Date.now();
+    var dt = lastTouchTime - touchStartTime;
+    // Quick tap (not a drag) = action
+    if (!isTouchDrag && dt < 400) {
+      e.preventDefault(); // prevent the synthetic click entirely
+      handleAction();
     }
-    isDragging = false;
-  }, { passive: true });
+    isTouchDrag = false;
+  }, { passive: false }); // passive:false so preventDefault works
 
   // ── Resize handler ──
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', function () {
     RADIUS = getRadius();
     layoutCards();
   });
@@ -271,14 +298,5 @@
   // ── Init ──
   buildCarousel();
   layoutCards();
-
-  // Idle slow rotation (2x speed)
-  function idleRotate() {
-    if (!spinning && !revealed) {
-      angle += 0.24;
-      layoutCards();
-    }
-    requestAnimationFrame(idleRotate);
-  }
-  idleRotate();
+  startLoop();
 })();
