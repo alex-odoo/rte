@@ -1,6 +1,7 @@
 // ── Angel Messages Carousel — Game Logic ──
 (function () {
   const NUM_VISIBLE = 12;
+  const SPIN_DURATION = 4000; // 4 seconds total spin time
   const container = document.getElementById('container');
   const carousel = document.getElementById('carousel');
   const revealedCard = document.getElementById('revealedCard');
@@ -26,6 +27,7 @@
   let touchStartX = 0;
   let touchStartTime = 0;
   let isDragging = false;
+  let spinStartTime = 0;
 
   // ── Stars ──
   (function createStars() {
@@ -118,13 +120,18 @@
     });
   }
 
-  // ── Animation loop ──
+  // ── Animation loop with time-based 4-second spin ──
   function animate() {
     if (spinning) {
+      const elapsed = Date.now() - spinStartTime;
+      const progress = Math.min(elapsed / SPIN_DURATION, 1);
+      // Ease-out: fast start, smooth deceleration
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      // Speed starts at 10 (2x original) and decelerates to 0
+      speed = 10 * (1 - easedProgress);
       angle += speed;
-      if (speed > 0.05) {
-        speed *= 0.994;
-      } else {
+
+      if (progress >= 1) {
         spinning = false;
         speed = 0;
         revealCard();
@@ -209,13 +216,20 @@
   // ── Spin action ──
   function startSpin() {
     if (revealed) { reset(); return; }
-    if (!spinning) {
-      spinning = true;
-      speed = 4 + Math.random() * 3;
-      instruction.classList.add('hidden');
+    if (spinning) {
+      // User clicked/tapped during spin — immediately reveal
+      spinning = false;
+      speed = 0;
       if (animId) cancelAnimationFrame(animId);
-      animate();
+      revealCard();
+      return;
     }
+    spinning = true;
+    spinStartTime = Date.now();
+    speed = 10; // 2x original speed
+    instruction.classList.add('hidden');
+    if (animId) cancelAnimationFrame(animId);
+    animate();
   }
 
   // ── Click handler ──
@@ -258,10 +272,10 @@
   buildCarousel();
   layoutCards();
 
-  // Idle slow rotation
+  // Idle slow rotation (2x speed)
   function idleRotate() {
     if (!spinning && !revealed) {
-      angle += 0.12;
+      angle += 0.24;
       layoutCards();
     }
     requestAnimationFrame(idleRotate);
