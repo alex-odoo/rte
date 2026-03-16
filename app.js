@@ -1,7 +1,6 @@
-// ââ Tarot Carousel â Game Logic ââ
+// ── Angel Messages Carousel — Game Logic ──
 (function () {
-  const NUM_VISIBLE = 10;
-  const RADIUS = 320;
+  const NUM_VISIBLE = 12;
   const container = document.getElementById('container');
   const carousel = document.getElementById('carousel');
   const revealedCard = document.getElementById('revealedCard');
@@ -10,45 +9,73 @@
   const glowRing = document.getElementById('glowRing');
   const particlesEl = document.getElementById('particles');
 
+  // Responsive radius
+  function getRadius() {
+    const w = window.innerWidth;
+    if (w < 400) return 200;
+    if (w < 600) return 260;
+    return 320;
+  }
+  let RADIUS = getRadius();
+
   let angle = 0;
   let speed = 0;
   let spinning = false;
   let revealed = false;
   let animId = null;
+  let touchStartX = 0;
+  let touchStartTime = 0;
+  let isDragging = false;
 
-  // ââ Stars ââ
+  // ── Stars ──
   (function createStars() {
     const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 100; i++) {
+    const count = window.innerWidth < 500 ? 60 : 100;
+    for (let i = 0; i < count; i++) {
       const s = document.createElement('div');
       s.className = 'star';
       s.style.left = Math.random() * 100 + '%';
       s.style.top = Math.random() * 100 + '%';
-      s.style.width = s.style.height = (Math.random() * 2 + 1) + 'px';
+      const size = (Math.random() * 2 + 0.5);
+      s.style.width = s.style.height = size + 'px';
       s.style.animationDelay = (Math.random() * 3) + 's';
       s.style.animationDuration = (2 + Math.random() * 3) + 's';
       starsEl.appendChild(s);
     }
   })();
 
-  // ââ Zodiac ring ââ
-  (function createZodiac() {
-    const zodiacRing = document.getElementById('zodiacRing');
-    const symbols = ['â','â','â','â','â','â','â','â','â','â','â','â'];
+  // ── Angel ring (replaces zodiac) ──
+  (function createAngelRing() {
+    const ring = document.getElementById('angelRing');
+    const symbols = ['\u2721', '\u2726', '\u2605', '\u2720', '\u2741', '\u273F', '\u2742', '\u2743', '\u2727', '\u2736', '\u2733', '\u2734'];
+    const ringSize = ring.offsetWidth || 380;
+    const r = (ringSize / 2) - 15;
     symbols.forEach((sym, i) => {
       const el = document.createElement('div');
-      el.className = 'zodiac-char';
+      el.className = 'angel-char';
       el.textContent = sym;
       const a = (i / symbols.length) * 360;
-      const r = 170;
       const rad = a * Math.PI / 180;
-      el.style.left = (190 + Math.cos(rad) * r - 8) + 'px';
-      el.style.top = (190 + Math.sin(rad) * r - 8) + 'px';
-      zodiacRing.appendChild(el);
+      el.style.left = (ringSize/2 + Math.cos(rad) * r - 8) + 'px';
+      el.style.top = (ringSize/2 + Math.sin(rad) * r - 8) + 'px';
+      ring.appendChild(el);
     });
   })();
 
-  // ââ Build carousel cards ââ
+  // ── Floating feathers ──
+  (function createFeathers() {
+    for (let i = 0; i < 5; i++) {
+      const f = document.createElement('div');
+      f.className = 'feather';
+      f.innerHTML = '<svg width="12" height="24" viewBox="0 0 12 24"><path d="M6 0 Q8 6 10 12 Q8 18 6 24 Q4 18 2 12 Q4 6 6 0" fill="none" stroke="rgba(196,162,101,0.25)" stroke-width="0.8"/><path d="M6 0 L6 24" stroke="rgba(196,162,101,0.15)" stroke-width="0.5"/></svg>';
+      f.style.left = (10 + Math.random() * 80) + '%';
+      f.style.animationDuration = (12 + Math.random() * 10) + 's';
+      f.style.animationDelay = (Math.random() * 15) + 's';
+      container.appendChild(f);
+    }
+  })();
+
+  // ── Build carousel cards ──
   function buildCarousel() {
     carousel.innerHTML = '';
     const shuffled = [...CARDS].sort(() => Math.random() - 0.5);
@@ -74,7 +101,7 @@
     }
   }
 
-  // ââ Position cards in 3D circle ââ
+  // ── Position cards in 3D circle ──
   function layoutCards() {
     const cards = carousel.querySelectorAll('.card');
     const step = 360 / NUM_VISIBLE;
@@ -84,19 +111,19 @@
       const x = Math.sin(rad) * RADIUS;
       const z = Math.cos(rad) * RADIUS - RADIUS;
       const scale = (z + RADIUS * 2) / (RADIUS * 3);
-      const opacity = 0.3 + scale * 0.7;
-      c.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${0.5 + scale * 0.5})`;
+      const opacity = 0.25 + scale * 0.75;
+      c.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${0.45 + scale * 0.55})`;
       c.style.opacity = opacity;
       c.style.zIndex = Math.round(scale * 100);
     });
   }
 
-  // ââ Animation loop ââ
+  // ── Animation loop ──
   function animate() {
     if (spinning) {
       angle += speed;
       if (speed > 0.05) {
-        speed *= 0.995;
+        speed *= 0.994;
       } else {
         spinning = false;
         speed = 0;
@@ -108,7 +135,7 @@
     animId = requestAnimationFrame(animate);
   }
 
-  // ââ Find the front card ââ
+  // ── Find the front card ──
   function getFrontCard() {
     const cards = carousel.querySelectorAll('.card');
     let best = null;
@@ -118,76 +145,55 @@
       const a = ((angle + i * step) % 360 + 360) % 360;
       const rad = (a * Math.PI) / 180;
       const z = Math.cos(rad) * RADIUS;
-      if (z > bestZ) {
-        bestZ = z;
-        best = c;
-      }
+      if (z > bestZ) { bestZ = z; best = c; }
     });
     return best;
   }
 
-  // ââ Reveal the chosen card ââ
+  // ── Reveal the chosen card ──
   function revealCard() {
     const front = getFrontCard();
     if (!front) return;
-
     revealed = true;
-    const num = front.dataset.num;
-    const name = front.dataset.name;
-    const displayName = front.dataset.displayName;
-    const meaning = front.dataset.meaning;
-
-    document.getElementById('cardNumber').textContent = num;
-    document.getElementById('cardImage').innerHTML = CARD_SVGS[name] || '';
-    document.getElementById('cardName').textContent = displayName;
-    document.getElementById('cardMeaning').textContent = meaning;
-
-    // Scale the SVG inside revealed card
+    document.getElementById('cardNumber').textContent = front.dataset.num;
+    document.getElementById('cardImage').innerHTML = CARD_SVGS[front.dataset.name] || '';
+    document.getElementById('cardName').textContent = front.dataset.displayName;
+    document.getElementById('cardMeaning').textContent = front.dataset.meaning;
     const svg = document.getElementById('cardImage').querySelector('svg');
-    if (svg) {
-      svg.classList.add('card-icon-svg');
-    }
-
+    if (svg) svg.classList.add('card-icon-svg');
     revealedCard.classList.add('show');
     glowRing.classList.add('show');
     tapAgain.classList.add('show');
-
     spawnParticles();
   }
 
-  // ââ Particles burst ââ
+  // ── Particles burst ──
   function spawnParticles() {
     particlesEl.innerHTML = '';
-    for (let i = 0; i < 30; i++) {
+    const count = window.innerWidth < 500 ? 18 : 30;
+    for (let i = 0; i < count; i++) {
       const p = document.createElement('div');
       p.className = 'particle';
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       const a = Math.random() * Math.PI * 2;
-      const dist = 80 + Math.random() * 160;
+      const dist = 60 + Math.random() * 140;
       const tx = Math.cos(a) * dist;
       const ty = Math.sin(a) * dist;
-      const size = 2 + Math.random() * 4;
+      const size = 2 + Math.random() * 3;
       p.style.width = p.style.height = size + 'px';
       p.style.left = cx + 'px';
       p.style.top = cy + 'px';
-      p.style.background = Math.random() > 0.5 ? '#bd9a52' : '#e8d5a3';
-      p.style.borderRadius = '50%';
+      p.style.background = Math.random() > 0.5 ? '#c4a265' : '#e8d5a3';
       particlesEl.appendChild(p);
-
       p.animate([
         { transform: 'translate(0,0) scale(1)', opacity: 1 },
         { transform: `translate(${tx}px,${ty}px) scale(0)`, opacity: 0 }
-      ], {
-        duration: 800 + Math.random() * 600,
-        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        fill: 'forwards',
-        delay: Math.random() * 200
-      });
+      ], { duration: 800 + Math.random() * 600, easing: 'cubic-bezier(0.25,0.46,0.45,0.94)', fill: 'forwards', delay: Math.random() * 200 });
     }
   }
 
-  // ââ Reset for new spin ââ
+  // ── Reset for new spin ──
   function reset() {
     revealed = false;
     revealedCard.classList.remove('show');
@@ -200,34 +206,62 @@
     layoutCards();
   }
 
-  // ââ Tap handler ââ
-  container.addEventListener('click', function () {
-    if (revealed) {
-      reset();
-      return;
-    }
+  // ── Spin action ──
+  function startSpin() {
+    if (revealed) { reset(); return; }
     if (!spinning) {
       spinning = true;
-      speed = 5 + Math.random() * 3;
+      speed = 4 + Math.random() * 3;
       instruction.classList.add('hidden');
       if (animId) cancelAnimationFrame(animId);
       animate();
     }
+  }
+
+  // ── Click handler ──
+  container.addEventListener('click', function(e) {
+    if (!isDragging) startSpin();
   });
 
-  // ââ Touch support ââ
-  container.addEventListener('touchstart', function (e) {
-    e.preventDefault();
-  }, { passive: false });
+  // ── Touch support with swipe ──
+  container.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartTime = Date.now();
+    isDragging = false;
+  }, { passive: true });
 
-  // ââ Init ââ
+  container.addEventListener('touchmove', function(e) {
+    const dx = e.touches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 10) isDragging = true;
+    if (!spinning && !revealed && isDragging) {
+      angle += dx * 0.3;
+      touchStartX = e.touches[0].clientX;
+      layoutCards();
+    }
+  }, { passive: true });
+
+  container.addEventListener('touchend', function(e) {
+    const dt = Date.now() - touchStartTime;
+    if (!isDragging && dt < 300) {
+      startSpin();
+    }
+    isDragging = false;
+  }, { passive: true });
+
+  // ── Resize handler ──
+  window.addEventListener('resize', function() {
+    RADIUS = getRadius();
+    layoutCards();
+  });
+
+  // ── Init ──
   buildCarousel();
   layoutCards();
 
   // Idle slow rotation
   function idleRotate() {
     if (!spinning && !revealed) {
-      angle += 0.15;
+      angle += 0.12;
       layoutCards();
     }
     requestAnimationFrame(idleRotate);
