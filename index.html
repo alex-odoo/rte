@@ -70,7 +70,7 @@
 <meta name="theme-color" content="#0d0b1a">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👼</text></svg>">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Marck+Script&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Marck+Script&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
     --gold:#c4a265;--gold-light:#e8d5a3;--gold-dark:#9a7a3f;
@@ -84,6 +84,264 @@
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;
     touch-action:manipulation;
+  }
+  /* ── Mode Switcher ── */
+  .mode-switcher{
+    position:fixed;top:16px;left:16px;z-index:100;
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .mode-btn{
+    padding:10px 18px;border-radius:12px;
+    font-size:12px;font-weight:600;cursor:pointer;
+    font-family:'Cinzel','Cormorant Garamond',serif;letter-spacing:1px;
+    transition:all .3s ease;backdrop-filter:blur(10px);
+    outline:none;
+  }
+  .mode-btn-angel{
+    background:linear-gradient(135deg,#DAA520 0%,#B8860B 100%);
+    border:1.5px solid #DAA520;color:#0a0a1a;
+  }
+  .mode-btn-angel.inactive{
+    background:rgba(218,165,32,0.08);
+    border:1.5px solid rgba(218,165,32,0.2);color:#DAA520;
+  }
+  .mode-btn-tarot{
+    background:linear-gradient(135deg,#6A3D9A 0%,#4B0082 100%);
+    border:1.5px solid #9370DB;color:#F5E6CA;
+  }
+  .mode-btn-tarot.inactive{
+    background:rgba(106,61,154,0.08);
+    border:1.5px solid rgba(106,61,154,0.2);color:#9370DB;
+  }
+  .mode-btn-tarot.active{animation:pulseGold 2s ease infinite}
+  /* ── Tarot 22 Section (Carousel Style) ── */
+  #tarotSection{display:none;position:absolute;inset:0;z-index:50;overflow:hidden}
+  #tarotSection.active{display:block}
+  .t22-page{
+    width:100%;height:100%;position:relative;overflow:hidden;
+    background:radial-gradient(ellipse at center,#1a0f2e 0%,#0d0b1a 70%);
+    cursor:pointer;
+  }
+  .t22-bg-stars{position:absolute;inset:0;overflow:hidden;z-index:0}
+  .t22-star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3s infinite alternate}
+  .t22-frame{position:absolute;inset:8px;border:1.5px solid rgba(196,162,101,.3);border-radius:14px;pointer-events:none;z-index:10}
+  .t22-frame::before{content:'';position:absolute;inset:4px;border:1px solid rgba(196,162,101,.12);border-radius:10px}
+  .t22-frame-corner{position:absolute;width:40px;height:40px;z-index:11;pointer-events:none}
+  .t22-frame-corner svg{width:100%;height:100%}
+  .t22-fc-tl{top:12px;left:12px}.t22-fc-tr{top:12px;right:12px;transform:scaleX(-1)}
+  .t22-fc-bl{bottom:12px;left:12px;transform:scaleY(-1)}.t22-fc-br{bottom:12px;right:12px;transform:scale(-1,-1)}
+  /* Mystic ring */
+  .t22-mystic-ring{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:clamp(280px,70vw,380px);height:clamp(280px,70vw,380px);
+    border-radius:50%;z-index:1;opacity:.12;animation:rotateRing 80s linear infinite;
+  }
+  .t22-ring-char{position:absolute;color:var(--gold);font-size:clamp(.8rem,2.5vw,1.1rem)}
+  /* Title */
+  .t22-title-area{position:absolute;top:4%;width:100%;text-align:center;z-index:5;color:var(--gold);text-shadow:0 0 20px rgba(196,162,101,.4)}
+  .t22-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,4.5vw,1.8rem);font-weight:600;letter-spacing:3px;margin-bottom:2px;color:var(--gold)}
+  .t22-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(.55rem,2.5vw,.8rem);letter-spacing:clamp(2px,1vw,5px);text-transform:uppercase;opacity:.65;color:var(--gold)}
+  .t22-title-decor{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;opacity:.4}
+  .t22-title-decor span{width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .t22-title-decor svg{width:16px;height:16px}
+  /* 3D Carousel Scene */
+  .t22-scene{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:clamp(160px,50vw,220px);height:clamp(260px,55vh,360px);
+    perspective:900px;z-index:5;
+  }
+  .t22-carousel{width:100%;height:100%;position:relative;transform-style:preserve-3d}
+  /* Carousel Card */
+  .t22-card{
+    position:absolute;
+    width:clamp(140px,40vw,200px);height:clamp(220px,45vh,330px);
+    left:50%;top:50%;
+    margin-left:clamp(-70px,-20vw,-100px);margin-top:clamp(-110px,-22.5vh,-165px);
+    backface-visibility:hidden;border-radius:12px;overflow:hidden;
+    box-shadow:0 0 25px rgba(0,0,0,.5),0 0 8px rgba(196,162,101,.25);
+  }
+  .t22-card-inner{
+    width:100%;height:100%;
+    background:linear-gradient(180deg,#18103a,#0f0828);
+    border:2.5px solid var(--gold);border-radius:12px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .t22-ci-border{position:absolute;inset:5px;border:1px solid rgba(196,162,101,.25);border-radius:8px;pointer-events:none}
+  .t22-ci-center{
+    width:clamp(50px,15vw,75px);height:clamp(50px,15vw,75px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:.6;
+  }
+  .t22-ci-svg{width:100%;height:100%}
+  .t22-ci-num{
+    position:absolute;bottom:12px;width:100%;text-align:center;
+    font-family:'Cormorant Garamond',serif;font-size:clamp(.55rem,2.5vw,.75rem);
+    color:var(--gold);letter-spacing:2px;opacity:.5;
+  }
+  .t22-ci-corners i{
+    position:absolute;width:6px;height:6px;
+    border:1px solid rgba(196,162,101,.3);transform:rotate(45deg);
+  }
+  .t22-ci-corners i:nth-child(1){top:10px;left:10px}
+  .t22-ci-corners i:nth-child(2){top:10px;right:10px}
+  .t22-ci-corners i:nth-child(3){bottom:10px;left:10px}
+  .t22-ci-corners i:nth-child(4){bottom:10px;right:10px}
+  .t22-card-inner::after{
+    content:'';position:absolute;top:-30%;left:-30%;width:160%;height:160%;
+    background:radial-gradient(ellipse at 50% 30%,rgba(196,162,101,.06) 0%,transparent 60%);
+    pointer-events:none;
+  }
+  /* Revealed Card */
+  .t22-revealed{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    width:clamp(200px,60vw,280px);height:clamp(320px,60vh,440px);
+    z-index:20;border-radius:14px;overflow:hidden;
+    border:2.5px solid var(--gold);
+    box-shadow:0 0 60px rgba(196,162,101,.35),0 0 120px rgba(100,50,180,.25);
+    background:linear-gradient(180deg,#18103a,#0f0828);
+    opacity:0;transition:transform .8s cubic-bezier(.34,1.56,.64,1),opacity .5s ease;
+  }
+  .t22-revealed.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+  .t22-rev-border{position:absolute;inset:6px;border:1.5px solid rgba(196,162,101,.4);border-radius:10px;pointer-events:none}
+  .t22-rev-num{text-align:center;color:var(--gold);font-size:clamp(.65rem,2.5vw,.8rem);letter-spacing:3px;margin-top:clamp(12px,3vh,18px);opacity:.7;font-family:'Cormorant Garamond',serif}
+  .t22-rev-symbol{
+    text-align:center;font-size:clamp(40px,12vw,60px);
+    margin:clamp(8px,2vh,15px) 0;
+    filter:drop-shadow(0 0 15px rgba(196,162,101,.3));
+  }
+  .t22-rev-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:4px auto}
+  .t22-rev-name{
+    text-align:center;color:var(--gold);font-size:clamp(.85rem,4vw,1.15rem);
+    font-weight:700;letter-spacing:2px;padding:0 10px;font-family:'Cormorant Garamond',serif;
+    text-shadow:0 0 10px rgba(196,162,101,.35);
+  }
+  .t22-rev-ukname{
+    text-align:center;color:rgba(196,162,101,.6);
+    font-size:clamp(.6rem,3vw,.8rem);font-family:'Marck Script',cursive;
+    letter-spacing:1px;margin-top:4px;
+  }
+  .t22-rev-meaning{
+    text-align:center;color:rgba(220,200,170,.65);font-family:'Marck Script',cursive;
+    font-size:clamp(.55rem,2.5vw,.75rem);letter-spacing:1px;margin-top:8px;
+    padding:0 clamp(12px,4vw,20px);line-height:1.45;
+  }
+  /* SVG art inside revealed card */
+  .t22-rev-art{
+    width:clamp(110px,35vw,160px);height:clamp(120px,22vh,190px);
+    margin:clamp(6px,1.5vh,10px) auto;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(ellipse,rgba(196,162,101,.06),transparent);
+    border-radius:8px;border:1px solid rgba(196,162,101,.2);overflow:hidden;
+  }
+  .t22-rev-art svg{width:100%;height:100%;border-radius:8px}
+  /* Glow ring */
+  .t22-glow{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+    width:clamp(280px,70vw,380px);height:clamp(280px,70vw,380px);
+    border-radius:50%;border:1.5px solid rgba(196,162,101,.25);
+    box-shadow:0 0 60px rgba(196,162,101,.12),inset 0 0 60px rgba(196,162,101,.08);
+    z-index:12;opacity:0;transition:transform 1s ease-out,opacity 1.5s ease;pointer-events:none;
+  }
+  .t22-glow.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+  /* Particles */
+  .t22-particles{position:absolute;inset:0;z-index:15;pointer-events:none;overflow:hidden}
+  .t22-particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:0}
+  /* Instructions */
+  .t22-instruction{
+    position:absolute;bottom:5%;width:100%;text-align:center;z-index:5;
+    color:rgba(196,162,101,.75);font-size:clamp(.7rem,3vw,.9rem);
+    font-family:'Cormorant Garamond',serif;
+    letter-spacing:clamp(2px,.8vw,4px);text-transform:uppercase;animation:pulse 2s infinite;
+  }
+  .t22-instruction.hidden{display:none}
+  .t22-tap-again{
+    position:absolute;bottom:5%;width:100%;text-align:center;z-index:25;
+    color:rgba(196,162,101,.75);font-size:clamp(.6rem,2.5vw,.8rem);
+    font-family:'Cormorant Garamond',serif;
+    letter-spacing:clamp(2px,.6vw,3px);text-transform:uppercase;
+    opacity:0;transition:opacity .5s ease 1.5s;
+  }
+  .t22-tap-again.show{opacity:1}
+  /* Counter badge */
+  .t22-counter{
+    position:absolute;top:4%;right:20px;z-index:15;
+    color:var(--gold);font-family:'Cormorant Garamond',serif;
+    font-size:clamp(.65rem,2.5vw,.85rem);letter-spacing:2px;opacity:0;
+    transition:opacity .3s ease;
+  }
+  .t22-counter.show{opacity:.7}
+  /* Drawn cards panel */
+  .t22-drawn-panel{
+    position:absolute;top:clamp(50px,12vh,80px);left:50%;transform:translateX(-50%);
+    z-index:18;display:flex;gap:8px;opacity:0;transition:opacity .5s ease;
+    pointer-events:none;
+  }
+  .t22-drawn-panel.show{opacity:1}
+  .t22-mini-card{
+    width:clamp(42px,10vw,55px);height:clamp(65px,15vw,85px);
+    border-radius:6px;border:1.5px solid;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+    animation:fadeInCard .5s ease both;
+  }
+  .t22-mini-num{
+    position:absolute;top:2px;left:50%;transform:translateX(-50%);
+    font-size:7px;font-weight:700;color:var(--gold);
+    font-family:'Cormorant Garamond',serif;opacity:.6;
+  }
+  .t22-mini-symbol{font-size:clamp(14px,3.5vw,20px)}
+  .t22-mini-name{font-size:clamp(5px,1.5vw,7px);color:rgba(220,200,170,.7);text-align:center;padding:0 2px;font-family:'Cormorant Garamond',serif}
+  /* Bottom scrollable area */
+  .t22-bottom-area{
+    position:absolute;bottom:0;left:0;right:0;max-height:0;
+    z-index:30;overflow-y:auto;
+    background:linear-gradient(180deg,rgba(13,11,26,.95),rgba(13,11,26,.98));
+    border-top:1px solid rgba(196,162,101,.2);
+    transition:max-height .5s ease;
+  }
+  .t22-bottom-area.show{max-height:80vh}
+  .t22-meanings-wrap{padding:20px 16px 40px;max-width:500px;margin:0 auto}
+  .t22-meanings-title{
+    text-align:center;font-family:'Cormorant Garamond',serif;
+    font-size:clamp(.9rem,3.5vw,1.2rem);color:var(--gold);
+    letter-spacing:2px;margin-bottom:16px;
+    text-shadow:0 0 15px rgba(196,162,101,.3);
+  }
+  .t22-meaning-card{
+    padding:12px;border-radius:10px;margin-bottom:10px;
+    border-left:3px solid var(--mc,var(--gold));
+    background:linear-gradient(90deg,rgba(196,162,101,.04),transparent);
+  }
+  .t22-mc-header{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+  .t22-mc-badge{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--gold);color:#0d0b1a;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:700;font-family:'Cormorant Garamond',serif;flex-shrink:0;
+  }
+  .t22-mc-symbol{font-size:18px}
+  .t22-mc-names{flex:1}
+  .t22-mc-name{font-family:'Cormorant Garamond',serif;font-size:clamp(.7rem,3vw,.9rem);font-weight:600;color:var(--mc,var(--gold))}
+  .t22-mc-ukname{font-family:'Marck Script',cursive;font-size:clamp(.55rem,2.5vw,.7rem);color:rgba(220,200,170,.5);margin-top:1px}
+  .t22-mc-body{padding-left:30px}
+  .t22-mc-meaning{font-size:clamp(.6rem,2.5vw,.8rem);color:rgba(220,200,170,.7);line-height:1.4;margin-bottom:4px}
+  .t22-mc-reversed{font-size:clamp(.55rem,2vw,.7rem);color:rgba(139,115,85,.7);font-style:italic}
+  .t22-btn-new-reading{
+    display:block;margin:20px auto 0;padding:12px 30px;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold),#9a7a3f);
+    border:none;color:#0d0b1a;font-size:clamp(.7rem,3vw,.9rem);
+    font-weight:600;font-family:'Cormorant Garamond',serif;
+    letter-spacing:2px;cursor:pointer;
+    box-shadow:0 0 20px rgba(196,162,101,.3);
+  }
+  @keyframes fadeInCard{from{opacity:0;transform:translateY(20px) scale(0.8)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes pulseGold{0%,100%{box-shadow:0 0 15px rgba(218,165,32,0.3)}50%{box-shadow:0 0 30px rgba(218,165,32,0.6)}}
+  @media (max-width:480px){
+    .t22-frame{inset:5px;border-radius:10px}
+    .t22-frame-corner{width:28px;height:28px}
+    .t22-fc-tl{top:8px;left:8px}.t22-fc-tr{top:8px;right:8px}
+    .t22-fc-bl{bottom:8px;left:8px}.t22-fc-br{bottom:8px;right:8px}
   }
   .container{
     width:100%;height:100%;position:relative;overflow:hidden;
@@ -256,6 +514,12 @@
 </style>
 </head>
 <body>
+<!-- Mode Switcher -->
+<div class="mode-switcher" id="modeSwitcher">
+  <button class="mode-btn mode-btn-angel" id="btnAngel" onclick="switchMode('angel')">👼 Angels</button>
+  <button class="mode-btn mode-btn-tarot inactive" id="btnTarot" onclick="switchMode('tarot')">✦ Tarot 22</button>
+</div>
+
 <div class="container" id="container">
   <div class="stars" id="stars"></div>
   <div class="angel-ring" id="angelRing"></div>
@@ -303,7 +567,37 @@
     <a href="https://tarocarousel.online/">Головна — Таро Карусель та Послання Ангелів</a>
   </nav>
 </div>
+<!-- Tarot 22 Section (hidden by default) -->
+<div id="tarotSection"></div>
+
 <script src="cards.js"></script>
 <script src="app.js"></script>
+<script src="tarot22-art.js"></script>
+<script src="tarot22.js"></script>
+<script>
+// ── Mode switching logic ──
+function switchMode(mode) {
+  var container = document.getElementById('container');
+  var tarotSection = document.getElementById('tarotSection');
+  var btnAngel = document.getElementById('btnAngel');
+  var btnTarot = document.getElementById('btnTarot');
+
+  if (mode === 'tarot') {
+    container.style.display = 'none';
+    tarotSection.classList.add('active');
+    btnAngel.className = 'mode-btn mode-btn-angel inactive';
+    btnTarot.className = 'mode-btn mode-btn-tarot active';
+    // Render tarot 22
+    if (window.tarot22) window.tarot22.render();
+  } else {
+    container.style.display = '';
+    tarotSection.classList.remove('active');
+    btnAngel.className = 'mode-btn mode-btn-angel';
+    btnTarot.className = 'mode-btn mode-btn-tarot inactive';
+    // Cleanup tarot state
+    if (window.tarot22) window.tarot22.cleanup();
+  }
+}
+</script>
 </body>
 </html>
