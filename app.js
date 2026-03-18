@@ -1,4 +1,4 @@
-// ── Angel Messages Carousel — Game Logic ──
+// ── Angel Messages Carousel — Game Logic (i18n-aware) ──
 (function () {
   const NUM_VISIBLE = 12;
   const SPIN_DURATION = 4000;
@@ -30,7 +30,48 @@
   let touchStartY = 0;
   let touchStartTime = 0;
   let isTouchDrag = false;
-  let lastTouchTime = 0; // prevent ghost click after touch
+  let lastTouchTime = 0;
+
+  // ── i18n helpers ──
+  function getCardText(cardIndex) {
+    if (window.i18n) return window.i18n.getAngelCard(cardIndex);
+    return { displayName: CARDS[cardIndex].displayName, meaning: CARDS[cardIndex].meaning };
+  }
+
+  function uiText(key) {
+    if (window.i18n) return window.i18n.t(key);
+    return key;
+  }
+
+  function applyUILanguage() {
+    var titleEl = container.querySelector('.title h1');
+    var subtitleEl = container.querySelector('.title p');
+    if (titleEl) titleEl.textContent = uiText('angelTitle');
+    if (subtitleEl) subtitleEl.textContent = uiText('angelSub');
+    if (!spinning && !revealed) {
+      instruction.textContent = uiText('tap');
+    }
+    tapAgain.textContent = uiText('tapShuffle');
+    // Update mode switcher buttons
+    var btnAngel = document.getElementById('btnAngel');
+    var btnTarot = document.getElementById('btnTarot');
+    if (btnAngel) btnAngel.textContent = uiText('btnAngel');
+    if (btnTarot) btnTarot.textContent = uiText('btnTarot');
+    // Rebuild carousel to update card text
+    if (!spinning && !revealed) {
+      buildCarousel();
+      layoutCards();
+    }
+    // Update language dropdown button
+    if (window.i18n && window.i18n.refreshDropdown) window.i18n.refreshDropdown();
+  }
+
+  // Register global language change handler
+  window.applyLanguage = function() {
+    applyUILanguage();
+    // Also refresh tarot if it has its own handler
+    if (window.tarot22 && window.tarot22.applyLanguage) window.tarot22.applyLanguage();
+  };
 
   // ── Stars ──
   (function createStars() {
@@ -86,12 +127,13 @@
     const shuffled = CARDS.slice().sort(function () { return Math.random() - 0.5; });
     for (let i = 0; i < NUM_VISIBLE; i++) {
       const card = shuffled[i % shuffled.length];
+      const cardIdx = parseInt(card.num) - 1;
+      const tr = getCardText(cardIdx);
       const el = document.createElement('div');
       el.className = 'card';
       el.dataset.index = i;
       el.dataset.name = card.name;
-      el.dataset.displayName = card.displayName;
-      el.dataset.meaning = card.meaning;
+      el.dataset.cardIdx = cardIdx;
       el.dataset.num = card.num;
       el.innerHTML =
         '<div class="card-face">' +
@@ -99,8 +141,8 @@
           '<div class="cf-num">' + card.num + '</div>' +
           '<div class="cf-icon">' + (CARD_SVGS[card.name] || '') + '</div>' +
           '<div class="cf-divider"></div>' +
-          '<div class="cf-name">' + card.displayName + '</div>' +
-          '<div class="cf-meaning">' + card.meaning + '</div>' +
+          '<div class="cf-name">' + tr.displayName + '</div>' +
+          '<div class="cf-meaning">' + tr.meaning + '</div>' +
         '</div>';
       carousel.appendChild(el);
     }
@@ -134,13 +176,12 @@
         speed = 0;
         layoutCards();
         revealCard();
-        return; // stop loop; will restart on next user action
+        return;
       }
       var easedProgress = 1 - Math.pow(1 - progress, 3);
       speed = 20 * (1 - easedProgress);
       angle += speed;
     } else if (!revealed) {
-      // Idle rotation
       angle += 0.48;
     }
     layoutCards();
@@ -172,17 +213,19 @@
     var front = getFrontCard();
     if (!front) return;
     revealed = true;
+    var cardIdx = parseInt(front.dataset.cardIdx);
+    var tr = getCardText(cardIdx);
     document.getElementById('cardNumber').textContent = front.dataset.num;
     document.getElementById('cardImage').innerHTML = CARD_SVGS[front.dataset.name] || '';
-    document.getElementById('cardName').textContent = front.dataset.displayName;
-    document.getElementById('cardMeaning').textContent = front.dataset.meaning;
+    document.getElementById('cardName').textContent = tr.displayName;
+    document.getElementById('cardMeaning').textContent = tr.meaning;
     var svg = document.getElementById('cardImage').querySelector('svg');
     if (svg) svg.classList.add('card-icon-svg');
     revealedCard.classList.add('show');
     glowRing.classList.add('show');
     tapAgain.classList.add('show');
+    tapAgain.textContent = uiText('tapShuffle');
     spawnParticles();
-    // Keep loop alive for particles / potential interactions
     startLoop();
   }
 
@@ -219,6 +262,7 @@
     glowRing.classList.remove('show');
     tapAgain.classList.remove('show');
     instruction.classList.remove('hidden');
+    instruction.textContent = uiText('tap');
     particlesEl.innerHTML = '';
     buildCarousel();
     angle = Math.random() * 360;
@@ -233,13 +277,11 @@
       return;
     }
     if (spinning) {
-      // Tap during spin = immediate reveal
       spinning = false;
       speed = 0;
       revealCard();
       return;
     }
-    // Start new spin
     spinning = true;
     spinStartTime = Date.now();
     speed = 20;
@@ -247,15 +289,8 @@
     startLoop();
   }
 
-  // ══════════════════════════════════════════
-  // ── EVENT HANDLING (ghost-click-proof) ──
-  // ══════════════════════════════════════════
-
-  // On mobile, a tap fires: touchstart → touchend → (300ms) click.
-  // We handle the tap in touchend and block the synthetic click.
-
+  // ── EVENT HANDLING ──
   container.addEventListener('click', function (e) {
-    // Block ghost clicks that follow a touch event
     if (Date.now() - lastTouchTime < 500) return;
     handleAction();
   }, false);
@@ -281,13 +316,12 @@
   container.addEventListener('touchend', function (e) {
     lastTouchTime = Date.now();
     var dt = lastTouchTime - touchStartTime;
-    // Quick tap (not a drag) = action
     if (!isTouchDrag && dt < 400) {
-      e.preventDefault(); // prevent the synthetic click entirely
+      e.preventDefault();
       handleAction();
     }
     isTouchDrag = false;
-  }, { passive: false }); // passive:false so preventDefault works
+  }, { passive: false });
 
   // ── Resize handler ──
   window.addEventListener('resize', function () {
@@ -296,6 +330,7 @@
   });
 
   // ── Init ──
+  applyUILanguage();
   buildCarousel();
   layoutCards();
   startLoop();

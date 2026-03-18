@@ -1,34 +1,38 @@
-// ── Tarot 22 Major Arcana — 3D Carousel Style (matching Angel Carousel) ──
+// ── Tarot 22 Major Arcana — 3D Carousel Style (i18n + Zodiac) ──
 (function() {
   'use strict';
 
   var TAROT = [
-    { id:0, name:"The Fool", numeral:"0", ukName:"Блазень", meaning:"Нові початки, невинність, спонтанність, вільний дух", reversed:"Безрозсудність, ризик, стримування", colors:["#F5D16C","#8B5E3C","#E8A838"], desc:"Стрибок віри у невідоме", symbol:"🌟" },
-    { id:1, name:"The Magician", numName:"I", ukName:"Маг", meaning:"Сила волі, творіння, прояв, винахідливість", reversed:"Маніпуляція, нерозкриті таланти, обман", colors:["#6A3D9A","#DAA520","#1A0533"], desc:"У вас є всі необхідні інструменти", symbol:"✨" },
-    { id:2, name:"The High Priestess", numeral:"II", ukName:"Верховна Жриця", meaning:"Інтуїція, таємниця, внутрішнє знання, підсвідомість", reversed:"Секрети, відстороненість, мовчання", colors:["#1B3A6B","#C0C0C0","#4169E1"], desc:"Довіртесь внутрішньому голосу", symbol:"🌙" },
-    { id:3, name:"The Empress", numeral:"III", ukName:"Імператриця", meaning:"Достаток, турбота, родючість, природа, краса", reversed:"Залежність, задушливість, творчий блок", colors:["#2E8B57","#FFD700","#8FBC8F"], desc:"Прийміть достаток і зростання", symbol:"🌿" },
-    { id:4, name:"The Emperor", numeral:"IV", ukName:"Імператор", meaning:"Авторитет, структура, стабільність, лідерство", reversed:"Тиранія, жорсткість, домінування", colors:["#8B0000","#DAA520","#FF4500"], desc:"Будуйте свою імперію з дисципліною", symbol:"👑" },
-    { id:5, name:"The Hierophant", numeral:"V", ukName:"Ієрофант", meaning:"Традиція, духовна мудрість, відповідність, освіта", reversed:"Бунтарство, підривність, нові підходи", colors:["#4B0082","#FFD700","#FF69B4"], desc:"Шукайте глибший духовний сенс", symbol:"🔑" },
-    { id:6, name:"The Lovers", numeral:"VI", ukName:"Закохані", meaning:"Любов, гармонія, партнерство, вибір, єдність", reversed:"Дисгармонія, дисбаланс, неузгодженість", colors:["#FF69B4","#FFD700","#FF1493"], desc:"Обирайте серцем і душею", symbol:"💕" },
-    { id:7, name:"The Chariot", numeral:"VII", ukName:"Колісниця", meaning:"Рішучість, сила волі, тріумф, контроль", reversed:"Відсутність напрямку, агресія, безконтрольність", colors:["#1C1C2E","#C0C0C0","#4682B4"], desc:"Перемога через зосереджену волю", symbol:"⚡" },
-    { id:8, name:"Strength", numeral:"VIII", ukName:"Сила", meaning:"Мужність, внутрішня сила, співчуття, терпіння", reversed:"Невпевненість, слабкість, незахищеність", colors:["#DAA520","#FF6347","#FFD700"], desc:"М'яка сила перемагає все", symbol:"🦁" },
-    { id:9, name:"The Hermit", numeral:"IX", ukName:"Відлюдник", meaning:"Пошук душі, самоаналіз, самотність, внутрішнє керівництво", reversed:"Ізоляція, самотність, відстороненість", colors:["#2F4F4F","#DAA520","#696969"], desc:"Освітіть шлях зсередини", symbol:"🕯️" },
-    { id:10, name:"Wheel of Fortune", numeral:"X", ukName:"Колесо Фортуни", meaning:"Зміна, цикли, доля, поворотний момент, удача", reversed:"Невдача, опір змінам, руйнування циклів", colors:["#4169E1","#FFD700","#9370DB"], desc:"Колесо обертається — прийміть зміни", symbol:"🎡" },
-    { id:11, name:"Justice", numeral:"XI", ukName:"Справедливість", meaning:"Чесність, істина, закон, причина та наслідок", reversed:"Несправедливість, нечесність, безвідповідальність", colors:["#8B0000","#DAA520","#DC143C"], desc:"Істина і баланс переважають", symbol:"⚖️" },
-    { id:12, name:"The Hanged Man", numeral:"XII", ukName:"Повішений", meaning:"Капітуляція, відпускання, нова перспектива, пауза", reversed:"Застій, опір, нерішучість", colors:["#4682B4","#98FB98","#5F9EA0"], desc:"Здайтесь, щоб здобути нове бачення", symbol:"🔮" },
-    { id:13, name:"Death", numeral:"XIII", ukName:"Смерть", meaning:"Закінчення, трансформація, перехід, звільнення", reversed:"Опір змінам, застій, розпад", colors:["#1C1C2E","#C0C0C0","#2F2F4F"], desc:"Трансформуйтесь і переродіться", symbol:"🦋" },
-    { id:14, name:"Temperance", numeral:"XIV", ukName:"Поміркованість", meaning:"Баланс, терпіння, помірність, гармонія, мета", reversed:"Дисбаланс, надмірність, відсутність бачення", colors:["#FFD700","#87CEEB","#DDA0DD"], desc:"Знайдіть свій ідеальний баланс", symbol:"🏺" },
-    { id:15, name:"The Devil", numeral:"XV", ukName:"Диявол", meaning:"Тіньове «я», прив'язаність, залежність, обмеження", reversed:"Звільнення від обмежень, свобода, повернення сили", colors:["#1C1C1C","#8B0000","#FF4500"], desc:"Звільніться від своїх ланцюгів", symbol:"🔗" },
-    { id:16, name:"The Tower", numeral:"XVI", ukName:"Вежа", meaning:"Потрясіння, одкровення, раптова зміна, пробудження", reversed:"Запобігання катастрофі, страх змін, зволікання", colors:["#FF4500","#FFD700","#8B0000"], desc:"Руйнування створює простір для істини", symbol:"🗼" },
-    { id:17, name:"The Star", numeral:"XVII", ukName:"Зірка", meaning:"Надія, віра, оновлення, спокій, натхнення", reversed:"Відсутність віри, відчай, відключеність", colors:["#87CEEB","#FFD700","#E6E6FA"], desc:"Надія сяє у темряві", symbol:"⭐" },
-    { id:18, name:"The Moon", numeral:"XVIII", ukName:"Місяць", meaning:"Ілюзія, страх, тривога, інтуїція, підсвідомість", reversed:"Звільнення від страху, придушені емоції, ясність", colors:["#191970","#C0C0C0","#483D8B"], desc:"Пройдіть через ілюзію до істини", symbol:"🌑" },
-    { id:19, name:"The Sun", numeral:"XIX", ukName:"Сонце", meaning:"Радість, успіх, життєва сила, позитивність, тепло", reversed:"Внутрішня дитина, пригніченість, надмірний оптимізм", colors:["#FFD700","#FF8C00","#FFA500"], desc:"Сяюча радість освітлює ваш шлях", symbol:"☀️" },
-    { id:20, name:"Judgement", numeral:"XX", ukName:"Суд", meaning:"Роздуми, розплата, внутрішній поклик, відпущення", reversed:"Невпевненість, внутрішній критик, ігнорування поклику", colors:["#4B0082","#FFD700","#9370DB"], desc:"Відповідайте на вищий поклик", symbol:"🔔" },
-    { id:21, name:"The World", numeral:"XXI", ukName:"Світ", meaning:"Завершення, досягнення, цілісність, подорож", reversed:"Незавершеність, скорочення шляху, пошук закриття", colors:["#2E8B57","#FFD700","#4169E1"], desc:"Ви прибули — святкуйте", symbol:"🌍" }
+    { id:0, name:"The Fool", numeral:"0", colors:["#F5D16C","#8B5E3C","#E8A838"], symbol:"\uD83C\uDF1F" },
+    { id:1, name:"The Magician", numeral:"I", colors:["#6A3D9A","#DAA520","#1A0533"], symbol:"\u2728" },
+    { id:2, name:"The High Priestess", numeral:"II", colors:["#1B3A6B","#C0C0C0","#4169E1"], symbol:"\uD83C\uDF19" },
+    { id:3, name:"The Empress", numeral:"III", colors:["#2E8B57","#FFD700","#8FBC8F"], symbol:"\uD83C\uDF3F" },
+    { id:4, name:"The Emperor", numeral:"IV", colors:["#8B0000","#DAA520","#FF4500"], symbol:"\uD83D\uDC51" },
+    { id:5, name:"The Hierophant", numeral:"V", colors:["#4B0082","#FFD700","#FF69B4"], symbol:"\uD83D\uDD11" },
+    { id:6, name:"The Lovers", numeral:"VI", colors:["#FF69B4","#FFD700","#FF1493"], symbol:"\uD83D\uDC95" },
+    { id:7, name:"The Chariot", numeral:"VII", colors:["#1C1C2E","#C0C0C0","#4682B4"], symbol:"\u26A1" },
+    { id:8, name:"Strength", numeral:"VIII", colors:["#DAA520","#FF6347","#FFD700"], symbol:"\uD83E\uDD81" },
+    { id:9, name:"The Hermit", numeral:"IX", colors:["#2F4F4F","#DAA520","#696969"], symbol:"\uD83D\uDD6F\uFE0F" },
+    { id:10, name:"Wheel of Fortune", numeral:"X", colors:["#4169E1","#FFD700","#9370DB"], symbol:"\uD83C\uDFA1" },
+    { id:11, name:"Justice", numeral:"XI", colors:["#8B0000","#DAA520","#DC143C"], symbol:"\u2696\uFE0F" },
+    { id:12, name:"The Hanged Man", numeral:"XII", colors:["#4682B4","#98FB98","#5F9EA0"], symbol:"\uD83D\uDD2E" },
+    { id:13, name:"Death", numeral:"XIII", colors:["#1C1C2E","#C0C0C0","#2F2F4F"], symbol:"\uD83E\uDD8B" },
+    { id:14, name:"Temperance", numeral:"XIV", colors:["#FFD700","#87CEEB","#DDA0DD"], symbol:"\uD83C\uDFFA" },
+    { id:15, name:"The Devil", numeral:"XV", colors:["#1C1C1C","#8B0000","#FF4500"], symbol:"\uD83D\uDD17" },
+    { id:16, name:"The Tower", numeral:"XVI", colors:["#FF4500","#FFD700","#8B0000"], symbol:"\uD83D\uDDFC" },
+    { id:17, name:"The Star", numeral:"XVII", colors:["#87CEEB","#FFD700","#E6E6FA"], symbol:"\u2B50" },
+    { id:18, name:"The Moon", numeral:"XVIII", colors:["#191970","#C0C0C0","#483D8B"], symbol:"\uD83C\uDF11" },
+    { id:19, name:"The Sun", numeral:"XIX", colors:["#FFD700","#FF8C00","#FFA500"], symbol:"\u2600\uFE0F" },
+    { id:20, name:"Judgement", numeral:"XX", colors:["#4B0082","#FFD700","#9370DB"], symbol:"\uD83D\uDD14" },
+    { id:21, name:"The World", numeral:"XXI", colors:["#2E8B57","#FFD700","#4169E1"], symbol:"\uD83C\uDF0D" }
   ];
 
-  // Fix: first card has numName instead of numeral
-  TAROT[1].numeral = "I";
+  // ── i18n helpers ──
+  function t(key) { return window.i18n ? window.i18n.t(key) : key; }
+  function getTarotTr(id) {
+    if (window.i18n) return window.i18n.getTarotCard(id);
+    return { localName: TAROT[id].name, meaning: '', reversed: '', desc: '' };
+  }
 
   // ── State ──
   var NUM_VISIBLE = 10;
@@ -43,6 +47,8 @@
   var showMeanings = false;
   var shuffledDeck = [];
   var readingActive = false;
+  var selectedZodiac = localStorage.getItem('tarot_zodiac') || null;
+  var zodiacPanelOpen = false;
 
   var section = document.getElementById('tarotSection');
   var carouselEl = null;
@@ -59,7 +65,7 @@
     var a = arr.slice();
     for (var i = a.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
     }
     return a;
   }
@@ -68,29 +74,22 @@
   function buildPage() {
     RADIUS = getRadius();
     var html = '<div class="t22-page">' +
-      // Stars background
       '<div class="t22-bg-stars" id="t22BgStars"></div>' +
-      // Frame border (matching angel mode)
       '<div class="t22-frame"></div>' +
       '<div class="t22-frame-corner t22-fc-tl"><svg viewBox="0 0 40 40"><path d="M2,38 L2,10 Q2,2 10,2 L38,2" fill="none" stroke="rgba(196,162,101,0.45)" stroke-width="1.5"/><circle cx="6" cy="6" r="2" fill="rgba(196,162,101,0.35)"/></svg></div>' +
       '<div class="t22-frame-corner t22-fc-tr"><svg viewBox="0 0 40 40"><path d="M2,38 L2,10 Q2,2 10,2 L38,2" fill="none" stroke="rgba(196,162,101,0.45)" stroke-width="1.5"/><circle cx="6" cy="6" r="2" fill="rgba(196,162,101,0.35)"/></svg></div>' +
       '<div class="t22-frame-corner t22-fc-bl"><svg viewBox="0 0 40 40"><path d="M2,38 L2,10 Q2,2 10,2 L38,2" fill="none" stroke="rgba(196,162,101,0.45)" stroke-width="1.5"/><circle cx="6" cy="6" r="2" fill="rgba(196,162,101,0.35)"/></svg></div>' +
       '<div class="t22-frame-corner t22-fc-br"><svg viewBox="0 0 40 40"><path d="M2,38 L2,10 Q2,2 10,2 L38,2" fill="none" stroke="rgba(196,162,101,0.45)" stroke-width="1.5"/><circle cx="6" cy="6" r="2" fill="rgba(196,162,101,0.35)"/></svg></div>' +
-      // Mystic ring
       '<div class="t22-mystic-ring" id="t22MysticRing"></div>' +
-      // Title
       '<div class="t22-title-area">' +
-        '<h1 class="t22-title">СТАРШІ АРКАНИ</h1>' +
-        '<p class="t22-subtitle">22 карти шляху душі</p>' +
+        '<h1 class="t22-title" id="t22Title">' + t('tarotTitle') + '</h1>' +
+        '<p class="t22-subtitle" id="t22Subtitle">' + t('tarotSub') + '</p>' +
         '<div class="t22-title-decor"><span></span><svg viewBox="0 0 24 24" fill="none" stroke="rgba(196,162,101,0.6)" stroke-width="1.5"><path d="M12 2L14 8L20 8L15 12L17 18L12 14L7 18L9 12L4 8L10 8Z"/></svg><span></span></div>' +
       '</div>' +
-      // Drawn cards panel (scrollable overlay at top)
       '<div class="t22-drawn-panel" id="t22DrawnPanel"></div>' +
-      // 3D Carousel Scene
       '<div class="t22-scene">' +
         '<div class="t22-carousel" id="t22Carousel"></div>' +
       '</div>' +
-      // Revealed card
       '<div class="t22-revealed" id="t22Revealed">' +
         '<div class="t22-rev-border"></div>' +
         '<div class="t22-rev-num" id="t22RevNum"></div>' +
@@ -100,19 +99,22 @@
         '<div class="t22-rev-ukname" id="t22RevUkName"></div>' +
         '<div class="t22-rev-meaning" id="t22RevMeaning"></div>' +
       '</div>' +
-      // Glow ring
       '<div class="t22-glow" id="t22Glow"></div>' +
-      // Particles
       '<div class="t22-particles" id="t22Particles"></div>' +
-      // Instruction
       '<div class="t22-instruction" id="t22Instruction">' +
-        (drawnCards.length > 0 && !readingActive ? '' : 'Натисніть, щоб витягти карту') +
+        (drawnCards.length > 0 && !readingActive ? '' : t('tapDrawCard')) +
       '</div>' +
-      // Tap again
       '<div class="t22-tap-again" id="t22TapAgain"></div>' +
-      // Counter badge
       '<div class="t22-counter" id="t22Counter">' + drawnCards.length + ' / 8</div>' +
-      // Bottom meanings area (scrollable)
+      // Zodiac trigger button (shown after card reveal)
+      '<div class="zodiac-trigger" id="zodiacTrigger">' +
+        '<button onclick="window.tarot22.toggleZodiac()">' +
+          (selectedZodiac !== null ? window.i18n.getZodiacSigns()[selectedZodiac].symbol + ' ' + window.i18n.getZodiacSigns()[selectedZodiac].name : '\u2728 ' + t('zodiacTitle')) +
+        '</button>' +
+      '</div>' +
+      // Zodiac panel
+      '<div class="zodiac-panel" id="zodiacPanel"></div>' +
+      // Bottom meanings area
       '<div class="t22-bottom-area" id="t22BottomArea"></div>' +
     '</div>';
 
@@ -135,7 +137,7 @@
 
     // Create mystic ring symbols
     var ring = document.getElementById('t22MysticRing');
-    var symbols = ['✦','☆','✧','⚝','✦','☆','✧','⚝','✦','☆','✧','⚝'];
+    var symbols = ['\u2726','\u2606','\u2727','\u269D','\u2726','\u2606','\u2727','\u269D','\u2726','\u2606','\u2727','\u269D'];
     var ringSize = ring.offsetWidth || 380;
     var r = (ringSize / 2) - 15;
     symbols.forEach(function(sym, i) {
@@ -160,7 +162,7 @@
 
     page.addEventListener('click', function(e) {
       if (Date.now() - lastTouchTime < 500) return;
-      if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel')) return;
+      if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel') || e.target.closest('.zodiac-trigger') || e.target.closest('.zodiac-panel')) return;
       handleAction();
     }, false);
 
@@ -186,7 +188,7 @@
       lastTouchTime = Date.now();
       var dt = lastTouchTime - touchStartT;
       if (!isTouchDrag && dt < 400) {
-        if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel')) return;
+        if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel') || e.target.closest('.zodiac-trigger') || e.target.closest('.zodiac-panel')) return;
         e.preventDefault();
         handleAction();
       }
@@ -194,12 +196,10 @@
     }, { passive: false });
   }
 
-  // ── Build carousel cards (card backs with tarot numeral) ──
+  // ── Build carousel cards ──
   function buildCarousel() {
     if (!carouselEl) return;
     carouselEl.innerHTML = '';
-
-    // Use shuffled deck or just the tarot cards
     if (shuffledDeck.length === 0) shuffledDeck = shuffleArray(TAROT);
 
     for (var i = 0; i < NUM_VISIBLE; i++) {
@@ -208,14 +208,7 @@
       el.className = 't22-card';
       el.dataset.index = i;
       el.dataset.id = card.id;
-      el.dataset.name = card.name;
-      el.dataset.ukName = card.ukName;
-      el.dataset.meaning = card.meaning;
-      el.dataset.numeral = card.numeral;
-      el.dataset.symbol = card.symbol;
-      el.dataset.reversed = card.reversed;
 
-      // Card back with tarot design
       el.innerHTML =
         '<div class="t22-card-inner">' +
           '<div class="t22-ci-border"></div>' +
@@ -227,9 +220,7 @@
             '</svg>' +
           '</div>' +
           '<div class="t22-ci-num">' + card.numeral + '</div>' +
-          '<div class="t22-ci-corners">' +
-            '<i></i><i></i><i></i><i></i>' +
-          '</div>' +
+          '<div class="t22-ci-corners"><i></i><i></i><i></i><i></i></div>' +
         '</div>';
 
       carouselEl.appendChild(el);
@@ -305,7 +296,7 @@
     revealed = true;
 
     var cardId = parseInt(front.dataset.id);
-    var card = TAROT.find(function(c) { return c.id === cardId; });
+    var card = TAROT[cardId];
     if (!card) return;
 
     // Add to drawn cards (avoid duplicates)
@@ -313,9 +304,10 @@
       drawnCards.push(card);
     }
 
+    var tr = getTarotTr(card.id);
+
     // Update revealed card display
     document.getElementById('t22RevNum').textContent = card.numeral;
-    // Use SVG art if available, fallback to symbol
     var artEl = document.getElementById('t22RevArt');
     if (typeof TAROT_SVGS !== 'undefined' && TAROT_SVGS[card.id]) {
       artEl.innerHTML = TAROT_SVGS[card.id];
@@ -323,8 +315,8 @@
       artEl.innerHTML = '<div style="font-size:60px;filter:drop-shadow(0 0 15px rgba(196,162,101,.3))">' + card.symbol + '</div>';
     }
     document.getElementById('t22RevName').textContent = card.name;
-    document.getElementById('t22RevUkName').textContent = card.ukName;
-    document.getElementById('t22RevMeaning').textContent = card.meaning;
+    document.getElementById('t22RevUkName').textContent = tr.localName;
+    document.getElementById('t22RevMeaning').textContent = tr.meaning;
 
     var revEl = document.getElementById('t22Revealed');
     revEl.style.borderColor = card.colors[0];
@@ -338,23 +330,23 @@
     counter.textContent = drawnCards.length + ' / 8';
     counter.classList.add('show');
 
-    // Update drawn cards panel
     updateDrawnPanel();
-
-    // Particles
     spawnParticles(card.colors[0]);
 
+    // Show zodiac trigger
+    var zodiacTrigger = document.getElementById('zodiacTrigger');
+    if (zodiacTrigger) zodiacTrigger.classList.add('show');
+
     // Show tap again
-    var tapAgain = document.getElementById('t22TapAgain');
+    var tapAgainEl = document.getElementById('t22TapAgain');
     if (drawnCards.length >= 8) {
-      tapAgain.textContent = 'Натисніть, щоб розкрити значення';
+      tapAgainEl.textContent = t('tapReveal');
     } else {
-      tapAgain.textContent = 'Натисніть, щоб витягти наступну (' + drawnCards.length + '/8)';
+      tapAgainEl.textContent = t('tapDrawN') + ' (' + drawnCards.length + '/8)';
     }
-    tapAgain.classList.add('show');
+    tapAgainEl.classList.add('show');
 
     document.getElementById('t22Instruction').classList.add('hidden');
-
     startLoop();
   }
 
@@ -364,10 +356,11 @@
     panel.classList.add('show');
     var html = '';
     drawnCards.forEach(function(card, i) {
+      var tr = getTarotTr(card.id);
       html += '<div class="t22-mini-card" style="animation-delay:' + (i * 0.1) + 's;border-color:' + card.colors[0] + '88;background:linear-gradient(180deg,' + card.colors[0] + '15,' + card.colors[2] + '10)">' +
         '<div class="t22-mini-num">' + (i + 1) + '</div>' +
         '<div class="t22-mini-symbol">' + card.symbol + '</div>' +
-        '<div class="t22-mini-name">' + card.ukName + '</div>' +
+        '<div class="t22-mini-name">' + tr.localName + '</div>' +
       '</div>';
     });
     panel.innerHTML = html;
@@ -387,8 +380,8 @@
       var dist = 60 + Math.random() * 140;
       var tx = Math.cos(a) * dist;
       var ty = Math.sin(a) * dist;
-      var size = 2 + Math.random() * 3;
-      p.style.width = p.style.height = size + 'px';
+      var sz = 2 + Math.random() * 3;
+      p.style.width = p.style.height = sz + 'px';
       p.style.left = cx + 'px';
       p.style.top = cy + 'px';
       p.style.background = Math.random() > 0.5 ? color : '#e8d5a3';
@@ -403,14 +396,18 @@
   // ── Reset for next draw ──
   function resetForNextDraw() {
     revealed = false;
+    zodiacPanelOpen = false;
     document.getElementById('t22Revealed').classList.remove('show');
     document.getElementById('t22Glow').classList.remove('show');
     document.getElementById('t22TapAgain').classList.remove('show');
     document.getElementById('t22Instruction').classList.remove('hidden');
-    document.getElementById('t22Instruction').textContent = 'Натисніть, щоб витягти карту (' + drawnCards.length + '/8)';
+    document.getElementById('t22Instruction').textContent = t('tapDraw') + ' (' + drawnCards.length + '/8)';
     document.getElementById('t22Particles').innerHTML = '';
+    var zodiacTrigger = document.getElementById('zodiacTrigger');
+    if (zodiacTrigger) zodiacTrigger.classList.remove('show');
+    var zodiacPanel = document.getElementById('zodiacPanel');
+    if (zodiacPanel) { zodiacPanel.classList.remove('show'); zodiacPanel.innerHTML = ''; }
 
-    // Reshuffle, excluding already drawn cards
     var remaining = TAROT.filter(function(c) {
       return !drawnCards.some(function(d) { return d.id === c.id; });
     });
@@ -428,24 +425,25 @@
     showMeanings = true;
 
     var html = '<div class="t22-meanings-wrap">' +
-      '<h3 class="t22-meanings-title">✦ Значення вашого розкладу ✦</h3>';
+      '<h3 class="t22-meanings-title">' + t('meanTitle') + '</h3>';
     drawnCards.forEach(function(card, i) {
+      var tr = getTarotTr(card.id);
       html += '<div class="t22-meaning-card" style="--mc:' + card.colors[0] + '">' +
         '<div class="t22-mc-header">' +
           '<span class="t22-mc-badge">' + (i + 1) + '</span>' +
           '<span class="t22-mc-symbol">' + card.symbol + '</span>' +
           '<div class="t22-mc-names">' +
-            '<div class="t22-mc-name">' + card.numeral + ' — ' + card.name + '</div>' +
-            '<div class="t22-mc-ukname">' + card.ukName + '</div>' +
+            '<div class="t22-mc-name">' + card.numeral + ' \u2014 ' + card.name + '</div>' +
+            '<div class="t22-mc-ukname">' + tr.localName + '</div>' +
           '</div>' +
         '</div>' +
         '<div class="t22-mc-body">' +
-          '<p class="t22-mc-meaning">' + card.meaning + '</p>' +
-          '<p class="t22-mc-reversed">Перевернута: ' + card.reversed + '</p>' +
+          '<p class="t22-mc-meaning">' + tr.meaning + '</p>' +
+          '<p class="t22-mc-reversed">' + t('reversed') + ': ' + tr.reversed + '</p>' +
         '</div>' +
       '</div>';
     });
-    html += '<button class="t22-btn-new-reading" onclick="window.tarot22.newReading()">✦ Новий розклад</button>';
+    html += '<button class="t22-btn-new-reading" onclick="window.tarot22.newReading()">' + t('newReading') + '</button>';
     html += '</div>';
 
     bottom.innerHTML = html;
@@ -453,32 +451,87 @@
     bottom.scrollIntoView({ behavior: 'smooth' });
   }
 
+  // ── Zodiac panel ──
+  function toggleZodiac() {
+    var panel = document.getElementById('zodiacPanel');
+    if (zodiacPanelOpen) {
+      panel.classList.remove('show');
+      panel.innerHTML = '';
+      zodiacPanelOpen = false;
+      return;
+    }
+    zodiacPanelOpen = true;
+
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var html = '<div class="zodiac-panel-title">' + t('zodiacTitle') + '</div>' +
+      '<div class="zodiac-grid">';
+    signs.forEach(function(sign) {
+      var sel = selectedZodiac === sign.index ? ' selected' : '';
+      html += '<div class="zodiac-item' + sel + '" onclick="window.tarot22.selectZodiac(' + sign.index + ')">' +
+        '<span class="zi-symbol">' + sign.symbol + '</span>' +
+        '<span class="zi-name">' + sign.name + '</span>' +
+      '</div>';
+    });
+    html += '</div>';
+    panel.innerHTML = html;
+    panel.classList.add('show');
+  }
+
+  function selectZodiac(index) {
+    selectedZodiac = index;
+    localStorage.setItem('tarot_zodiac', index);
+    // Update trigger button text
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var sign = signs[index];
+    var trigger = document.getElementById('zodiacTrigger');
+    if (trigger && sign) {
+      trigger.querySelector('button').textContent = sign.symbol + ' ' + sign.name;
+    }
+    // Highlight selected
+    var items = document.querySelectorAll('.zodiac-item');
+    items.forEach(function(item, i) {
+      item.classList.toggle('selected', i === index);
+    });
+    // Close panel after selection
+    setTimeout(function() {
+      var panel = document.getElementById('zodiacPanel');
+      if (panel) { panel.classList.remove('show'); zodiacPanelOpen = false; }
+    }, 300);
+  }
+
   // ── New reading ──
   function newReading() {
     drawnCards = [];
     showMeanings = false;
     readingActive = false;
+    zodiacPanelOpen = false;
     document.getElementById('t22BottomArea').innerHTML = '';
     document.getElementById('t22BottomArea').classList.remove('show');
     document.getElementById('t22Counter').textContent = '0 / 8';
     document.getElementById('t22Counter').classList.remove('show');
+    var zodiacTrigger = document.getElementById('zodiacTrigger');
+    if (zodiacTrigger) zodiacTrigger.classList.remove('show');
+    var zodiacPanel = document.getElementById('zodiacPanel');
+    if (zodiacPanel) { zodiacPanel.classList.remove('show'); zodiacPanel.innerHTML = ''; }
     updateDrawnPanel();
     resetForNextDraw();
-    document.getElementById('t22Instruction').textContent = 'Натисніть, щоб витягти карту';
+    document.getElementById('t22Instruction').textContent = t('tapDrawCard');
   }
 
   // ── Core action handler ──
   function handleAction() {
-    if (showMeanings) return; // meanings displayed, use buttons
+    if (showMeanings) return;
+    if (zodiacPanelOpen) return;
 
     if (revealed) {
       if (drawnCards.length >= 8) {
-        // All 8 drawn, show meanings
         revealed = false;
         document.getElementById('t22Revealed').classList.remove('show');
         document.getElementById('t22Glow').classList.remove('show');
         document.getElementById('t22TapAgain').classList.remove('show');
         document.getElementById('t22Particles').innerHTML = '';
+        var zodiacTrigger = document.getElementById('zodiacTrigger');
+        if (zodiacTrigger) zodiacTrigger.classList.remove('show');
         showMeaningsPanel();
         return;
       }
@@ -493,7 +546,6 @@
       return;
     }
 
-    // Start spin
     readingActive = true;
     spinning = true;
     spinStartTime = Date.now();
@@ -502,11 +554,16 @@
     startLoop();
   }
 
+  // ── Language change handler ──
+  function applyLanguageT22() {
+    if (!section.classList.contains('active')) return;
+    // Re-render the full page with new translations
+    buildPage();
+  }
+
   // ── Public API ──
   window.tarot22 = {
-    render: function() {
-      buildPage();
-    },
+    render: function() { buildPage(); },
     cleanup: function() {
       if (animId) cancelAnimationFrame(animId);
       animId = null;
@@ -516,10 +573,14 @@
       showMeanings = false;
       readingActive = false;
       shuffledDeck = [];
+      zodiacPanelOpen = false;
       angle = 0;
       speed = 0;
     },
-    newReading: newReading
+    newReading: newReading,
+    toggleZodiac: toggleZodiac,
+    selectZodiac: selectZodiac,
+    applyLanguage: applyLanguageT22
   };
 
   // Resize

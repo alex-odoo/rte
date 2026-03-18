@@ -213,7 +213,7 @@
   }
   .t22-rev-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:4px auto}
   .t22-rev-name{
-    text-align:center;color:var(--gold);font-size:clamp(.85rem,4vw,1.15rem);
+    text-align:center;color:var(--gold);font-size:clamp(1rem,4.5vw,1.4rem);
     font-weight:700;letter-spacing:2px;padding:0 10px;font-family:'Cormorant Garamond',serif;
     text-shadow:0 0 10px rgba(196,162,101,.35);
   }
@@ -397,7 +397,7 @@
   .card-face .cf-icon{width:clamp(70px,22vw,110px);height:clamp(75px,18vh,120px);margin:4px 0;display:flex;align-items:center;justify-content:center;z-index:1}
   .card-face .cf-icon svg{width:clamp(50px,15vw,75px);height:clamp(50px,15vw,75px)}
   .card-face .cf-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:2px 0;z-index:1}
-  .card-face .cf-name{font-size:clamp(.6rem,3vw,.8rem);font-weight:600;color:var(--gold);text-align:center;letter-spacing:1px;padding:0 8px;text-shadow:0 0 6px rgba(196,162,101,.25);z-index:1}
+  .card-face .cf-name{font-size:clamp(1rem,4.5vw,1.4rem);font-weight:600;color:var(--gold);text-align:center;letter-spacing:1px;padding:0 8px;text-shadow:0 0 6px rgba(196,162,101,.25);z-index:1}
   .card-face .cf-meaning{font-family:'Marck Script',cursive;font-size:clamp(.45rem,2vw,.55rem);color:rgba(220,200,170,.45);text-align:center;padding:0 10px;margin-top:2px;line-height:1.35;z-index:1}
   /* Angel glow on card */
   .card-face::after{
@@ -511,6 +511,48 @@
     .title-decor{display:none}
     .scene{height:clamp(180px,70vh,280px);width:clamp(120px,30vw,180px)}
   }
+  /* ── Zodiac Panel ── */
+  .zodiac-trigger{
+    display:none;position:absolute;bottom:12%;width:100%;text-align:center;z-index:26;
+  }
+  .zodiac-trigger.show{display:block}
+  .zodiac-trigger button{
+    padding:10px 22px;border-radius:12px;
+    background:linear-gradient(135deg,rgba(218,165,32,0.12),rgba(106,61,154,0.12));
+    border:1.5px solid rgba(218,165,32,0.35);color:#DAA520;
+    font-size:clamp(.65rem,2.5vw,.85rem);font-weight:600;cursor:pointer;
+    font-family:'Cinzel','Cormorant Garamond',serif;letter-spacing:1px;
+    transition:all .3s ease;backdrop-filter:blur(10px);
+  }
+  .zodiac-panel{
+    display:none;position:absolute;bottom:0;left:0;right:0;
+    z-index:35;padding:20px 16px 30px;
+    background:linear-gradient(180deg,rgba(13,11,26,0.96),rgba(13,11,26,0.99));
+    border-top:1px solid rgba(218,165,32,0.25);
+    animation:fadeInCard .4s ease;
+  }
+  .zodiac-panel.show{display:block}
+  .zodiac-panel-title{
+    text-align:center;font-family:'Cinzel','Cormorant Garamond',serif;
+    font-size:clamp(.75rem,3vw,1rem);color:#DAA520;
+    letter-spacing:2px;margin-bottom:14px;
+    text-shadow:0 0 12px rgba(218,165,32,0.3);
+  }
+  .zodiac-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:8px;max-width:400px;margin:0 auto;
+  }
+  .zodiac-item{
+    padding:10px 4px;border-radius:10px;text-align:center;cursor:pointer;
+    background:rgba(218,165,32,0.04);border:1px solid rgba(218,165,32,0.12);
+    transition:all .3s ease;
+  }
+  .zodiac-item:hover,.zodiac-item.selected{
+    background:rgba(218,165,32,0.12);border-color:rgba(218,165,32,0.4);
+    box-shadow:0 0 15px rgba(218,165,32,0.15);
+  }
+  .zodiac-item .zi-symbol{font-size:clamp(18px,5vw,26px);display:block;margin-bottom:2px}
+  .zodiac-item .zi-name{font-size:clamp(8px,2vw,11px);color:#DAA520;font-family:'Cormorant Garamond',serif;opacity:.8}
 </style>
 </head>
 <body>
@@ -570,6 +612,7 @@
 <!-- Tarot 22 Section (hidden by default) -->
 <div id="tarotSection"></div>
 
+<script src="i18n.js"></script>
 <script src="cards.js"></script>
 <script src="app.js"></script>
 <script src="tarot22-art.js"></script>
