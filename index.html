@@ -248,14 +248,14 @@
     text-shadow:0 0 10px rgba(196,162,101,.35);
   }
   .t22-rev-ukname{
-    text-align:center;color:rgba(196,162,101,.6);
-    font-size:clamp(.6rem,3vw,.8rem);font-family:'Marck Script',cursive;
+    text-align:center;color:rgba(196,162,101,.8);
+    font-size:clamp(.82rem,3.5vw,1rem);font-family:'Marck Script',cursive;
     letter-spacing:1px;margin-top:4px;
   }
   .t22-rev-meaning{
-    text-align:center;color:rgba(220,200,170,.65);font-family:'Marck Script',cursive;
-    font-size:clamp(.55rem,2.5vw,.75rem);letter-spacing:1px;margin-top:8px;
-    padding:0 clamp(12px,4vw,20px);line-height:1.45;
+    text-align:center;color:rgba(220,200,170,.85);font-family:'Marck Script',cursive;
+    font-size:clamp(.82rem,3.5vw,1rem);letter-spacing:1px;margin-top:8px;
+    padding:0 clamp(12px,4vw,20px);line-height:1.5;
   }
   /* SVG art inside revealed card */
   .t22-rev-art{
@@ -280,14 +280,14 @@
   /* Instructions */
   .t22-instruction{
     position:absolute;bottom:5%;width:100%;text-align:center;z-index:5;
-    color:rgba(196,162,101,.75);font-size:clamp(.7rem,3vw,.9rem);
+    color:rgba(196,162,101,.85);font-size:clamp(.88rem,3.5vw,1.05rem);
     font-family:'Cormorant Garamond',serif;
     letter-spacing:clamp(2px,.8vw,4px);text-transform:uppercase;animation:pulse 2s infinite;
   }
   .t22-instruction.hidden{display:none}
   .t22-tap-again{
     position:absolute;bottom:5%;width:100%;text-align:center;z-index:25;
-    color:rgba(196,162,101,.75);font-size:clamp(.6rem,2.5vw,.8rem);
+    color:rgba(196,162,101,.85);font-size:clamp(.88rem,3.5vw,1.05rem);
     font-family:'Cormorant Garamond',serif;
     letter-spacing:clamp(2px,.6vw,3px);text-transform:uppercase;
     opacity:0;transition:opacity .5s ease 1.5s;
@@ -515,8 +515,8 @@
   .card-face .cf-icon{width:clamp(70px,22vw,110px);height:clamp(75px,18vh,120px);margin:4px 0;display:flex;align-items:center;justify-content:center;z-index:1}
   .card-face .cf-icon svg{width:clamp(50px,15vw,75px);height:clamp(50px,15vw,75px)}
   .card-face .cf-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:2px 0;z-index:1}
-  .card-face .cf-name{font-size:clamp(1rem,4.5vw,1.4rem);font-weight:600;color:var(--gold);text-align:center;letter-spacing:1px;padding:0 8px;text-shadow:0 0 6px rgba(196,162,101,.25);z-index:1}
-  .card-face .cf-meaning{font-family:'Marck Script',cursive;font-size:clamp(.45rem,2vw,.55rem);color:rgba(220,200,170,.45);text-align:center;padding:0 10px;margin-top:2px;line-height:1.35;z-index:1}
+  .card-face .cf-name{font-size:clamp(1.1rem,5vw,1.6rem);font-weight:600;color:var(--gold);text-align:center;letter-spacing:1px;padding:0 8px;text-shadow:0 0 6px rgba(196,162,101,.25);z-index:1}
+  .card-face .cf-meaning{font-family:'Marck Script',cursive;font-size:clamp(.82rem,3.5vw,1rem);color:rgba(220,200,170,.8);text-align:center;padding:0 10px;margin-top:3px;line-height:1.4;z-index:1}
   /* Angel glow on card */
   .card-face::after{
     content:'';position:absolute;top:-30%;left:-30%;width:160%;height:160%;
@@ -545,27 +545,27 @@
   }
   .card-icon-svg{width:clamp(65px,20vw,100px);height:clamp(65px,20vw,100px)}
   .revealed-card .card-name{
-    text-align:center;color:var(--gold);font-size:clamp(.85rem,4vw,1.15rem);
+    text-align:center;color:var(--gold);font-size:clamp(1rem,4.5vw,1.35rem);
     font-weight:700;letter-spacing:2px;padding:0 10px;
     text-shadow:0 0 10px rgba(196,162,101,.35);
   }
   .revealed-card .card-meaning{
-    text-align:center;color:rgba(220,200,170,.65);font-family:'Marck Script',cursive;
-    font-size:clamp(.65rem,3vw,.85rem);letter-spacing:1px;margin-top:6px;
-    padding:0 clamp(12px,4vw,20px);line-height:1.45;
+    text-align:center;color:rgba(220,200,170,.85);font-family:'Marck Script',cursive;
+    font-size:clamp(.85rem,3.8vw,1.05rem);letter-spacing:1px;margin-top:6px;
+    padding:0 clamp(12px,4vw,20px);line-height:1.5;
   }
   .revealed-card .divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:8px auto}
   /* Instruction */
   .instruction{
     position:absolute;bottom:5%;width:100%;text-align:center;z-index:5;
-    color:rgba(196,162,101,.75);font-size:clamp(.7rem,3vw,.9rem);
+    color:rgba(196,162,101,.85);font-size:clamp(.88rem,3.5vw,1.05rem);
     letter-spacing:clamp(2px,.8vw,4px);text-transform:uppercase;animation:pulse 2s infinite;
   }
   .instruction.hidden{display:none}
   @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
   .tap-again{
     position:absolute;bottom:5%;width:100%;text-align:center;z-index:25;
-    color:rgba(196,162,101,.75);font-size:clamp(.6rem,2.5vw,.8rem);
+    color:rgba(196,162,101,.85);font-size:clamp(.88rem,3.5vw,1.05rem);
     letter-spacing:clamp(2px,.6vw,3px);text-transform:uppercase;
     opacity:0;transition:opacity .5s ease 1.5s;
   }
