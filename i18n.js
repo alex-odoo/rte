@@ -1986,13 +1986,12 @@
       var ss = document.createElement('style');
       ss.id = 'langPickerStyle';
       ss.textContent = [
-        '#langList::-webkit-scrollbar{width:3px}',
-        '#langList::-webkit-scrollbar-track{background:transparent}',
-        '#langList::-webkit-scrollbar-thumb{background:rgba(218,165,32,0.25);border-radius:2px}',
-        '#langList::-webkit-scrollbar-thumb:hover{background:rgba(218,165,32,0.5)}',
-        '#langSearchInput::placeholder{color:rgba(218,165,32,0.35)}',
-        '#langSearchInput:focus{outline:none}',
-        '#langBtn:hover{background:rgba(218,165,32,0.14)!important;border-color:rgba(218,165,32,0.55)!important}',
+        '#langList::-webkit-scrollbar{width:4px}',
+        '#langList::-webkit-scrollbar-track{background:rgba(0,0,0,0.3)}',
+        '#langList::-webkit-scrollbar-thumb{background:rgba(218,165,32,0.4);border-radius:2px}',
+        '#langList::-webkit-scrollbar-thumb:hover{background:rgba(218,165,32,0.7)}',
+        '#langSearchInput::placeholder{color:rgba(218,165,32,0.4);font-style:italic}',
+        '#langBtn:hover{background:rgba(218,165,32,0.14)!important;border-color:rgba(218,165,32,0.6)!important}',
       ].join('');
       document.head.appendChild(ss);
     }
@@ -2020,13 +2019,12 @@
       'position:absolute',
       'top:calc(100% + 8px)',
       'right:0',
-      'width:214px',
+      'width:220px',
       'background:rgba(9,7,20,0.97)',
-      'border:1.5px solid rgba(218,165,32,0.32)',
+      'border:1.5px solid rgba(218,165,32,0.4)',
       'border-radius:14px',
-      'overflow:hidden',
       'backdrop-filter:blur(24px)',
-      'box-shadow:0 16px 48px rgba(0,0,0,0.75),0 0 0 1px rgba(218,165,32,0.07)',
+      'box-shadow:0 16px 48px rgba(0,0,0,0.8)',
       'opacity:0',
       'transform:scale(.94) translateY(-6px)',
       'transform-origin:top right',
@@ -2035,14 +2033,14 @@
 
     // ── Search row
     var searchRow = document.createElement('div');
-    searchRow.style.cssText = 'padding:10px 10px 8px;border-bottom:1px solid rgba(218,165,32,0.12);';
+    searchRow.style.cssText = 'padding:10px;border-bottom:1px solid rgba(218,165,32,0.2);border-radius:14px 14px 0 0;background:rgba(218,165,32,0.04);';
 
     var searchBox = document.createElement('div');
-    searchBox.style.cssText = 'display:flex;align-items:center;background:rgba(218,165,32,0.06);border:1px solid rgba(218,165,32,0.18);border-radius:8px;padding:5px 9px;gap:6px;transition:border-color .15s;';
+    searchBox.style.cssText = 'display:flex;align-items:center;background:rgba(218,165,32,0.1);border:1.5px solid rgba(218,165,32,0.4);border-radius:8px;padding:6px 10px;gap:7px;';
 
     var searchIcon = document.createElement('span');
-    searchIcon.innerHTML = '&#128269;';
-    searchIcon.style.cssText = 'font-size:12px;opacity:.45;flex-shrink:0;line-height:1;';
+    searchIcon.textContent = '🔍';
+    searchIcon.style.cssText = 'font-size:13px;flex-shrink:0;line-height:1;';
 
     var searchInput = document.createElement('input');
     searchInput.id = 'langSearchInput';
@@ -2050,7 +2048,7 @@
     searchInput.placeholder = 'Search…';
     searchInput.autocomplete = 'off';
     searchInput.spellcheck = false;
-    searchInput.style.cssText = 'background:none;border:none;color:#DAA520;font-size:12px;font-family:inherit;letter-spacing:.3px;width:100%;';
+    searchInput.style.cssText = 'background:none;border:none;outline:none;color:#DAA520;font-size:13px;font-family:inherit;letter-spacing:.3px;width:100%;min-width:0;';
 
     var clearX = document.createElement('button');
     clearX.textContent = '×';
@@ -2064,7 +2062,7 @@
     // ── List
     var list = document.createElement('div');
     list.id = 'langList';
-    list.style.cssText = 'max-height:282px;overflow-y:auto;padding:4px 0;';
+    list.style.cssText = 'max-height:260px;overflow-y:scroll;-webkit-overflow-scrolling:touch;padding:4px 0;border-radius:0 0 13px 13px;';
 
     // Empty state
     var emptyMsg = document.createElement('div');
