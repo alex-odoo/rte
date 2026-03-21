@@ -105,7 +105,7 @@
         (drawnCards.length > 0 && !readingActive ? '' : t('tapDrawCard')) +
       '</div>' +
       '<div class="t22-tap-again" id="t22TapAgain"></div>' +
-      '<div class="t22-counter" id="t22Counter">' + drawnCards.length + ' / 8</div>' +
+      '<div class="t22-counter" id="t22Counter">' + drawnCards.length + ' / 1</div>' +
       // Zodiac trigger button (shown after card reveal)
       '<div class="zodiac-trigger" id="zodiacTrigger">' +
         '<button onclick="window.tarot22.toggleZodiac()">' +
@@ -327,7 +327,7 @@
 
     // Update counter
     var counter = document.getElementById('t22Counter');
-    counter.textContent = drawnCards.length + ' / 8';
+    counter.textContent = drawnCards.length + ' / 1';
     counter.classList.add('show');
 
     updateDrawnPanel();
@@ -339,10 +339,10 @@
 
     // Show tap again
     var tapAgainEl = document.getElementById('t22TapAgain');
-    if (drawnCards.length >= 8) {
+    if (drawnCards.length >= 1) {
       tapAgainEl.textContent = t('tapReveal');
     } else {
-      tapAgainEl.textContent = t('tapDrawN') + ' (' + drawnCards.length + '/8)';
+      tapAgainEl.textContent = t('tapDrawN') + ' (' + drawnCards.length + '/1)';
     }
     tapAgainEl.classList.add('show');
 
@@ -401,7 +401,7 @@
     document.getElementById('t22Glow').classList.remove('show');
     document.getElementById('t22TapAgain').classList.remove('show');
     document.getElementById('t22Instruction').classList.remove('hidden');
-    document.getElementById('t22Instruction').textContent = t('tapDraw') + ' (' + drawnCards.length + '/8)';
+    document.getElementById('t22Instruction').textContent = t('tapDraw') + ' (' + drawnCards.length + '/1)';
     document.getElementById('t22Particles').innerHTML = '';
     var zodiacTrigger = document.getElementById('zodiacTrigger');
     if (zodiacTrigger) zodiacTrigger.classList.remove('show');
@@ -507,7 +507,7 @@
     zodiacPanelOpen = false;
     document.getElementById('t22BottomArea').innerHTML = '';
     document.getElementById('t22BottomArea').classList.remove('show');
-    document.getElementById('t22Counter').textContent = '0 / 8';
+    document.getElementById('t22Counter').textContent = '0 / 1';
     document.getElementById('t22Counter').classList.remove('show');
     var zodiacTrigger = document.getElementById('zodiacTrigger');
     if (zodiacTrigger) zodiacTrigger.classList.remove('show');
@@ -524,7 +524,7 @@
     if (zodiacPanelOpen) return;
 
     if (revealed) {
-      if (drawnCards.length >= 8) {
+      if (drawnCards.length >= 1) {
         revealed = false;
         document.getElementById('t22Revealed').classList.remove('show');
         document.getElementById('t22Glow').classList.remove('show');
