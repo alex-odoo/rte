@@ -29,6 +29,23 @@
 
   // ── i18n helpers ──
   function t(key) { return window.i18n ? window.i18n.t(key) : key; }
+
+  // ── Pick the most readable (brightest) color from card palette ──
+  function readableColor(colors) {
+    var best = '#C4A265'; // gold fallback
+    var bestLum = -1;
+    for (var i = 0; i < colors.length; i++) {
+      var hex = colors[i].replace('#', '');
+      var r = parseInt(hex.slice(0,2), 16) / 255;
+      var g = parseInt(hex.slice(2,4), 16) / 255;
+      var b = parseInt(hex.slice(4,6), 16) / 255;
+      var lum = 0.299 * r + 0.587 * g + 0.114 * b;
+      if (lum > bestLum) { bestLum = lum; best = colors[i]; }
+    }
+    // If brightest is still too dark, return gold
+    return bestLum < 0.22 ? '#C4A265' : best;
+  }
+
   function getTarotTr(id) {
     if (window.i18n) return window.i18n.getTarotCard(id);
     return { localName: TAROT[id].name, meaning: '', reversed: '', desc: '' };
@@ -428,7 +445,7 @@
       '<h3 class="t22-meanings-title">' + t('meanTitle') + '</h3>';
     drawnCards.forEach(function(card, i) {
       var tr = getTarotTr(card.id);
-      html += '<div class="t22-meaning-card" style="--mc:' + card.colors[0] + '">' +
+      html += '<div class="t22-meaning-card" style="--mc:' + card.colors[0] + ';--mc-text:' + readableColor(card.colors) + '">' +
         '<div class="t22-mc-header">' +
           '<span class="t22-mc-badge">' + (i + 1) + '</span>' +
           '<span class="t22-mc-symbol">' + card.symbol + '</span>' +
