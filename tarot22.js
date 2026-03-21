@@ -439,7 +439,9 @@
         '</div>' +
         '<div class="t22-mc-body">' +
           '<p class="t22-mc-meaning">' + tr.meaning + '</p>' +
-          '<p class="t22-mc-reversed">' + t('reversed') + ': ' + tr.reversed + '</p>' +
+          '<div class="t22-mc-divider"></div>' +
+          '<div class="t22-mc-reversed-label">' + t('reversed') + '</div>' +
+          '<p class="t22-mc-reversed">' + tr.reversed + '</p>' +
         '</div>' +
       '</div>';
     });

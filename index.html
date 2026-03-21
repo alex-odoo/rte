@@ -296,44 +296,132 @@
   .t22-bottom-area{
     position:absolute;bottom:0;left:0;right:0;max-height:0;
     z-index:30;overflow-y:auto;
-    background:linear-gradient(180deg,rgba(13,11,26,.95),rgba(13,11,26,.98));
-    border-top:1px solid rgba(196,162,101,.2);
+    background:linear-gradient(180deg,rgba(10,8,22,.97) 0%,rgba(13,11,26,.99) 100%);
+    border-top:1px solid rgba(196,162,101,.25);
     transition:max-height .5s ease;
+    -webkit-overflow-scrolling:touch;
   }
-  .t22-bottom-area.show{max-height:80vh}
-  .t22-meanings-wrap{padding:20px 16px 40px;max-width:500px;margin:0 auto}
+  .t22-bottom-area.show{max-height:85vh}
+
+  /* ── Meanings wrap ── */
+  .t22-meanings-wrap{
+    padding:28px 20px 52px;
+    max-width:520px;
+    margin:0 auto;
+  }
+
+  /* ── Title ── */
   .t22-meanings-title{
-    text-align:center;font-family:'Cormorant Garamond',serif;
-    font-size:clamp(.9rem,3.5vw,1.2rem);color:var(--gold);
-    letter-spacing:2px;margin-bottom:16px;
-    text-shadow:0 0 15px rgba(196,162,101,.3);
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.15rem,4.5vw,1.5rem);
+    color:var(--gold);
+    letter-spacing:3px;
+    margin-bottom:24px;
+    text-shadow:0 0 20px rgba(196,162,101,.45);
   }
+
+  /* ── Card block ── */
   .t22-meaning-card{
-    padding:12px;border-radius:10px;margin-bottom:10px;
+    padding:20px 18px;
+    border-radius:14px;
+    margin-bottom:14px;
     border-left:3px solid var(--mc,var(--gold));
-    background:linear-gradient(90deg,rgba(196,162,101,.04),transparent);
+    background:linear-gradient(135deg,rgba(255,255,255,.055) 0%,rgba(196,162,101,.04) 100%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
   }
-  .t22-mc-header{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+
+  /* ── Header row: badge + symbol + names ── */
+  .t22-mc-header{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:14px;
+  }
   .t22-mc-badge{
-    width:22px;height:22px;border-radius:50%;
-    background:var(--gold);color:#0d0b1a;
+    width:30px;height:30px;
+    border-radius:50%;
+    background:var(--mc,var(--gold));
+    color:#0d0b1a;
     display:flex;align-items:center;justify-content:center;
-    font-size:10px;font-weight:700;font-family:'Cormorant Garamond',serif;flex-shrink:0;
+    font-size:13px;font-weight:700;
+    font-family:'Cormorant Garamond',serif;
+    flex-shrink:0;
+    box-shadow:0 0 10px rgba(196,162,101,.3);
   }
-  .t22-mc-symbol{font-size:18px}
-  .t22-mc-names{flex:1}
-  .t22-mc-name{font-family:'Cormorant Garamond',serif;font-size:clamp(.7rem,3vw,.9rem);font-weight:600;color:var(--mc,var(--gold))}
-  .t22-mc-ukname{font-family:'Marck Script',cursive;font-size:clamp(.55rem,2.5vw,.7rem);color:rgba(220,200,170,.5);margin-top:1px}
-  .t22-mc-body{padding-left:30px}
-  .t22-mc-meaning{font-size:clamp(.6rem,2.5vw,.8rem);color:rgba(220,200,170,.7);line-height:1.4;margin-bottom:4px}
-  .t22-mc-reversed{font-size:clamp(.55rem,2vw,.7rem);color:rgba(139,115,85,.7);font-style:italic}
+  .t22-mc-symbol{
+    font-size:28px;
+    line-height:1;
+    flex-shrink:0;
+  }
+  .t22-mc-names{flex:1;min-width:0}
+  .t22-mc-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1rem,4vw,1.2rem);
+    font-weight:700;
+    color:var(--mc,var(--gold));
+    line-height:1.2;
+    text-shadow:0 0 8px rgba(196,162,101,.2);
+  }
+  .t22-mc-ukname{
+    font-family:'Marck Script',cursive;
+    font-size:clamp(.85rem,3.5vw,1rem);
+    color:rgba(230,210,180,.85);
+    margin-top:3px;
+  }
+
+  /* ── Body: meaning + reversed ── */
+  .t22-mc-body{padding:0}
+  .t22-mc-meaning{
+    font-size:clamp(.95rem,3.8vw,1.1rem);
+    color:rgba(238,224,205,.95);
+    line-height:1.65;
+    margin:0 0 10px 0;
+    font-weight:400;
+  }
+  .t22-mc-divider{
+    height:1px;
+    background:linear-gradient(90deg,transparent,rgba(196,162,101,.25),transparent);
+    margin:0 0 10px 0;
+  }
+  .t22-mc-reversed-label{
+    font-size:clamp(.75rem,3vw,.85rem);
+    color:rgba(196,162,101,.7);
+    font-family:'Cormorant Garamond',serif;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .t22-mc-reversed{
+    font-size:clamp(.88rem,3.5vw,1rem);
+    color:rgba(196,162,101,.9);
+    font-style:italic;
+    line-height:1.55;
+    margin:0;
+  }
+
+  /* ── New reading button ── */
   .t22-btn-new-reading{
-    display:block;margin:20px auto 0;padding:12px 30px;border-radius:12px;
-    background:linear-gradient(135deg,var(--gold),#9a7a3f);
-    border:none;color:#0d0b1a;font-size:clamp(.7rem,3vw,.9rem);
-    font-weight:600;font-family:'Cormorant Garamond',serif;
-    letter-spacing:2px;cursor:pointer;
-    box-shadow:0 0 20px rgba(196,162,101,.3);
+    display:block;
+    width:100%;max-width:320px;
+    margin:28px auto 0;
+    padding:16px 24px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#c4a265 0%,#9a7a3f 100%);
+    border:none;
+    color:#0d0b1a;
+    font-size:clamp(1rem,4vw,1.15rem);
+    font-weight:700;
+    font-family:'Cormorant Garamond',serif;
+    letter-spacing:2px;
+    cursor:pointer;
+    box-shadow:0 4px 24px rgba(196,162,101,.35),0 0 0 1px rgba(196,162,101,.15);
+    transition:transform .15s ease,box-shadow .15s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .t22-btn-new-reading:active{
+    transform:scale(0.97);
+    box-shadow:0 2px 12px rgba(196,162,101,.2);
   }
   @keyframes fadeInCard{from{opacity:0;transform:translateY(20px) scale(0.8)}to{opacity:1;transform:translateY(0) scale(1)}}
   @keyframes pulseGold{0%,100%{box-shadow:0 0 15px rgba(218,165,32,0.3)}50%{box-shadow:0 0 30px rgba(218,165,32,0.6)}}
