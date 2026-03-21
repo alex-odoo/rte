@@ -316,6 +316,32 @@
     zh:['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座']
   };
 
+  var SEO_META = {
+    am:{title:'ታሮት ካሩዝ — የመላዕክት መልዕክቶች | ነፃ ቃናቄ ኦንላይን',desc:'ነፃ የኦንላይን ታሮት እና የመላዕክት ካርዶች ቃናቄ። ምስጢራዊ ካርድዎን ይምረጡ እና ከጠባቂ መላዕክቶዎ መልዕክቶችን ያግኙ። 44 ካርዶች ከትርጓሜ ጋር።',kw:'ታሮት ኦንላይን, የመላዕክት ካርዶች, ነፃ ቃናቄ, ምስጢራዊ ካርዶች, መላዕክት, ጸሎት',locale:'am_ET',geo:'ET'},
+    ar:{title:'دوامة التاروت — رسائل الملائكة | قراءة التاروت المجانية أونلاين',desc:'قراءة تاروت وأوراق ملائكة مجانية عبر الإنترنت. اختر بطاقتك الروحانية واستقبل رسائل وإرشادات من الملائكة الحارسة. 44 بطاقة مع تفسيرات شاملة.',kw:'تاروت اونلاين, رسائل الملائكة, قراءة تاروت مجاناً, بطاقات الملائكة, تاروت عربي, عرافة اونلاين, أوراق الملائكة',locale:'ar_SA',geo:'SA',dir:'rtl'},
+    be:{title:'Тара-Карусель — Пасланні Анёлаў | Гаданне на картах онлайн',desc:'Бясплатнае онлайн гаданне на картах Тара і анёлаў. Абярыце сваю магічную карту і атрымайце пасланне ад анёлаў-ахоўнікаў. 44 карты з тлумачэннямі.',kw:'тара онлайн, карты анёлаў, гаданне онлайн, пасланні анёлаў, таро беларуская, аракул',locale:'be_BY',geo:'BY'},
+    cs:{title:'Tarot Karusel — Poselství andělů | Výklad karet online zdarma',desc:'Bezplatný online výklad tarotových karet a karet andělů. Vyberte svou mystickou kartu a získejte poselství od strážných andělů. 44 karet s výklady.',kw:'tarot online, poselství andělů, výklad karet zdarma, andělské karty, tarot česky, věštění online, orákulum',locale:'cs_CZ',geo:'CZ'},
+    de:{title:'Tarot Karussell — Engelsbotschaften | Kostenloses Online-Tarot',desc:'Kostenloses Online-Tarot und Engelskarten-Orakel. Wählen Sie Ihre mystische Engelskarte und erhalten Sie Botschaften von Schutzengeln. 44 Karten mit Deutungen.',kw:'Tarot Online, Engelsbotschaften, Tarot kostenlos, Engelskarten, Online-Orakel, Tarot legen, Engel Botschaft, Wahrsagen',locale:'de_DE',geo:'DE'},
+    en:{title:'Tarot Carousel — Angel Messages | Free Online Tarot & Angel Card Reading',desc:'Free online tarot and angel card readings. Choose your mystical angel card and receive guidance from guardian angels. 44 angel cards with full interpretations. Spiritual guidance for your life journey.',kw:'tarot carousel, angel messages, free tarot online, angel cards reading, tarot reading, oracle cards, guardian angel, free divination, spiritual guidance, angel oracle',locale:'en_US',geo:'US'},
+    es:{title:'Carrusel del Tarot — Mensajes de los Ángeles | Lectura gratuita online',desc:'Lectura gratuita de tarot y cartas de ángeles en línea. Elige tu carta mística y recibe mensajes de tus ángeles guardianes. 44 cartas con interpretaciones completas.',kw:'tarot online gratis, mensajes de ángeles, lectura de cartas, cartas de ángeles, tarot español, oráculo online, adivinación, arcanos mayores',locale:'es_ES',geo:'ES'},
+    fr:{title:'Carrousel du Tarot — Messages des Anges | Tirage gratuit en ligne',desc:'Tirage gratuit de tarot et de cartes des anges en ligne. Choisissez votre carte mystique et recevez des messages de vos anges gardiens. 44 cartes avec interprétations.',kw:'tarot en ligne gratuit, messages des anges, tirage de cartes, cartes des anges, tarot français, oracle gratuit, divination, arcanes majeurs',locale:'fr_FR',geo:'FR'},
+    ha:{title:'Tarot Carousel — Saƙon Mala\'iku | Karatun Kati na Kyauta Online',desc:'Karatun tarot da katin mala\'iku na kyauta a layi. Zaɓi katin ɓoye naka kuma karɓi jagoranci daga mala\'ikun ka. Kati 44 tare da bayanai na cikakke.',kw:'tarot online, sakon mala\'iku, karatun kati, duba na kyauta, mala\'iku, kati na asiri',locale:'ha_NG',geo:'NG'},
+    he:{title:'קרוסלת טארוט — מסרי המלאכים | קריאת קלפים חינם אונליין',desc:'קריאת טארוט וקלפי מלאכים חינם באינטרנט. בחר את הקלף המיסטי שלך וקבל מסרים והדרכה ממלאכי השמירה. 44 קלפים עם פירושים מלאים.',kw:'טארוט אונליין, מסרי מלאכים, קלפי מלאכים, קריאת קלפים, אורקל חינם, ניחוש, מלאכים, קלפי טארוט',locale:'he_IL',geo:'IL',dir:'rtl'},
+    hu:{title:'Tarot Körhinta — Angyali üzenetek | Ingyenes online tarot olvasás',desc:'Ingyenes online tarot és angyalkártyák olvasása. Válaszd ki misztikus angyalkártyádat és kapj üzeneteket az oltalmazó angyaloktól. 44 kártya értelmezésekkel.',kw:'tarot online, angyali üzenetek, ingyenes tarot, angyalkártyák, jóslás online, tarot magyar, orákulum, tarot kártya',locale:'hu_HU',geo:'HU'},
+    it:{title:'Giostra dei Tarocchi — Messaggi degli Angeli | Lettura gratuita online',desc:'Lettura gratuita di tarocchi e carte degli angeli online. Scegli la tua carta mistica e ricevi messaggi e guida dai tuoi angeli custodi. 44 carte con interpretazioni.',kw:'tarocchi online, messaggi degli angeli, carte degli angeli, lettura tarocchi gratuita, oracolo online, divinazione, arcani maggiori',locale:'it_IT',geo:'IT'},
+    ja:{title:'タロットカルーセル — 天使のメッセージ | 無料オンラインタロット占い',desc:'無料のオンラインタロットと天使カード占い。神秘的な天使カードを選んで、守護天使からのメッセージと導きを受け取りましょう。44枚のカードと詳しい解説付き。',kw:'タロット占い, 天使カード, 無料タロット, 守護天使, オンライン占い, エンジェルカード, タロットカルーセル, 占い',locale:'ja_JP',geo:'JP'},
+    ko:{title:'타로 카루셀 — 천사의 메시지 | 무료 온라인 타로 카드 리딩',desc:'무료 온라인 타로와 천사 카드 리딩. 신비로운 천사 카드를 선택하고 수호 천사로부터 메시지와 인도를 받으세요. 해석이 포함된 44장의 카드.',kw:'타로 카드, 천사 메시지, 무료 타로, 온라인 점술, 엔젤 카드, 타로 리딩, 수호천사, 점성술',locale:'ko_KR',geo:'KR'},
+    mt:{title:'Giroferr tat-Tarot — Messaġġi tal-Anġli | Qari ħieles online',desc:'Qari ħieles tat-tarot u karti tal-anġli online. Agħżel il-karta mistika tiegħek u irċievi messaġġi u gwida mill-anġli protettivi. 44 karta b\'interpretazzjonijiet.',kw:'tarot online, messaġġi anġli, karti anġli, qari karti, oraklu ħieles, divinazzjoni, anġli',locale:'mt_MT',geo:'MT'},
+    pl:{title:'Karuzela Tarota — Przesłania Aniołów | Darmowy odczyt kart online',desc:'Darmowy odczyt kart tarota i kart aniołów online. Wybierz swoją mistyczną kartę i otrzymaj przesłania oraz wskazówki od aniołów stróżów. 44 karty z interpretacjami.',kw:'tarot online, przesłania aniołów, karty anielskie, wróżenie online, darmowy tarot, orakulum, anioły, karuzela tarota',locale:'pl_PL',geo:'PL'},
+    pt:{title:'Carrossel do Tarô — Mensagens dos Anjos | Leitura gratuita online',desc:'Leitura gratuita de tarô e cartas dos anjos online. Escolha sua carta mística e receba mensagens e orientações dos anjos guardiões. 44 cartas com interpretações.',kw:'tarô online, mensagens dos anjos, cartas dos anjos, leitura de tarô grátis, oráculo online, adivinhação, anjos guardiões',locale:'pt_BR',geo:'BR'},
+    ro:{title:'Caruselul Tarot — Mesajele Îngerilor | Citire gratuită a cărților online',desc:'Citire gratuită de tarot și cărți ale îngerilor online. Alege cartea ta mistică și primește mesaje și îndrumare de la îngerii păzitori. 44 de cărți cu interpretări.',kw:'tarot online, mesajele îngerilor, cărți îngerești, ghicit online, tarot gratuit, oracol, îngeri, carusel tarot',locale:'ro_RO',geo:'RO'},
+    ru:{title:'Таро Карусель — Послания Ангелов | Бесплатное гадание онлайн',desc:'Бесплатное онлайн гадание на картах Таро и картах ангелов. Выберите свою мистическую карту и получите послания и руководство от ангелов-хранителей. 44 карты с толкованиями.',kw:'таро онлайн, послания ангелов, карты ангелов, гадание онлайн бесплатно, таро карусель, оракул, ангелы, карты таро',locale:'ru_RU',geo:'RU'},
+    sw:{title:'Tarot Carousel — Ujumbe wa Malaika | Usomaji wa Bure Online',desc:'Usomaji wa bure wa tarot na kadi za malaika mtandaoni. Chagua kadi yako ya ajabu na upokee mwongozo na ujumbe kutoka kwa malaika walinzi wako. Kadi 44 na maelezo.',kw:'tarot online, ujumbe wa malaika, kadi za malaika, usomaji wa bure, utabiri, malaika, bahati',locale:'sw_KE',geo:'KE'},
+    th:{title:'ไพ่ทาโรต์ชิงช้าสวรรค์ — ข้อความจากเทวทูต | ดูไพ่ฟรีออนไลน์',desc:'ดูไพ่ทาโรต์และไพ่เทวทูตฟรีออนไลน์ เลือกไพ่มิสติคของคุณและรับข้อความและคำแนะนำจากเทวทูตผู้พิทักษ์ ไพ่ 44 ใบพร้อมการตีความครบถ้วน',kw:'ไพ่ทาโรต์, ข้อความเทวทูต, ดูไพ่ฟรี, ทำนาย, เทวทูต, ไพ่ออนไลน์, โชคชะตา, ไพ่ยิปซี',locale:'th_TH',geo:'TH'},
+    uk:{title:'Таро Карусель — Послання Ангелів | Магічні Карти Онлайн',desc:'Безкоштовне онлайн ворожіння на картах Таро та картах ангелів. Оберіть свою магічну карту і отримайте послання від ангелів-хранителів. 44 карти з тлумаченнями.',kw:'таро карусель, послання ангелів, карти ангелів онлайн, ворожіння онлайн, таро онлайн безкоштовно, оракул ангелів, ангельські карти',locale:'uk_UA',geo:'UA'},
+    zh:{title:'塔罗旋转木马 — 天使的信息 | 免费在线塔罗牌占卜',desc:'免费在线塔罗牌和天使卡占卜。选择您的神秘天使卡，从守护天使那里获得信息和指引。44张卡牌附有详细解释说明。',kw:'塔罗牌, 天使信息, 免费塔罗, 在线占卜, 天使卡, 塔罗旋转木马, 占卜, 大阿卡纳',locale:'zh_CN',geo:'CN'}
+  };
+
   // ── Angel Cards: 44 cards × 7 languages [displayName, meaning] ──
   var ANGEL = {
     en:[
@@ -1936,6 +1962,11 @@
 
   // ── Language detection ──
   function detectLang() {
+    // Check URL ?lang= param first (for SEO/GEO indexed pages)
+    try {
+      var urlLang = new URLSearchParams(window.location.search).get('lang');
+      if (urlLang && META[urlLang]) { return urlLang; }
+    } catch(e) {}
     var saved = localStorage.getItem('tarot_lang');
     if (saved && META[saved]) return saved;
     var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
@@ -1944,6 +1975,7 @@
   }
 
   var currentLang = detectLang();
+  updateSEOMeta(currentLang);
 
   function t(key) {
     var strings = UI[currentLang] || UI.en;
@@ -1973,7 +2005,63 @@
     if (!META[code]) return;
     currentLang = code;
     localStorage.setItem('tarot_lang', code);
+    updateSEOMeta(code);
     if (window.applyLanguage) window.applyLanguage();
+  }
+
+
+  // ── Dynamic SEO meta updater ──
+  function updateSEOMeta(lang) {
+    var d = SEO_META[lang] || SEO_META['en'];
+    var isRTL = d.dir === 'rtl';
+
+    // html lang + dir
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+    // title
+    document.title = d.title;
+
+    // helper: set or create meta
+    function setMeta(sel, attr, val) {
+      var el = document.querySelector(sel);
+      if (!el) { el = document.createElement('meta'); document.head.appendChild(el); }
+      el.setAttribute(attr, val);
+    }
+    function setProp(prop, val) {
+      var el = document.querySelector('meta[property="' + prop + '"]');
+      if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+      el.setAttribute('content', val);
+    }
+
+    setMeta('meta[name="description"]',        'content', d.desc);
+    setMeta('meta[name="keywords"]',           'content', d.kw);
+    setMeta('meta[http-equiv="content-language"]', 'content', lang);
+    setMeta('meta[name="geo.region"]',         'content', d.geo);
+    setMeta('meta[name="geo.country"]',        'content', d.geo);
+
+    setProp('og:title',       d.title);
+    setProp('og:description', d.desc);
+    setProp('og:locale',      d.locale);
+
+    setMeta('meta[name="twitter:title"]',       'content', d.title);
+    setMeta('meta[name="twitter:description"]', 'content', d.desc);
+
+    // JSON-LD: update inLanguage
+    var ld = document.querySelector('script[type="application/ld+json"]');
+    if (ld) {
+      try {
+        var obj = JSON.parse(ld.textContent);
+        obj.inLanguage = lang;
+        obj.name = d.title.split(' | ')[0];
+        obj.description = d.desc;
+        ld.textContent = JSON.stringify(obj);
+      } catch(e) {}
+    }
+
+    // canonical URL keeps base, no lang param (canonical = default)
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = 'https://tarocarousel.online/';
   }
 
   // ── Build language dropdown ──
@@ -2224,6 +2312,7 @@
     getLang: function() { return currentLang; },
     langs: LANGS,
     meta: META,
+    updateSEOMeta: updateSEOMeta,
     refreshDropdown: function() {
       var btn = document.getElementById('langBtn');
       if (btn) btn.innerHTML = '<span style="font-size:15px">' + META[currentLang].flag + '</span>'
