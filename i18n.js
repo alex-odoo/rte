@@ -1981,43 +1981,230 @@
     var existing = document.getElementById('langDropdown');
     if (existing) existing.remove();
 
+    // Inject scrollbar + search styles once
+    if (!document.getElementById('langPickerStyle')) {
+      var ss = document.createElement('style');
+      ss.id = 'langPickerStyle';
+      ss.textContent = [
+        '#langList::-webkit-scrollbar{width:3px}',
+        '#langList::-webkit-scrollbar-track{background:transparent}',
+        '#langList::-webkit-scrollbar-thumb{background:rgba(218,165,32,0.25);border-radius:2px}',
+        '#langList::-webkit-scrollbar-thumb:hover{background:rgba(218,165,32,0.5)}',
+        '#langSearchInput::placeholder{color:rgba(218,165,32,0.35)}',
+        '#langSearchInput:focus{outline:none}',
+        '#langBtn:hover{background:rgba(218,165,32,0.14)!important;border-color:rgba(218,165,32,0.55)!important}',
+      ].join('');
+      document.head.appendChild(ss);
+    }
+
     var wrap = document.createElement('div');
     wrap.id = 'langDropdown';
     wrap.style.cssText = 'position:fixed;top:16px;right:16px;z-index:200;font-family:"Cinzel","Cormorant Garamond",serif;';
 
+    // ── Trigger button
     var btn = document.createElement('button');
     btn.id = 'langBtn';
-    btn.style.cssText = 'padding:8px 14px;border-radius:12px;background:rgba(218,165,32,0.08);border:1.5px solid rgba(218,165,32,0.3);color:#DAA520;font-size:13px;cursor:pointer;backdrop-filter:blur(10px);transition:all .3s ease;display:flex;align-items:center;gap:6px;';
-    btn.textContent = META[currentLang].flag + ' ' + META[currentLang].name;
+    btn.style.cssText = 'padding:7px 13px;border-radius:20px;background:rgba(218,165,32,0.08);border:1.5px solid rgba(218,165,32,0.32);color:#DAA520;font-size:13px;cursor:pointer;backdrop-filter:blur(10px);transition:background .2s,border-color .2s;display:flex;align-items:center;gap:6px;white-space:nowrap;letter-spacing:.3px;';
+    function renderBtn() {
+      btn.innerHTML = '<span style="font-size:15px">' + META[currentLang].flag + '</span>'
+        + '<span>' + META[currentLang].name + '</span>'
+        + '<span style="font-size:9px;opacity:.5;margin-left:1px">&#9660;</span>';
+    }
+    renderBtn();
 
-    var menu = document.createElement('div');
-    menu.id = 'langMenu';
-    menu.style.cssText = 'display:none;position:absolute;top:100%;right:0;margin-top:6px;background:rgba(13,11,26,0.95);border:1.5px solid rgba(218,165,32,0.3);border-radius:12px;overflow:hidden;backdrop-filter:blur(15px);min-width:160px;box-shadow:0 8px 30px rgba(0,0,0,0.5);';
+    // ── Panel
+    var panel = document.createElement('div');
+    panel.id = 'langMenu';
+    panel.style.cssText = [
+      'display:none',
+      'position:absolute',
+      'top:calc(100% + 8px)',
+      'right:0',
+      'width:214px',
+      'background:rgba(9,7,20,0.97)',
+      'border:1.5px solid rgba(218,165,32,0.32)',
+      'border-radius:14px',
+      'overflow:hidden',
+      'backdrop-filter:blur(24px)',
+      'box-shadow:0 16px 48px rgba(0,0,0,0.75),0 0 0 1px rgba(218,165,32,0.07)',
+      'opacity:0',
+      'transform:scale(.94) translateY(-6px)',
+      'transform-origin:top right',
+      'transition:opacity .16s ease,transform .16s ease',
+    ].join(';');
 
-    LANGS.forEach(function(code) {
-      var item = document.createElement('div');
-      item.style.cssText = 'padding:10px 16px;cursor:pointer;color:#DAA520;font-size:12px;display:flex;align-items:center;gap:8px;transition:background .2s;border-bottom:1px solid rgba(218,165,32,0.08);';
-      item.textContent = META[code].flag + ' ' + META[code].name;
-      if (code === currentLang) item.style.background = 'rgba(218,165,32,0.15)';
-      item.addEventListener('mouseenter', function() { this.style.background = 'rgba(218,165,32,0.12)'; });
-      item.addEventListener('mouseleave', function() { this.style.background = code === currentLang ? 'rgba(218,165,32,0.15)' : 'transparent'; });
-      item.addEventListener('click', function(e) {
+    // ── Search row
+    var searchRow = document.createElement('div');
+    searchRow.style.cssText = 'padding:10px 10px 8px;border-bottom:1px solid rgba(218,165,32,0.12);';
+
+    var searchBox = document.createElement('div');
+    searchBox.style.cssText = 'display:flex;align-items:center;background:rgba(218,165,32,0.06);border:1px solid rgba(218,165,32,0.18);border-radius:8px;padding:5px 9px;gap:6px;transition:border-color .15s;';
+
+    var searchIcon = document.createElement('span');
+    searchIcon.innerHTML = '&#128269;';
+    searchIcon.style.cssText = 'font-size:12px;opacity:.45;flex-shrink:0;line-height:1;';
+
+    var searchInput = document.createElement('input');
+    searchInput.id = 'langSearchInput';
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search…';
+    searchInput.autocomplete = 'off';
+    searchInput.spellcheck = false;
+    searchInput.style.cssText = 'background:none;border:none;color:#DAA520;font-size:12px;font-family:inherit;letter-spacing:.3px;width:100%;';
+
+    var clearX = document.createElement('button');
+    clearX.textContent = '×';
+    clearX.style.cssText = 'background:none;border:none;color:rgba(218,165,32,0.38);font-size:17px;line-height:1;cursor:pointer;padding:0;flex-shrink:0;display:none;transition:color .15s;';
+
+    searchBox.appendChild(searchIcon);
+    searchBox.appendChild(searchInput);
+    searchBox.appendChild(clearX);
+    searchRow.appendChild(searchBox);
+
+    // ── List
+    var list = document.createElement('div');
+    list.id = 'langList';
+    list.style.cssText = 'max-height:282px;overflow-y:auto;padding:4px 0;';
+
+    // Empty state
+    var emptyMsg = document.createElement('div');
+    emptyMsg.style.cssText = 'padding:18px;text-align:center;color:rgba(218,165,32,0.28);font-size:11px;letter-spacing:.8px;display:none;';
+    emptyMsg.textContent = '— not found —';
+
+    // Build items
+    var itemObjs = LANGS.map(function(code) {
+      var row = document.createElement('div');
+      row.dataset.code = code;
+      row.dataset.name = META[code].name.toLowerCase();
+      row.style.cssText = 'padding:9px 14px 9px 12px;cursor:pointer;color:#DAA520;font-size:12px;display:flex;align-items:center;gap:9px;transition:background .12s;letter-spacing:.3px;';
+
+      var flagEl = document.createElement('span');
+      flagEl.textContent = META[code].flag;
+      flagEl.style.cssText = 'font-size:16px;flex-shrink:0;line-height:1;';
+
+      var nameEl = document.createElement('span');
+      nameEl.textContent = META[code].name;
+      nameEl.style.cssText = 'flex:1;';
+
+      var tick = document.createElement('span');
+      tick.textContent = '✓';
+      tick.style.cssText = 'font-size:11px;color:rgba(218,165,32,0.7);opacity:0;transition:opacity .12s;flex-shrink:0;';
+
+      row.appendChild(flagEl);
+      row.appendChild(nameEl);
+      row.appendChild(tick);
+      list.appendChild(row);
+
+      if (code === currentLang) {
+        row.style.background = 'rgba(218,165,32,0.11)';
+        tick.style.opacity = '1';
+      }
+
+      row.addEventListener('mouseenter', function() { row.style.background = 'rgba(218,165,32,0.09)'; });
+      row.addEventListener('mouseleave', function() { row.style.background = code === currentLang ? 'rgba(218,165,32,0.11)' : ''; });
+      row.addEventListener('click', function(e) {
         e.stopPropagation();
-        menu.style.display = 'none';
+        closeMenu();
         setLang(code);
+        // Update active highlight immediately
+        itemObjs.forEach(function(o) {
+          o.row.style.background = o.code === code ? 'rgba(218,165,32,0.11)' : '';
+          o.tick.style.opacity = o.code === code ? '1' : '0';
+        });
+        renderBtn();
       });
-      menu.appendChild(item);
+
+      return { code: code, row: row, tick: tick };
     });
+
+    list.appendChild(emptyMsg);
+
+    // ── Filter
+    function applyFilter(q) {
+      q = q.trim().toLowerCase();
+      var shown = 0;
+      itemObjs.forEach(function(o) {
+        var match = !q || o.code.indexOf(q) >= 0 || o.row.dataset.name.indexOf(q) >= 0;
+        o.row.style.display = match ? 'flex' : 'none';
+        if (match) shown++;
+      });
+      emptyMsg.style.display = shown === 0 ? 'block' : 'none';
+      clearX.style.display = q ? 'flex' : 'none';
+    }
+
+    searchInput.addEventListener('input', function() { applyFilter(this.value); });
+
+    clearX.addEventListener('click', function(e) {
+      e.stopPropagation();
+      searchInput.value = '';
+      applyFilter('');
+      searchInput.focus();
+    });
+
+    // Keyboard nav
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeMenu(); btn.focus(); return; }
+      if (e.key === 'Enter') {
+        var vis = itemObjs.filter(function(o) { return o.row.style.display !== 'none'; });
+        if (vis.length) { closeMenu(); setLang(vis[0].code); renderBtn(); }
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        var vis = itemObjs.filter(function(o) { return o.row.style.display !== 'none'; });
+        if (vis.length) vis[0].row.focus();
+      }
+    });
+
+    // Arrow key nav on items
+    list.addEventListener('keydown', function(e) {
+      var focused = document.activeElement;
+      var vis = itemObjs.filter(function(o) { return o.row.style.display !== 'none'; });
+      var idx = vis.findIndex(function(o) { return o.row === focused; });
+      if (e.key === 'ArrowDown' && idx < vis.length - 1) { e.preventDefault(); vis[idx + 1].row.focus(); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); idx > 0 ? vis[idx - 1].row.focus() : searchInput.focus(); }
+      if (e.key === 'Enter' && idx >= 0) { closeMenu(); setLang(vis[idx].code); renderBtn(); }
+      if (e.key === 'Escape') { closeMenu(); btn.focus(); }
+    });
+
+    // ── Open / close
+    var isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      panel.style.display = 'block';
+      requestAnimationFrame(function() {
+        panel.style.opacity = '1';
+        panel.style.transform = 'scale(1) translateY(0)';
+      });
+      searchInput.value = '';
+      applyFilter('');
+      setTimeout(function() { searchInput.focus(); }, 30);
+      // Scroll active item into view
+      var activeRow = list.querySelector('[data-code="' + currentLang + '"]');
+      if (activeRow) setTimeout(function() { activeRow.scrollIntoView({ block: 'nearest' }); }, 60);
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      panel.style.opacity = '0';
+      panel.style.transform = 'scale(.94) translateY(-6px)';
+      setTimeout(function() { if (!isOpen) panel.style.display = 'none'; }, 170);
+    }
 
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+      isOpen ? closeMenu() : openMenu();
     });
 
-    document.addEventListener('click', function() { menu.style.display = 'none'; });
+    document.addEventListener('click', function(e) {
+      if (isOpen && !wrap.contains(e.target)) closeMenu();
+    });
 
+    panel.appendChild(searchRow);
+    panel.appendChild(list);
     wrap.appendChild(btn);
-    wrap.appendChild(menu);
+    wrap.appendChild(panel);
     document.body.appendChild(wrap);
   }
 
@@ -2041,7 +2228,9 @@
     meta: META,
     refreshDropdown: function() {
       var btn = document.getElementById('langBtn');
-      if (btn) btn.textContent = META[currentLang].flag + ' ' + META[currentLang].name;
+      if (btn) btn.innerHTML = '<span style="font-size:15px">' + META[currentLang].flag + '</span>'
+        + '<span>' + META[currentLang].name + '</span>'
+        + '<span style="font-size:9px;opacity:.5;margin-left:1px">&#9660;</span>';
     }
   };
 })();
