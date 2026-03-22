@@ -931,6 +931,14 @@
     speed = 20;
     document.getElementById('t22Instruction').classList.add('hidden');
 
+    // Hide zodiac/period/spin sections immediately
+    var zs = document.getElementById('t22StepZodiac');
+    var ps = document.getElementById('t22StepPeriod');
+    var ss = document.getElementById('t22StepSpin');
+    if (zs) zs.style.display = 'none';
+    if (ps) ps.style.display = 'none';
+    if (ss) ss.style.display = 'none';
+
     // Hide previous forecast if re-spinning
     var bottom = document.getElementById('t22BottomArea');
     if (bottom) { bottom.classList.remove('show'); bottom.innerHTML = ''; }
