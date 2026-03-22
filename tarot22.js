@@ -66,6 +66,9 @@
   var readingActive = false;
   var selectedZodiac = localStorage.getItem('tarot_zodiac') || null;
   var zodiacPanelOpen = false;
+  var currentFcPeriod = 'today';
+  var ZODIAC_NAMES = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+  var ZODIAC_SYMBOLS = ['\u2648','\u2649','\u264A','\u264B','\u264C','\u264D','\u264E','\u264F','\u2650','\u2651','\u2652','\u2653'];
 
   var section = document.getElementById('tarotSection');
   var carouselEl = null;
@@ -462,12 +465,241 @@
         '</div>' +
       '</div>';
     });
+
+    // ── Forecast section ──
+    html += buildForecastSection();
+
     html += '<button class="t22-btn-new-reading" onclick="window.tarot22.newReading()">' + t('newReading') + '</button>';
     html += '</div>';
 
     bottom.innerHTML = html;
     bottom.classList.add('show');
     bottom.scrollIntoView({ behavior: 'smooth' });
+
+    // Render forecast after DOM is ready
+    setTimeout(function() { renderForecast(); }, 50);
+  }
+
+  // ── Build forecast HTML skeleton ──
+  function buildForecastSection() {
+    if (!window.forecast) return '';
+
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var zodiacIdx = selectedZodiac !== null ? parseInt(selectedZodiac) : null;
+
+    var html = '<div class="forecast-section" id="fcSection">' +
+      '<div class="fc-section-divider"></div>' +
+      '<div class="fc-section-title">' + t('fcTitle') + '</div>' +
+      '<div class="fc-section-divider"></div>';
+
+    // Zodiac selector row
+    html += '<div class="fc-zodiac-row" id="fcZodiacRow">';
+    for (var i = 0; i < 12; i++) {
+      var signName = signs[i] ? signs[i].name : ZODIAC_NAMES[i];
+      var active = (zodiacIdx === i) ? ' active' : '';
+      html += '<button class="fc-zodiac-btn' + active + '" data-zidx="' + i + '" onclick="window.tarot22.selectFcZodiac(' + i + ')" title="' + signName + '">' +
+        ZODIAC_SYMBOLS[i] +
+        '<span class="fc-zodiac-label">' + signName + '</span>' +
+      '</button>';
+    }
+    html += '</div>';
+
+    // Period selector
+    html += '<div class="fc-period-row" id="fcPeriodRow">';
+    var periods = getForecastPeriods();
+    periods.forEach(function(p) {
+      var active = (currentFcPeriod === p.key) ? ' active' : '';
+      html += '<button class="fc-period-btn' + active + '" data-period="' + p.key + '" onclick="window.tarot22.selectFcPeriod(\'' + p.key + '\')">' +
+        '<span>' + p.label + '</span>' +
+        '<span class="fc-period-sub">' + p.sub + '</span>' +
+      '</button>';
+    });
+    html += '</div>';
+
+    // Forecast output block
+    html += '<div class="fc-block" id="fcBlock">' +
+      '<div class="fc-header">' +
+        '<span class="fc-badge" id="fcMoonBadge"></span>' +
+        '<span class="fc-badge" id="fcPlanetBadge"></span>' +
+      '</div>' +
+      '<div class="fc-text" id="fcText"></div>' +
+      '<div class="fc-footer">' +
+        '<span id="fcSignLabel"></span>' +
+        '<span>\u2022</span>' +
+        '<span id="fcDateLabel"></span>' +
+        '<span class="fc-tone" id="fcToneLabel"></span>' +
+      '</div>' +
+    '</div>';
+
+    // No zodiac selected prompt
+    if (zodiacIdx === null) {
+      html += '<div id="fcPrompt" style="text-align:center;color:rgba(255,215,0,.5);font-family:\'Cormorant Garamond\',serif;font-size:13px;padding:8px 0;letter-spacing:1px">' +
+        t('fcSelectZodiac') +
+      '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  // ── Period labels ──
+  function getForecastPeriods() {
+    var now = new Date();
+    var months = [t('fcJan'),t('fcFeb'),t('fcMar'),t('fcApr'),t('fcMay'),t('fcJun'),
+                  t('fcJul'),t('fcAug'),t('fcSep'),t('fcOct'),t('fcNov'),t('fcDec')];
+    // fallback if i18n keys missing
+    var mFallback = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    for (var i = 0; i < 12; i++) { if (months[i] === 'fcJan' || !months[i]) months = mFallback; }
+
+    var tmrw = new Date(now); tmrw.setDate(tmrw.getDate() + 1);
+    var nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    return [
+      { key:'today',    label:t('fcToday')    || 'Today',    sub:now.getDate() + ' ' + months[now.getMonth()] },
+      { key:'tomorrow', label:t('fcTomorrow') || 'Tomorrow', sub:tmrw.getDate() + ' ' + months[tmrw.getMonth()] },
+      { key:'week',     label:t('fcWeek')     || 'Week',     sub:'W' + (window.forecast ? window.forecast.getISOWeek(now) : '') },
+      { key:'month',    label:t('fcMonth')    || 'Month',    sub:months[nextMonth.getMonth()] },
+      { key:'year',     label:t('fcYear')     || 'Year',     sub:String(now.getFullYear() + 1) }
+    ];
+  }
+
+  // ── Render forecast into the block ──
+  function renderForecast() {
+    var block = document.getElementById('fcBlock');
+    var prompt = document.getElementById('fcPrompt');
+    if (!block || !window.forecast) return;
+
+    var zodiacIdx = selectedZodiac !== null ? parseInt(selectedZodiac) : null;
+    if (zodiacIdx === null || drawnCards.length === 0) {
+      block.classList.remove('visible');
+      if (prompt) prompt.style.display = '';
+      return;
+    }
+    if (prompt) prompt.style.display = 'none';
+
+    var card = drawnCards[drawnCards.length - 1]; // last drawn card
+    var signName = ZODIAC_NAMES[zodiacIdx];
+    var result = window.forecast.generate(signName, card.id, currentFcPeriod);
+
+    if (!result) {
+      block.classList.remove('visible');
+      return;
+    }
+
+    // Moon badge
+    var moonBadge = document.getElementById('fcMoonBadge');
+    var moonNames = getMoonPhaseNames();
+    moonBadge.innerHTML = result.moonIcon + ' ' + (moonNames[result.moonPhase.name] || result.moonPhase.energy);
+
+    // Planet badge
+    var planetBadge = document.getElementById('fcPlanetBadge');
+    var dayNames = getPlanetaryDayNames();
+    planetBadge.innerHTML = result.planetSymbol + ' ' + (dayNames[result.planetaryDay] || result.planetaryDay);
+
+    // Forecast text
+    document.getElementById('fcText').textContent = result.text;
+
+    // Footer: sign + date + tone
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var signLabel = signs[zodiacIdx] ? (ZODIAC_SYMBOLS[zodiacIdx] + ' ' + signs[zodiacIdx].name) : (ZODIAC_SYMBOLS[zodiacIdx] + ' ' + signName);
+    document.getElementById('fcSignLabel').textContent = signLabel;
+    document.getElementById('fcDateLabel').textContent = getFcDateLabel(currentFcPeriod);
+
+    var toneEl = document.getElementById('fcToneLabel');
+    var toneLabels = { positive: '\u{1F7E2}', neutral: '\u{1F7E1}', warning: '\u{1F534}' };
+    toneEl.textContent = toneLabels[result.tone] || '';
+    toneEl.className = 'fc-tone fc-tone-' + result.tone;
+
+    // Show block with animation
+    block.classList.remove('visible');
+    block.style.animation = 'none';
+    block.offsetHeight; // force reflow
+    block.style.animation = '';
+    setTimeout(function() { block.classList.add('visible'); }, 30);
+  }
+
+  // ── Moon phase localized names ──
+  function getMoonPhaseNames() {
+    return {
+      newMoon:        t('fcMoonNew')      || 'New Moon',
+      waxingCrescent: t('fcMoonWaxCr')    || 'Waxing Crescent',
+      firstQuarter:   t('fcMoonFQ')       || 'First Quarter',
+      waxingGibbous:  t('fcMoonWaxGi')    || 'Waxing Gibbous',
+      fullMoon:       t('fcMoonFull')      || 'Full Moon',
+      waningGibbous:  t('fcMoonWanGi')    || 'Waning Gibbous',
+      lastQuarter:    t('fcMoonLQ')        || 'Last Quarter',
+      waningCrescent: t('fcMoonWanCr')     || 'Waning Crescent'
+    };
+  }
+
+  // ── Planetary day localized names ──
+  function getPlanetaryDayNames() {
+    return {
+      Sun:     t('fcPlanetSun')     || 'Sun',
+      Moon:    t('fcPlanetMoon')    || 'Moon',
+      Mars:    t('fcPlanetMars')    || 'Mars',
+      Mercury: t('fcPlanetMercury') || 'Mercury',
+      Jupiter: t('fcPlanetJupiter') || 'Jupiter',
+      Venus:   t('fcPlanetVenus')   || 'Venus',
+      Saturn:  t('fcPlanetSaturn')  || 'Saturn'
+    };
+  }
+
+  // ── Date label for period ──
+  function getFcDateLabel(period) {
+    var now = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    switch (period) {
+      case 'today':
+        return (t('fcToday') || 'Today') + ', ' + now.getDate() + ' ' + months[now.getMonth()];
+      case 'tomorrow':
+        var tmrw = new Date(now); tmrw.setDate(tmrw.getDate() + 1);
+        return (t('fcTomorrow') || 'Tomorrow') + ', ' + tmrw.getDate() + ' ' + months[tmrw.getMonth()];
+      case 'week':
+        return (t('fcWeek') || 'Week') + ' ' + (window.forecast ? window.forecast.getISOWeek(now) : '');
+      case 'month':
+        var nm = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+        return months[nm.getMonth()] + ' ' + nm.getFullYear();
+      case 'year':
+        return (now.getFullYear() + 1) + '';
+      default:
+        return '';
+    }
+  }
+
+  // ── Forecast zodiac selection ──
+  function selectFcZodiac(index) {
+    // Update shared zodiac state
+    selectedZodiac = index;
+    localStorage.setItem('tarot_zodiac', index);
+
+    // Update zodiac buttons
+    var btns = document.querySelectorAll('.fc-zodiac-btn');
+    btns.forEach(function(b, i) {
+      b.classList.toggle('active', i === index);
+    });
+
+    // Also update the trigger button if visible
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var sign = signs[index];
+    var trigger = document.getElementById('zodiacTrigger');
+    if (trigger && sign) {
+      trigger.querySelector('button').textContent = sign.symbol + ' ' + sign.name;
+    }
+
+    renderForecast();
+  }
+
+  // ── Forecast period selection ──
+  function selectFcPeriod(period) {
+    currentFcPeriod = period;
+
+    var btns = document.querySelectorAll('.fc-period-btn');
+    btns.forEach(function(b) {
+      b.classList.toggle('active', b.dataset.period === period);
+    });
+
+    renderForecast();
   }
 
   // ── Zodiac panel ──
@@ -599,6 +831,8 @@
     newReading: newReading,
     toggleZodiac: toggleZodiac,
     selectZodiac: selectZodiac,
+    selectFcZodiac: selectFcZodiac,
+    selectFcPeriod: selectFcPeriod,
     applyLanguage: applyLanguageT22
   };
 

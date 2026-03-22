@@ -34,18 +34,26 @@
   var UI = {
     en:{
       angelTitle:'ANGEL MESSAGES',angelSub:'Receive guidance from the angels',
-      tarotTitle:'MAJOR ARCANA',tarotSub:'22 cards of the soul\'s journey',
+      tarotTitle:'MAJOR ARCANA',tarotSub:'22 cards of the soul\'s journey · 2026',
       tap:'Tap to receive a message',tapShuffle:'Tap to shuffle',
       tapDraw:'Tap to draw a card',tapDrawN:'Tap to draw next',
       tapReveal:'Tap to reveal meanings',
       meanTitle:'\u2726 Your Reading Meanings \u2726',reversed:'Reversed',
       newReading:'\u2726 New Reading',counter:'of',btnAngel:'\uD83D\uDC7C Angels',btnTarot:'\u2726 Tarot 22',
       zodiacTitle:'Choose your zodiac sign',readingTitle:'Your reading',
-      cardsWord:'cards',drawCount:'drawn',tapDrawCard:'Tap to draw a card'
+      cardsWord:'cards',drawCount:'drawn',tapDrawCard:'Tap to draw a card',
+      fcTitle:'YOUR PERSONAL FORECAST',fcSelectZodiac:'Select your zodiac sign above',
+      fcToday:'Today',fcTomorrow:'Tomorrow',fcWeek:'Week',fcMonth:'Month',fcYear:'Year',
+      fcJan:'Jan',fcFeb:'Feb',fcMar:'Mar',fcApr:'Apr',fcMay:'May',fcJun:'Jun',
+      fcJul:'Jul',fcAug:'Aug',fcSep:'Sep',fcOct:'Oct',fcNov:'Nov',fcDec:'Dec',
+      fcMoonNew:'New Moon',fcMoonWaxCr:'Waxing Crescent',fcMoonFQ:'First Quarter',fcMoonWaxGi:'Waxing Gibbous',
+      fcMoonFull:'Full Moon',fcMoonWanGi:'Waning Gibbous',fcMoonLQ:'Last Quarter',fcMoonWanCr:'Waning Crescent',
+      fcPlanetSun:'Sun',fcPlanetMoon:'Moon',fcPlanetMars:'Mars',fcPlanetMercury:'Mercury',
+      fcPlanetJupiter:'Jupiter',fcPlanetVenus:'Venus',fcPlanetSaturn:'Saturn'
     },
     ru:{
       angelTitle:'\u041F\u041E\u0421\u041B\u0410\u041D\u0418\u042F \u0410\u041D\u0413\u0415\u041B\u041E\u0412',angelSub:'\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 \u0441\u043E\u0432\u0435\u0442 \u043E\u0442 \u0430\u043D\u0433\u0435\u043B\u043E\u0432',
-      tarotTitle:'\u0421\u0422\u0410\u0420\u0428\u0418\u0415 \u0410\u0420\u041A\u0410\u041D\u042B',tarotSub:'22 \u043A\u0430\u0440\u0442\u044B \u043F\u0443\u0442\u0438 \u0434\u0443\u0448\u0438',
+      tarotTitle:'\u0421\u0422\u0410\u0420\u0428\u0418\u0415 \u0410\u0420\u041A\u0410\u041D\u042B',tarotSub:'22 \u043A\u0430\u0440\u0442\u044B \u043F\u0443\u0442\u0438 \u0434\u0443\u0448\u0438 · 2026',
       tap:'\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u043E\u0441\u043B\u0430\u043D\u0438\u0435',tapShuffle:'\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u043F\u0435\u0440\u0435\u043C\u0435\u0448\u0430\u0442\u044C',
       tapDraw:'\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0432\u044B\u0442\u044F\u043D\u0443\u0442\u044C \u043A\u0430\u0440\u0442\u0443',tapDrawN:'\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u0434\u043B\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439',
       tapReveal:'\u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0441\u043A\u0440\u044B\u0442\u044C \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F',
@@ -56,7 +64,7 @@
     },
     fr:{
       angelTitle:'MESSAGES DES ANGES',angelSub:'Recevez les conseils des anges',
-      tarotTitle:'ARCANES MAJEURS',tarotSub:'22 cartes du voyage de l\'\u00e2me',
+      tarotTitle:'ARCANES MAJEURS',tarotSub:'22 cartes du voyage de l\'\u00e2me · 2026',
       tap:'Appuyez pour recevoir un message',tapShuffle:'Appuyez pour m\u00e9langer',
       tapDraw:'Appuyez pour tirer une carte',tapDrawN:'Appuyez pour la suivante',
       tapReveal:'Appuyez pour r\u00e9v\u00e9ler les significations',
@@ -67,7 +75,7 @@
     },
     es:{
       angelTitle:'MENSAJES DE LOS \u00c1NGELES',angelSub:'Recibe gu\u00eda de los \u00e1ngeles',
-      tarotTitle:'ARCANOS MAYORES',tarotSub:'22 cartas del viaje del alma',
+      tarotTitle:'ARCANOS MAYORES',tarotSub:'22 cartas del viaje del alma · 2026',
       tap:'Toca para recibir un mensaje',tapShuffle:'Toca para mezclar',
       tapDraw:'Toca para sacar una carta',tapDrawN:'Toca para la siguiente',
       tapReveal:'Toca para revelar significados',
@@ -78,7 +86,7 @@
     },
     de:{
       angelTitle:'ENGELSBOTSCHAFTEN',angelSub:'Empfangen Sie die F\u00fchrung der Engel',
-      tarotTitle:'GROSSE ARKANA',tarotSub:'22 Karten der Seelenreise',
+      tarotTitle:'GROSSE ARKANA',tarotSub:'22 Karten der Seelenreise · 2026',
       tap:'Tippen Sie f\u00fcr eine Botschaft',tapShuffle:'Tippen Sie zum Mischen',
       tapDraw:'Tippen Sie, um eine Karte zu ziehen',tapDrawN:'Tippen Sie f\u00fcr die n\u00e4chste',
       tapReveal:'Tippen Sie f\u00fcr die Bedeutungen',
@@ -89,7 +97,7 @@
     },
     it:{
       angelTitle:'MESSAGGI DEGLI ANGELI',angelSub:'Ricevi la guida degli angeli',
-      tarotTitle:'ARCANI MAGGIORI',tarotSub:'22 carte del viaggio dell\'anima',
+      tarotTitle:'ARCANI MAGGIORI',tarotSub:'22 carte del viaggio dell\'anima · 2026',
       tap:'Tocca per ricevere un messaggio',tapShuffle:'Tocca per mescolare',
       tapDraw:'Tocca per estrarre una carta',tapDrawN:'Tocca per la prossima',
       tapReveal:'Tocca per rivelare i significati',
@@ -100,7 +108,7 @@
     },
     ro:{
       angelTitle:'MESAJE DE LA \u00ceNGERI',angelSub:'Prime\u0219te ghidare de la \u00eengeri',
-      tarotTitle:'ARCANELE MAJORE',tarotSub:'22 de c\u0103r\u021bi ale c\u0103l\u0103toriei sufletului',
+      tarotTitle:'ARCANELE MAJORE',tarotSub:'22 de c\u0103r\u021bi ale c\u0103l\u0103toriei sufletului · 2026',
       tap:'Atinge pentru a primi un mesaj',tapShuffle:'Atinge pentru a amesteca',
       tapDraw:'Atinge pentru a trage o carte',tapDrawN:'Atinge pentru urm\u0103toarea',
       tapReveal:'Atinge pentru a dezv\u0103lui semnifica\u021biile',
@@ -111,7 +119,7 @@
     },
     uk:{
       angelTitle:'\u041F\u041E\u0421\u041B\u0410\u041D\u041D\u042F \u0410\u041D\u0413\u0415\u041B\u0406\u0412',angelSub:'\u041E\u0442\u0440\u0438\u043C\u0430\u0439\u0442\u0435 \u043F\u043E\u0440\u0430\u0434\u0443 \u0432\u0456\u0434 \u0430\u043D\u0433\u0435\u043B\u0456\u0432',
-      tarotTitle:'\u0421\u0422\u0410\u0420\u0428\u0406 \u0410\u0420\u041A\u0410\u041D\u0418',tarotSub:'22 \u043A\u0430\u0440\u0442\u0438 \u0448\u043B\u044F\u0445\u0443 \u0434\u0443\u0448\u0456',
+      tarotTitle:'\u0421\u0422\u0410\u0420\u0428\u0406 \u0410\u0420\u041A\u0410\u041D\u0418',tarotSub:'22 \u043A\u0430\u0440\u0442\u0438 \u0448\u043B\u044F\u0445\u0443 \u0434\u0443\u0448\u0456 · 2026',
       tap:'\u041D\u0430\u0442\u0438\u0441\u043D\u0456\u0442\u044C, \u0449\u043E\u0431 \u043E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 \u043F\u043E\u0441\u043B\u0430\u043D\u043D\u044F',tapShuffle:'\u041D\u0430\u0442\u0438\u0441\u043D\u0456\u0442\u044C, \u0449\u043E\u0431 \u043F\u0435\u0440\u0435\u043C\u0456\u0448\u0430\u0442\u0438',
       tapDraw:'\u041D\u0430\u0442\u0438\u0441\u043D\u0456\u0442\u044C, \u0449\u043E\u0431 \u0432\u0438\u0442\u044F\u0433\u043D\u0443\u0442\u0438 \u043A\u0430\u0440\u0442\u0443',tapDrawN:'\u041D\u0430\u0442\u0438\u0441\u043D\u0456\u0442\u044C \u0434\u043B\u044F \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0457',
       tapReveal:'\u041D\u0430\u0442\u0438\u0441\u043D\u0456\u0442\u044C, \u0449\u043E\u0431 \u0440\u043E\u0437\u043A\u0440\u0438\u0442\u0438 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F',
@@ -122,7 +130,7 @@
     },
     am:{
       angelTitle:'የመላእክት መልዕክቶች',angelSub:'ከመላዕክት መመሪያ ይቀበሉ',
-      tarotTitle:'ዋና አርካና',tarotSub:'22 የነፍስ ጉዞ ካርዶች',
+      tarotTitle:'ዋና አርካና',tarotSub:'22 የነፍስ ጉዞ ካርዶች · 2026',
       tap:'መልዕክት ለመቀበል ይጫኑ',tapShuffle:'ለማደባለቅ ይጫኑ',
       tapDraw:'ካርድ ለመሳብ ይጫኑ',tapDrawN:'ቀጣዩን ለመሳብ ይጫኑ',
       tapReveal:'ትርጉሞችን ለማሳየት ይጫኑ',
@@ -133,7 +141,7 @@
     },
     ar:{
       angelTitle:'رسائل الملائكة',angelSub:'استقبل إرشادات الملائكة',
-      tarotTitle:'الأركانا الكبرى',tarotSub:'22 بطاقة رحلة الروح',
+      tarotTitle:'الأركانا الكبرى',tarotSub:'22 بطاقة رحلة الروح · 2026',
       tap:'انقر لتلقي رسالة',tapShuffle:'انقر للخلط',
       tapDraw:'انقر لسحب بطاقة',tapDrawN:'انقر للتالية',
       tapReveal:'انقر لكشف المعاني',
@@ -144,7 +152,7 @@
     },
     be:{
       angelTitle:'ПАСЛАННІ АНЁЛАЎ',angelSub:'Атрымайце кіраўніцтва ад анёлаў',
-      tarotTitle:'СТАРЭЙШЫЯ АРКАНЫ',tarotSub:'22 карты шляху душы',
+      tarotTitle:'СТАРЭЙШЫЯ АРКАНЫ',tarotSub:'22 карты шляху душы · 2026',
       tap:'Націсніце, каб атрымаць пасланне',tapShuffle:'Націсніце, каб перамяшаць',
       tapDraw:'Націсніце, каб выцягнуць карту',tapDrawN:'Націсніце для наступнай',
       tapReveal:'Націсніце, каб раскрыць значэнні',
@@ -155,7 +163,7 @@
     },
     cs:{
       angelTitle:'ZPRÁVY ANDĚLŮ',angelSub:'Přijměte vedení od andělů',
-      tarotTitle:'VELKÉ ARKÁNY',tarotSub:'22 karet cesty duše',
+      tarotTitle:'VELKÉ ARKÁNY',tarotSub:'22 karet cesty duše · 2026',
       tap:'Klepněte pro přijetí zprávy',tapShuffle:'Klepněte pro zamíchání',
       tapDraw:'Klepněte pro výběr karty',tapDrawN:'Klepněte pro další',
       tapReveal:'Klepněte pro odhalení',
@@ -166,7 +174,7 @@
     },
     ha:{
       angelTitle:'SAƘONNIN MALAIKU',angelSub:'Karbi jagorancin malaiku',
-      tarotTitle:'MANYAN ARCANA',tarotSub:'Katunan 22 na tafiyar ruhi',
+      tarotTitle:'MANYAN ARCANA',tarotSub:'Katunan 22 na tafiyar ruhi · 2026',
       tap:'Taɓa don karɓar saƙo',tapShuffle:'Taɓa don gauraya',
       tapDraw:'Taɓa don ja katunan',tapDrawN:'Taɓa don na gaba',
       tapReveal:'Taɓa don bayyana ma\'anoni',
@@ -177,7 +185,7 @@
     },
     he:{
       angelTitle:'מסרי מלאכים',angelSub:'קבל הדרכה מהמלאכים',
-      tarotTitle:'ארקנות הגדולות',tarotSub:'22 קלפי מסע הנשמה',
+      tarotTitle:'ארקנות הגדולות',tarotSub:'22 קלפי מסע הנשמה · 2026',
       tap:'לחץ לקבלת מסר',tapShuffle:'לחץ לערבוב',
       tapDraw:'לחץ לשליפת קלף',tapDrawN:'לחץ לבא',
       tapReveal:'לחץ לחשיפת משמעויות',
@@ -188,7 +196,7 @@
     },
     hu:{
       angelTitle:'ANGYALI ÜZENETEK',angelSub:'Fogadd az angyalok útmutatását',
-      tarotTitle:'NAGY ARKANUMOK',tarotSub:'A lélek útjának 22 lapja',
+      tarotTitle:'NAGY ARKANUMOK',tarotSub:'A lélek útjának 22 lapja · 2026',
       tap:'Kattints egy üzenetért',tapShuffle:'Kattints a keveréshez',
       tapDraw:'Kattints egy lap húzásához',tapDrawN:'Kattints a következőhöz',
       tapReveal:'Kattints a jelentések megtekintéséhez',
@@ -199,7 +207,7 @@
     },
     ja:{
       angelTitle:'天使のメッセージ',angelSub:'天使からのガイダンスを受け取る',
-      tarotTitle:'大アルカナ',tarotSub:'魂の旅の22枚のカード',
+      tarotTitle:'大アルカナ',tarotSub:'魂の旅の22枚のカード · 2026',
       tap:'メッセージを受け取るにはタップ',tapShuffle:'シャッフルするにはタップ',
       tapDraw:'カードを引くにはタップ',tapDrawN:'次を引くにはタップ',
       tapReveal:'意味を表示するにはタップ',
@@ -210,7 +218,7 @@
     },
     ko:{
       angelTitle:'천사의 메시지',angelSub:'천사로부터 안내를 받으세요',
-      tarotTitle:'대 아르카나',tarotSub:'영혼의 여정 22장의 카드',
+      tarotTitle:'대 아르카나',tarotSub:'영혼의 여정 22장의 카드 · 2026',
       tap:'메시지를 받으려면 탭하세요',tapShuffle:'섞으려면 탭하세요',
       tapDraw:'카드를 뽑으려면 탭하세요',tapDrawN:'다음을 뽑으려면 탭하세요',
       tapReveal:'의미를 보려면 탭하세요',
@@ -221,7 +229,7 @@
     },
     mt:{
       angelTitle:'MESSAĠĠI TAL-ANĠLI',angelSub:'Irċievi gwida mill-anġli',
-      tarotTitle:'ARKANIJIET MAĠĠURI',tarotSub:'22 karta tal-vjaġġ tar-ruħ',
+      tarotTitle:'ARKANIJIET MAĠĠURI',tarotSub:'22 karta tal-vjaġġ tar-ruħ · 2026',
       tap:'Agħfas biex tirċievi messaġġ',tapShuffle:'Agħfas biex taħżen',
       tapDraw:'Agħfas biex tiġbed karta',tapDrawN:'Agħfas għall-li jmiss',
       tapReveal:'Agħfas biex tikxef',
@@ -232,7 +240,7 @@
     },
     pl:{
       angelTitle:'PRZESŁANIA ANIOŁÓW',angelSub:'Odbierz wskazówki od aniołów',
-      tarotTitle:'WIELKIE ARKANA',tarotSub:'22 karty podróży duszy',
+      tarotTitle:'WIELKIE ARKANA',tarotSub:'22 karty podróży duszy · 2026',
       tap:'Dotknij, aby odebrać wiadomość',tapShuffle:'Dotknij, aby potasować',
       tapDraw:'Dotknij, aby ciągnąć kartę',tapDrawN:'Dotknij dla następnej',
       tapReveal:'Dotknij, aby odkryć znaczenia',
@@ -243,7 +251,7 @@
     },
     pt:{
       angelTitle:'MENSAGENS DOS ANJOS',angelSub:'Receba orientação dos anjos',
-      tarotTitle:'ARCANOS MAIORES',tarotSub:'22 cartas da jornada da alma',
+      tarotTitle:'ARCANOS MAIORES',tarotSub:'22 cartas da jornada da alma · 2026',
       tap:'Toque para receber uma mensagem',tapShuffle:'Toque para embaralhar',
       tapDraw:'Toque para tirar uma carta',tapDrawN:'Toque para a próxima',
       tapReveal:'Toque para revelar os significados',
@@ -254,7 +262,7 @@
     },
     sw:{
       angelTitle:'UJUMBE WA MALAIKA',angelSub:'Pokea mwongozo kutoka kwa malaika',
-      tarotTitle:'ARCANA KUU',tarotSub:'Kadi 22 za safari ya roho',
+      tarotTitle:'ARCANA KUU',tarotSub:'Kadi 22 za safari ya roho · 2026',
       tap:'Gusa kupokea ujumbe',tapShuffle:'Gusa kuchanganya',
       tapDraw:'Gusa kuchora kadi',tapDrawN:'Gusa kwa inayofuata',
       tapReveal:'Gusa kufunua maana',
@@ -265,7 +273,7 @@
     },
     th:{
       angelTitle:'ข้อความจากนางฟ้า',angelSub:'รับคำแนะนำจากนางฟ้า',
-      tarotTitle:'อาร์คาน่าใหญ่',tarotSub:'22 ใบไพ่แห่งการเดินทางของวิญญาณ',
+      tarotTitle:'อาร์คาน่าใหญ่',tarotSub:'22 ใบไพ่แห่งการเดินทางของวิญญาณ · 2026',
       tap:'แตะเพื่อรับข้อความ',tapShuffle:'แตะเพื่อสับไพ่',
       tapDraw:'แตะเพื่อหยิบไพ่',tapDrawN:'แตะเพื่อหยิบใบต่อไป',
       tapReveal:'แตะเพื่อดูความหมาย',
@@ -276,7 +284,7 @@
     },
     zh:{
       angelTitle:'天使信息',angelSub:'接受天使的指引',
-      tarotTitle:'大阿尔卡那',tarotSub:'灵魂之旅的22张牌',
+      tarotTitle:'大阿尔卡那',tarotSub:'灵魂之旅的22张牌 · 2026',
       tap:'点击接收信息',tapShuffle:'点击洗牌',
       tapDraw:'点击抽牌',tapDrawN:'点击抽下一张',
       tapReveal:'点击揭示含义',
