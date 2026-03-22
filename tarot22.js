@@ -307,10 +307,11 @@
       }
     }
 
-    // Hide step sections when meanings panel is shown
+    // Hide step sections during spin, reveal, or meanings panel
     var zodiacSec = document.getElementById('t22StepZodiac');
     var spinSec = document.getElementById('t22StepSpin');
-    if (showMeanings) {
+    var hideSteps = showMeanings || stepState.isSpinning || spinning || revealed || readingActive;
+    if (hideSteps) {
       if (zodiacSec) zodiacSec.style.display = 'none';
       if (periodSec) periodSec.style.display = 'none';
       if (spinSec) spinSec.style.display = 'none';
