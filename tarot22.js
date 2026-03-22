@@ -306,6 +306,19 @@
         hintEl.style.display = 'none';
       }
     }
+
+    // Hide step sections when meanings panel is shown
+    var zodiacSec = document.getElementById('t22StepZodiac');
+    var spinSec = document.getElementById('t22StepSpin');
+    if (showMeanings) {
+      if (zodiacSec) zodiacSec.style.display = 'none';
+      if (periodSec) periodSec.style.display = 'none';
+      if (spinSec) spinSec.style.display = 'none';
+    } else {
+      if (zodiacSec) zodiacSec.style.display = '';
+      if (periodSec) periodSec.style.display = '';
+      if (spinSec) spinSec.style.display = '';
+    }
   }
 
   // ── Build carousel cards ──
@@ -532,6 +545,7 @@
   function showMeaningsPanel() {
     var bottom = document.getElementById('t22BottomArea');
     showMeanings = true;
+    updateUIState();
 
     var html = '<div class="t22-meanings-wrap">' +
       '<h3 class="t22-meanings-title">' + t('meanTitle') + '</h3>';
