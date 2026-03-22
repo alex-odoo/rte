@@ -476,8 +476,11 @@
     bottom.classList.add('show');
     bottom.scrollIntoView({ behavior: 'smooth' });
 
-    // Render forecast after DOM is ready
-    setTimeout(function() { renderForecast(); }, 50);
+    // Render forecast after DOM is ready, scroll selected zodiac to center
+    setTimeout(function() {
+      renderForecast();
+      scrollZodiacToActive();
+    }, 50);
   }
 
   // ── Build forecast HTML skeleton ──
@@ -667,6 +670,18 @@
     }
   }
 
+  // ── Scroll zodiac row so active button is centered ──
+  function scrollZodiacToActive() {
+    var row = document.getElementById('fcZodiacRow');
+    if (!row) return;
+    var active = row.querySelector('.fc-zodiac-btn.active');
+    if (!active) return;
+    var rowRect = row.getBoundingClientRect();
+    var btnRect = active.getBoundingClientRect();
+    var scrollTarget = active.offsetLeft - (row.clientWidth / 2) + (active.offsetWidth / 2);
+    row.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+  }
+
   // ── Forecast zodiac selection ──
   function selectFcZodiac(index) {
     // Update shared zodiac state
@@ -688,6 +703,7 @@
     }
 
     renderForecast();
+    scrollZodiacToActive();
   }
 
   // ── Forecast period selection ──
