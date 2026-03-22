@@ -67,6 +67,14 @@
   var selectedZodiac = localStorage.getItem('tarot_zodiac') || null;
   var zodiacPanelOpen = false;
   var currentFcPeriod = 'today';
+
+  // ── Step-by-step state machine ──
+  var stepState = {
+    step: 0,        // 0=nothing, 1=zodiac chosen, 2=period chosen, 3=after spin
+    isSpinning: false
+  };
+  // Auto-restore if zodiac was saved
+  if (selectedZodiac !== null) stepState.step = 1;
   var ZODIAC_NAMES = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
   var ZODIAC_SYMBOLS = ['\u2648','\u2649','\u264A','\u264B','\u264C','\u264D','\u264E','\u264F','\u2650','\u2651','\u2652','\u2653'];
 
@@ -106,6 +114,22 @@
         '<p class="t22-subtitle" id="t22Subtitle">' + t('tarotSub') + '</p>' +
         '<div class="t22-title-decor"><span></span><svg viewBox="0 0 24 24" fill="none" stroke="rgba(196,162,101,0.6)" stroke-width="1.5"><path d="M12 2L14 8L20 8L15 12L17 18L12 14L7 18L9 12L4 8L10 8Z"/></svg><span></span></div>' +
       '</div>' +
+      // ── Step 1: Zodiac selector (BEFORE carousel) ──
+      '<div class="t22-step-zodiac" id="t22StepZodiac">' +
+        '<div class="fc-section-title" id="t22FcTitle">' + t('fcTitle') + '</div>' +
+        '<p class="t22-step-hint" id="t22StepHint">' + t('fcSelectZodiac') + '</p>' +
+        '<div class="fc-zodiac-row" id="fcZodiacRow">' + buildZodiacButtons() + '</div>' +
+      '</div>' +
+      // ── Step 2: Period selector (locked until zodiac chosen) ──
+      '<div class="t22-step-period' + (stepState.step < 1 ? ' t22-locked' : '') + '" id="t22StepPeriod">' +
+        '<div class="fc-period-row" id="fcPeriodRow">' + buildPeriodButtons() + '</div>' +
+      '</div>' +
+      // ── Step 3: Spin button (locked until period chosen) ──
+      '<div class="t22-step-spin" id="t22StepSpin">' +
+        '<button class="t22-spin-btn' + (stepState.step < 2 ? ' t22-locked' : ' t22-pulse-glow') + '" id="t22SpinBtn" onclick="window.tarot22.spinAction()"' + (stepState.step < 2 ? ' disabled' : '') + '>' +
+          '\uD83D\uDD2E ' + (t('fcGetForecast') || 'GET FORECAST') +
+        '</button>' +
+      '</div>' +
       '<div class="t22-drawn-panel" id="t22DrawnPanel"></div>' +
       '<div class="t22-scene">' +
         '<div class="t22-carousel" id="t22Carousel"></div>' +
@@ -126,14 +150,6 @@
       '</div>' +
       '<div class="t22-tap-again" id="t22TapAgain"></div>' +
       '<div class="t22-counter" id="t22Counter">' + drawnCards.length + ' / 1</div>' +
-      // Zodiac trigger button (shown after card reveal)
-      '<div class="zodiac-trigger" id="zodiacTrigger">' +
-        '<button onclick="window.tarot22.toggleZodiac()">' +
-          (selectedZodiac !== null ? window.i18n.getZodiacSigns()[selectedZodiac].symbol + ' ' + window.i18n.getZodiacSigns()[selectedZodiac].name : '\u2728 ' + t('zodiacTitle')) +
-        '</button>' +
-      '</div>' +
-      // Zodiac panel
-      '<div class="zodiac-panel" id="zodiacPanel"></div>' +
       // Bottom meanings area
       '<div class="t22-bottom-area" id="t22BottomArea"></div>' +
     '</div>';
@@ -175,6 +191,7 @@
     buildCarousel();
     layoutCards();
     startLoop();
+    updateUIState();
 
     // Touch / click handling
     var page = section.querySelector('.t22-page');
@@ -182,7 +199,7 @@
 
     page.addEventListener('click', function(e) {
       if (Date.now() - lastTouchTime < 500) return;
-      if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel') || e.target.closest('.zodiac-trigger') || e.target.closest('.zodiac-panel')) return;
+      if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel') || e.target.closest('.t22-step-zodiac') || e.target.closest('.t22-step-period') || e.target.closest('.t22-step-spin')) return;
       handleAction();
     }, false);
 
@@ -197,7 +214,7 @@
       var dx = e.touches[0].clientX - touchStartX;
       var dy = e.touches[0].clientY - touchStartY;
       if (Math.abs(dx) > 8 || Math.abs(dy) > 8) isTouchDrag = true;
-      if (!spinning && !revealed && isTouchDrag) {
+      if (!spinning && !revealed && isTouchDrag && stepState.step >= 2) {
         angle += dx * 0.3;
         touchStartX = e.touches[0].clientX;
         layoutCards();
@@ -208,12 +225,87 @@
       lastTouchTime = Date.now();
       var dt = lastTouchTime - touchStartT;
       if (!isTouchDrag && dt < 400) {
-        if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel') || e.target.closest('.zodiac-trigger') || e.target.closest('.zodiac-panel')) return;
+        if (e.target.closest('.t22-bottom-area') || e.target.closest('.t22-drawn-panel') || e.target.closest('.t22-step-zodiac') || e.target.closest('.t22-step-period') || e.target.closest('.t22-step-spin')) return;
         e.preventDefault();
         handleAction();
       }
       isTouchDrag = false;
     }, { passive: false });
+  }
+
+  // ── Build zodiac buttons HTML ──
+  function buildZodiacButtons() {
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var zodiacIdx = selectedZodiac !== null ? parseInt(selectedZodiac) : null;
+    var html = '';
+    for (var i = 0; i < 12; i++) {
+      var signName = signs[i] ? signs[i].name : ZODIAC_NAMES[i];
+      var active = (zodiacIdx === i) ? ' active' : '';
+      html += '<button class="fc-zodiac-btn' + active + '" data-zidx="' + i + '" onclick="window.tarot22.selectFcZodiac(' + i + ')" title="' + signName + '">' +
+        ZODIAC_SYMBOLS[i] +
+        '<span class="fc-zodiac-label">' + signName + '</span>' +
+      '</button>';
+    }
+    return html;
+  }
+
+  // ── Build period buttons HTML ──
+  function buildPeriodButtons() {
+    var periods = getForecastPeriods();
+    var html = '';
+    periods.forEach(function(p) {
+      var active = (currentFcPeriod === p.key) ? ' active' : '';
+      html += '<button class="fc-period-btn' + active + '" data-period="' + p.key + '" onclick="window.tarot22.selectFcPeriod(\'' + p.key + '\')">' +
+        '<span>' + p.label + '</span>' +
+        '<span class="fc-period-sub">' + p.sub + '</span>' +
+      '</button>';
+    });
+    return html;
+  }
+
+  // ── Update UI based on step state ──
+  function updateUIState() {
+    var periodSec = document.getElementById('t22StepPeriod');
+    var spinBtn = document.getElementById('t22SpinBtn');
+    var hintEl = document.getElementById('t22StepHint');
+
+    // Step 1: Period unlock
+    if (periodSec) {
+      if (stepState.step >= 1) {
+        periodSec.classList.remove('t22-locked');
+      } else {
+        periodSec.classList.add('t22-locked');
+      }
+    }
+
+    // Step 2: Spin button unlock
+    if (spinBtn) {
+      if (stepState.step >= 2) {
+        spinBtn.classList.remove('t22-locked');
+        spinBtn.classList.add('t22-pulse-glow');
+        spinBtn.disabled = false;
+        if (stepState.step >= 3) {
+          spinBtn.textContent = '\uD83D\uDD04 ' + (t('fcSpinAgain') || 'SPIN AGAIN');
+        }
+      } else {
+        spinBtn.classList.add('t22-locked');
+        spinBtn.classList.remove('t22-pulse-glow');
+        spinBtn.disabled = true;
+      }
+    }
+
+    // Update hint text
+    if (hintEl) {
+      if (stepState.step === 0) {
+        hintEl.textContent = t('fcSelectZodiac') || 'Select your zodiac sign';
+        hintEl.style.display = '';
+      } else if (stepState.step === 1) {
+        hintEl.textContent = t('fcSelectPeriod') || 'Choose forecast period';
+        hintEl.style.display = '';
+      } else {
+        hintEl.style.display = 'none';
+      }
+    }
   }
 
   // ── Build carousel cards ──
@@ -353,9 +445,10 @@
     updateDrawnPanel();
     spawnParticles(card.colors[0]);
 
-    // Show zodiac trigger
-    var zodiacTrigger = document.getElementById('zodiacTrigger');
-    if (zodiacTrigger) zodiacTrigger.classList.add('show');
+    // Step 3: spin complete
+    stepState.step = 3;
+    stepState.isSpinning = false;
+    updateUIState();
 
     // Show tap again
     var tapAgainEl = document.getElementById('t22TapAgain');
@@ -423,10 +516,6 @@
     document.getElementById('t22Instruction').classList.remove('hidden');
     document.getElementById('t22Instruction').textContent = t('tapDraw') + ' (' + drawnCards.length + '/1)';
     document.getElementById('t22Particles').innerHTML = '';
-    var zodiacTrigger = document.getElementById('zodiacTrigger');
-    if (zodiacTrigger) zodiacTrigger.classList.remove('show');
-    var zodiacPanel = document.getElementById('zodiacPanel');
-    if (zodiacPanel) { zodiacPanel.classList.remove('show'); zodiacPanel.innerHTML = ''; }
 
     var remaining = TAROT.filter(function(c) {
       return !drawnCards.some(function(d) { return d.id === c.id; });
@@ -466,8 +555,27 @@
       '</div>';
     });
 
-    // ── Forecast section ──
-    html += buildForecastSection();
+    // ── Inline forecast block (zodiac/period already at top of page) ──
+    if (window.forecast) {
+      html += '<div class="forecast-section" id="fcSection">' +
+        '<div class="fc-section-divider"></div>' +
+        '<div class="fc-section-title">' + t('fcTitle') + '</div>' +
+        '<div class="fc-section-divider"></div>' +
+        '<div class="fc-block" id="fcBlock">' +
+          '<div class="fc-header">' +
+            '<span class="fc-badge" id="fcMoonBadge"></span>' +
+            '<span class="fc-badge" id="fcPlanetBadge"></span>' +
+          '</div>' +
+          '<div class="fc-text" id="fcText"></div>' +
+          '<div class="fc-footer">' +
+            '<span id="fcSignLabel"></span>' +
+            '<span>\u2022</span>' +
+            '<span id="fcDateLabel"></span>' +
+            '<span class="fc-tone" id="fcToneLabel"></span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
 
     html += '<button class="t22-btn-new-reading" onclick="window.tarot22.newReading()">' + t('newReading') + '</button>';
     html += '</div>';
@@ -476,10 +584,9 @@
     bottom.classList.add('show');
     bottom.scrollIntoView({ behavior: 'smooth' });
 
-    // Render forecast after DOM is ready, scroll selected zodiac to center
+    // Render forecast after DOM is ready
     setTimeout(function() {
       renderForecast();
-      scrollZodiacToActive();
     }, 50);
   }
 
@@ -684,7 +791,6 @@
 
   // ── Forecast zodiac selection ──
   function selectFcZodiac(index) {
-    // Update shared zodiac state
     selectedZodiac = index;
     localStorage.setItem('tarot_zodiac', index);
 
@@ -694,20 +800,20 @@
       b.classList.toggle('active', i === index);
     });
 
-    // Also update the trigger button if visible
-    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
-    var sign = signs[index];
-    var trigger = document.getElementById('zodiacTrigger');
-    if (trigger && sign) {
-      trigger.querySelector('button').textContent = sign.symbol + ' ' + sign.name;
-    }
+    // Advance step
+    if (stepState.step < 1) stepState.step = 1;
+    updateUIState();
 
-    renderForecast();
+    // Re-render forecast if already shown
+    if (stepState.step >= 3 && drawnCards.length > 0) {
+      renderForecast();
+    }
     scrollZodiacToActive();
   }
 
   // ── Forecast period selection ──
   function selectFcPeriod(period) {
+    if (stepState.step < 1) return; // Periods locked
     currentFcPeriod = period;
 
     var btns = document.querySelectorAll('.fc-period-btn');
@@ -715,7 +821,13 @@
       b.classList.toggle('active', b.dataset.period === period);
     });
 
-    renderForecast();
+    if (stepState.step < 2) stepState.step = 2;
+    updateUIState();
+
+    // Re-render forecast if already shown
+    if (stepState.step >= 3 && drawnCards.length > 0) {
+      renderForecast();
+    }
   }
 
   // ── Zodiac panel ──
@@ -776,13 +888,41 @@
     document.getElementById('t22BottomArea').classList.remove('show');
     document.getElementById('t22Counter').textContent = '0 / 1';
     document.getElementById('t22Counter').classList.remove('show');
-    var zodiacTrigger = document.getElementById('zodiacTrigger');
-    if (zodiacTrigger) zodiacTrigger.classList.remove('show');
-    var zodiacPanel = document.getElementById('zodiacPanel');
-    if (zodiacPanel) { zodiacPanel.classList.remove('show'); zodiacPanel.innerHTML = ''; }
     updateDrawnPanel();
+
+    // Keep zodiac selection but reset step to match
+    stepState.step = selectedZodiac !== null ? 1 : 0;
+    stepState.isSpinning = false;
+    updateUIState();
+
+    // Reset spin button text
+    var spinBtn = document.getElementById('t22SpinBtn');
+    if (spinBtn) spinBtn.textContent = '\uD83D\uDD2E ' + (t('fcGetForecast') || 'GET FORECAST');
+
     resetForNextDraw();
     document.getElementById('t22Instruction').textContent = t('tapDrawCard');
+  }
+
+  // ── Spin action from button or tap ──
+  function spinAction() {
+    if (stepState.step < 2 || stepState.isSpinning) return;
+    doSpin();
+  }
+
+  function doSpin() {
+    stepState.isSpinning = true;
+    readingActive = true;
+    spinning = true;
+    spinStartTime = Date.now();
+    speed = 20;
+    document.getElementById('t22Instruction').classList.add('hidden');
+
+    // Hide previous forecast if re-spinning
+    var bottom = document.getElementById('t22BottomArea');
+    if (bottom) { bottom.classList.remove('show'); bottom.innerHTML = ''; }
+    showMeanings = false;
+
+    startLoop();
   }
 
   // ── Core action handler ──
@@ -797,8 +937,6 @@
         document.getElementById('t22Glow').classList.remove('show');
         document.getElementById('t22TapAgain').classList.remove('show');
         document.getElementById('t22Particles').innerHTML = '';
-        var zodiacTrigger = document.getElementById('zodiacTrigger');
-        if (zodiacTrigger) zodiacTrigger.classList.remove('show');
         showMeaningsPanel();
         return;
       }
@@ -813,12 +951,9 @@
       return;
     }
 
-    readingActive = true;
-    spinning = true;
-    spinStartTime = Date.now();
-    speed = 20;
-    document.getElementById('t22Instruction').classList.add('hidden');
-    startLoop();
+    // Only allow spin if step >= 2
+    if (stepState.step < 2) return;
+    doSpin();
   }
 
   // ── Language change handler ──
@@ -843,12 +978,13 @@
       zodiacPanelOpen = false;
       angle = 0;
       speed = 0;
+      stepState.step = selectedZodiac !== null ? 1 : 0;
+      stepState.isSpinning = false;
     },
     newReading: newReading,
-    toggleZodiac: toggleZodiac,
-    selectZodiac: selectZodiac,
     selectFcZodiac: selectFcZodiac,
     selectFcPeriod: selectFcPeriod,
+    spinAction: spinAction,
     applyLanguage: applyLanguageT22
   };
 

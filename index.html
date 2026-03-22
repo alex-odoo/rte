@@ -849,6 +849,103 @@
     .fc-period-sub{font-size:10px}
     .fc-text{font-size:17px;line-height:1.75}
   }
+
+  /* ══════════════════════════════════════════════════════
+     Step-by-step UI: zodiac → period → spin → carousel
+     ══════════════════════════════════════════════════════ */
+  .t22-step-zodiac{
+    text-align:center;padding:4px 10px 8px;
+    position:relative;z-index:10;
+  }
+  .t22-step-hint{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(12px,3vw,14px);
+    color:rgba(255,215,0,.5);letter-spacing:1.5px;
+    margin:2px 0 8px;
+    animation:t22HintPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes t22HintPulse{
+    0%,100%{opacity:.5}50%{opacity:.85}
+  }
+  .t22-step-period{
+    text-align:center;padding:0 10px;
+    position:relative;z-index:10;
+    transition:opacity .4s ease,filter .4s ease,transform .4s ease;
+  }
+  .t22-step-spin{
+    text-align:center;padding:8px 10px 4px;
+    position:relative;z-index:10;
+  }
+
+  /* ── Locked state ── */
+  .t22-locked{
+    opacity:.35 !important;
+    pointer-events:none !important;
+    filter:grayscale(.25);
+  }
+
+  /* ── Spin button ── */
+  .t22-spin-btn{
+    display:inline-block;
+    padding:14px 44px;border-radius:30px;
+    border:2px solid #FFD700;
+    background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,140,0,.08));
+    color:#FFD700;font-size:clamp(14px,3.5vw,17px);
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    cursor:pointer;transition:all .3s ease;
+    outline:none;-webkit-tap-highlight-color:transparent;
+  }
+  .t22-spin-btn:active:not(.t22-locked){transform:scale(.95)}
+  .t22-spin-btn.t22-locked{
+    opacity:.3;border-color:rgba(255,215,0,.2);cursor:default;
+  }
+
+  /* ── Pulse glow for active spin button ── */
+  .t22-spin-btn.t22-pulse-glow{
+    animation:t22SpinPulse 2s ease-in-out infinite;
+  }
+  @keyframes t22SpinPulse{
+    0%,100%{box-shadow:0 0 18px rgba(255,215,0,.25)}
+    50%{box-shadow:0 0 36px rgba(255,215,0,.5),0 0 60px rgba(255,215,0,.15)}
+  }
+
+  /* ── Zodiac buttons pulse when no selection ── */
+  .t22-step-zodiac .fc-zodiac-row:not(:has(.fc-zodiac-btn.active)) .fc-zodiac-btn{
+    animation:t22ZodiacPulse 3s ease-in-out infinite;
+  }
+  @keyframes t22ZodiacPulse{
+    0%,100%{border-color:rgba(255,215,0,.25)}
+    50%{border-color:rgba(255,215,0,.55)}
+  }
+
+  /* ── Unlock fade-in ── */
+  .t22-step-period:not(.t22-locked){
+    animation:t22UnlockIn .45s ease-out;
+  }
+  @keyframes t22UnlockIn{
+    from{opacity:.35;transform:translateY(6px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ── Mobile: bigger step buttons ── */
+  @media(max-width:480px){
+    .t22-spin-btn{padding:16px 36px;font-size:16px;letter-spacing:1.5px}
+    .t22-step-zodiac .fc-zodiac-row{
+      flex-wrap:nowrap;justify-content:flex-start;
+      gap:10px;padding:14px 8px 28px;
+      overflow-x:auto;
+    }
+    .t22-step-zodiac .fc-zodiac-btn{width:56px;height:56px;font-size:24px}
+    .t22-step-zodiac .fc-zodiac-label{bottom:-20px;font-size:12px}
+    .t22-step-period .fc-period-row{gap:6px;padding:8px 2px 14px}
+    .t22-step-period .fc-period-btn{padding:10px 14px;font-size:15px}
+  }
+  @media(max-width:360px){
+    .t22-step-zodiac .fc-zodiac-btn{width:50px;height:50px;font-size:22px}
+    .t22-step-period .fc-period-btn{padding:9px 11px;font-size:14px}
+    .t22-spin-btn{padding:14px 28px;font-size:15px}
+  }
 </style>
 </head>
 <body>
