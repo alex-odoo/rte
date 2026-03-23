@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Tarot Card — Free Tarot Reading for Today | Tarot Carousel</title>
+<meta name="description" content="Draw your free daily tarot card and get guidance for today. New card every day based on the Major Arcana. Start your morning with spiritual insight and daily tarot predictions.">
+<meta name="keywords" content="daily tarot, daily tarot card, tarot of the day, free daily tarot reading, today's tarot card, daily tarot guidance">
+<link rel="canonical" href="https://tarocarousel.online/daily/">
+<link rel="alternate" hreflang="en" href="https://tarocarousel.online/daily/">
+<link rel="alternate" hreflang="ru" href="https://tarocarousel.online/daily/?lang=ru">
+<link rel="alternate" hreflang="uk" href="https://tarocarousel.online/daily/?lang=uk">
+<link rel="alternate" hreflang="x-default" href="https://tarocarousel.online/daily/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Daily Tarot Card — Free Tarot Reading for Today">
+<meta property="og:description" content="Draw your free daily tarot card and get guidance for today. New card every day based on the Major Arcana.">
+<meta property="og:url" content="https://tarocarousel.online/daily/">
+<meta property="og:site_name" content="Tarot Carousel">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daily Tarot Card — Free Tarot Reading for Today">
+<meta name="twitter:description" content="Draw your free daily tarot card and get guidance for today. New card every day based on the Major Arcana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0b1a;color:#e0dce8;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;line-height:1.7;min-height:100vh}
+h1,h2,h3{font-family:'Cinzel',serif;color:#c4a265;line-height:1.3}
+h1{font-size:clamp(1.6rem,5vw,2.6rem);text-align:center;margin-bottom:.6em}
+h2{font-size:clamp(1.3rem,4vw,2rem);margin-bottom:.8em;position:relative;padding-bottom:.4em}
+h2::after{content:'';display:block;width:60px;height:2px;background:linear-gradient(90deg,#c4a265,transparent);margin-top:.4em}
+a{color:#c4a265;text-decoration:none;transition:color .2s}
+a:hover{color:#e2c97e}
+.wrap{max-width:800px;margin:0 auto;padding:0 20px}
+header{text-align:center;padding:50px 20px 30px;background:linear-gradient(180deg,#1a1333 0%,#0d0b1a 100%)}
+header .subtitle{font-size:clamp(1rem,3vw,1.2rem);color:#9a8fb8;margin-top:.3em;font-style:italic}
+.intro{padding:30px 20px;max-width:800px;margin:0 auto;font-size:clamp(1rem,3vw,1.15rem);color:#c8c2d6}
+.intro p{margin-bottom:1em}
+/* Daily Card Feature */
+.daily-card-section{padding:30px 20px;max-width:800px;margin:0 auto}
+.daily-card-header{text-align:center;margin-bottom:25px}
+.daily-card-header h2::after{margin:8px auto 0}
+.date-badge{display:inline-block;background:linear-gradient(135deg,#1e1840,#2a1f50);border:1px solid #c4a26540;border-radius:30px;padding:8px 24px;font-family:'Cinzel',serif;font-size:.95rem;color:#c4a265;margin-bottom:15px;letter-spacing:.05em}
+.card-display{background:linear-gradient(145deg,#16112e,#1c1640);border:1px solid #c4a26530;border-radius:16px;padding:40px 30px;text-align:center;position:relative;overflow:hidden;margin-bottom:25px}
+.card-display::before{content:'';position:absolute;inset:-2px;border-radius:17px;background:conic-gradient(from 0deg,#c4a26500,#c4a26580,#c4a26500,#c4a26540,#c4a26500);animation:cardGlow 4s linear infinite;z-index:0;opacity:.6}
+.card-display::after{content:'';position:absolute;inset:1px;border-radius:15px;background:linear-gradient(145deg,#16112e,#1c1640);z-index:1}
+.card-inner{position:relative;z-index:2}
+.card-emoji{font-size:clamp(3.5rem,10vw,5rem);display:block;margin-bottom:10px;filter:drop-shadow(0 0 20px #c4a26550)}
+.card-number{font-family:'Cinzel',serif;font-size:.85rem;color:#9a8fb8;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
+.card-name{font-family:'Cinzel',serif;font-size:clamp(1.5rem,5vw,2.2rem);color:#c4a265;margin-bottom:12px;text-shadow:0 0 20px #c4a26530}
+.card-meaning{font-size:clamp(1rem,3vw,1.15rem);color:#c8c2d6;max-width:500px;margin:0 auto 16px;font-style:italic}
+.card-daily-msg{font-size:clamp(1.05rem,3vw,1.2rem);color:#e2c97e;font-weight:600;padding:12px 20px;background:#c4a26510;border-radius:10px;display:inline-block}
+.card-guidance{background:linear-gradient(135deg,#1a1338,#14102a);border-left:3px solid #c4a265;border-radius:0 10px 10px 0;padding:20px 24px;margin:20px 0;font-size:clamp(1rem,3vw,1.1rem);color:#c8c2d6;line-height:1.8}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:25px 0}
+.btn{display:inline-block;padding:14px 30px;border-radius:30px;font-family:'Cinzel',serif;font-size:1rem;font-weight:600;cursor:pointer;border:none;transition:all .3s}
+.btn-secondary{background:transparent;border:2px solid #c4a265;color:#c4a265}
+.btn-secondary:hover{background:#c4a26520;transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(135deg,#c4a265,#a8863f);color:#0d0b1a;box-shadow:0 4px 20px #c4a26540}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 30px #c4a26560}
+/* Content Sections */
+.content-section{padding:40px 20px;max-width:800px;margin:0 auto}
+.content-section+.content-section{border-top:1px solid #ffffff0a}
+.content-section p{margin-bottom:1em;color:#c8c2d6}
+.benefits-list{list-style:none;padding:0}
+.benefits-list li{padding:14px 0 14px 36px;position:relative;border-bottom:1px solid #ffffff06;color:#c8c2d6}
+.benefits-list li::before{content:'';position:absolute;left:0;top:20px;width:20px;height:20px;background:radial-gradient(circle,#c4a265,transparent);border-radius:50%;opacity:.7}
+.benefits-list li strong{color:#c4a265;display:block;margin-bottom:2px}
+.tips-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:600px){.tips-grid{grid-template-columns:1fr 1fr}}
+.tip-card{background:linear-gradient(135deg,#16112e,#1a1440);border:1px solid #ffffff0a;border-radius:12px;padding:20px}
+.tip-card h3{font-size:1rem;margin-bottom:8px;color:#c4a265}
+.tip-card p{font-size:.95rem;color:#b0a8c4;margin:0}
+.monthly-section{background:linear-gradient(180deg,#1a133308,#1e174010,#1a133308);padding:40px 20px;text-align:center}
+.monthly-section .wrap{max-width:800px}
+.monthly-badge{display:inline-block;font-family:'Cinzel',serif;font-size:clamp(1.1rem,3.5vw,1.4rem);color:#c4a265;border:1px solid #c4a26540;border-radius:30px;padding:10px 28px;margin-bottom:16px;background:#c4a26508}
+.cta-section{text-align:center;padding:50px 20px;background:linear-gradient(180deg,#0d0b1a,#1a1338)}
+.cta-section h2{margin-bottom:.4em}
+.cta-section h2::after{margin:8px auto 0}
+.cta-section p{color:#9a8fb8;margin-bottom:25px;font-size:1.1rem}
+.internal-links{padding:30px 20px;max-width:800px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.internal-links a{padding:8px 18px;border:1px solid #c4a26530;border-radius:20px;font-size:.9rem;color:#9a8fb8;transition:all .25s}
+.internal-links a:hover{border-color:#c4a265;color:#c4a265;background:#c4a26510}
+footer{text-align:center;padding:30px 20px;border-top:1px solid #ffffff0a;color:#6b6280;font-size:.85rem}
+footer a{color:#9a8fb8}
+@keyframes cardGlow{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.fade-up{animation:fadeUp .6s ease-out both}
+/* Sunrise accent */
+.sunrise-accent{height:3px;background:linear-gradient(90deg,#c4a26500,#d4a04a,#e8b85a,#f0c866,#e8b85a,#d4a04a,#c4a26500);margin:30px auto;max-width:300px;border-radius:2px;opacity:.6}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebPage",
+  "name":"Daily Tarot Card — Free Tarot Reading for Today",
+  "description":"Draw your free daily tarot card and get guidance for today. New card every day based on the Major Arcana.",
+  "url":"https://tarocarousel.online/daily/",
+  "dateModified":"2026-03-23",
+  "isPartOf":{"@type":"WebSite","name":"Tarot Carousel","url":"https://tarocarousel.online/"},
+  "breadcrumb":{"@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://tarocarousel.online/"},
+    {"@type":"ListItem","position":2,"name":"Daily Tarot","item":"https://tarocarousel.online/daily/"}
+  ]}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"How does a daily tarot reading work?",
+      "acceptedAnswer":{"@type":"Answer","text":"A daily tarot reading draws one card from the Major Arcana each morning. The card is selected using a date-based algorithm so everyone receives the same universal card for the day. It provides a theme, guidance, and reflection point for your day ahead."}
+    },
+    {
+      "@type":"Question",
+      "name":"Can I draw more than one tarot card per day?",
+      "acceptedAnswer":{"@type":"Answer","text":"While the Card of the Day is the same for everyone, you can draw additional random cards for extra insight. Many practitioners recommend focusing on one card to keep your daily intention clear, but there is no strict rule against multiple draws."}
+    },
+    {
+      "@type":"Question",
+      "name":"Is daily tarot reading free on Tarot Carousel?",
+      "acceptedAnswer":{"@type":"Answer","text":"Yes, Tarot Carousel offers completely free daily tarot readings with no account required. You can visit the site each day for your card, or use the full interactive carousel for a personalized forecast based on your zodiac sign."}
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Daily Tarot Card — Your Free Tarot Reading for Today</h1>
+    <p class="subtitle">A new card of wisdom every day from the 22 Major Arcana</p>
+  </div>
+  <div class="sunrise-accent"></div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <p>A <strong>daily tarot card</strong> reading is one of the most powerful ways to start your morning with clarity and purpose. Each day, the Major Arcana offers a unique message — a lens through which you can view the hours ahead. Whether you are a seasoned reader or simply curious, pulling a <strong>tarot card of the day</strong> helps you tune into the energy surrounding you right now.</p>
+    <p>The practice is simple yet profound. One card, drawn with intention, becomes your guide. It might confirm what you already feel, reveal a hidden challenge, or inspire you to see the day from a fresh perspective. Our <strong>free daily tarot reading</strong> uses all 22 Major Arcana cards — the soul's journey from the innocent Fool to the triumphant World — ensuring that every day carries its own archetypal wisdom. No sign-ups, no fees — just a moment of reflection each morning.</p>
+  </div>
+</section>
+
+<section class="daily-card-section">
+  <div class="daily-card-header">
+    <div class="date-badge" id="dateBadge"></div>
+    <h2>Your Card for Today</h2>
+  </div>
+  <div class="card-display fade-up">
+    <div class="card-inner">
+      <span class="card-emoji" id="cardEmoji"></span>
+      <div class="card-number" id="cardNumber"></div>
+      <div class="card-name" id="cardName"></div>
+      <p class="card-meaning" id="cardMeaning"></p>
+      <div class="card-daily-msg" id="cardDailyMsg"></div>
+    </div>
+  </div>
+  <div class="card-guidance" id="cardGuidance"></div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" id="btnDrawAnother">Draw Another Card</button>
+    <a class="btn btn-primary" href="https://tarocarousel.online/">Get Full Personalized Forecast</a>
+  </div>
+</section>
+
+<div class="sunrise-accent"></div>
+
+<section class="content-section">
+  <div class="wrap">
+    <h2>How Daily Tarot Works</h2>
+    <p>Daily tarot is built on a time-honored tradition: drawing a single card each day as a meditation point. Unlike a full spread that maps past, present, and future, the daily draw focuses entirely on the energy of <em>today</em>. Each of the 22 Major Arcana represents a universal archetype — from the adventurous spirit of The Fool to the fulfilled wholeness of The World.</p>
+    <p>On Tarot Carousel, your daily tarot card is determined by the calendar date, which means the entire community shares the same universal card. This creates a collective resonance — thousands of people reflecting on the same archetypal energy. The algorithm uses a simple date-based seed, ensuring the card changes exactly at midnight and remains consistent throughout the day.</p>
+    <p>Think of it as a daily horoscope, but deeper. While a horoscope tells you what might happen, a tarot card asks you to consider <em>how</em> you want to engage with the day. It is not fortune-telling — it is a tool for mindful living. Sit with the card for a minute, read its meaning, and carry its message as a quiet companion through whatever the day brings.</p>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="wrap">
+    <h2>Benefits of Daily Tarot Practice</h2>
+    <ul class="benefits-list">
+      <li>
+        <strong>Morning Clarity</strong>
+        Starting your day with a tarot card creates a moment of stillness. Before the rush of emails and tasks, you set an intention that grounds your entire day.
+      </li>
+      <li>
+        <strong>Heightened Intuition</strong>
+        Regular card reading trains your subconscious to notice patterns, symbols, and gut feelings — skills that extend far beyond the tarot deck.
+      </li>
+      <li>
+        <strong>Emotional Awareness</strong>
+        Each card reflects an emotional landscape. By checking in with the card's energy, you become more attuned to your own moods and reactions throughout the day.
+      </li>
+      <li>
+        <strong>Decision-Making Support</strong>
+        When faced with a choice, recalling your daily card can offer a framework. Should you be bold like The Chariot or patient like The Hermit?
+      </li>
+      <li>
+        <strong>Stress Reduction</strong>
+        The ritual aspect of pulling a card — the brief pause, the focus, the reflection — acts as a micro-meditation that lowers stress and centers your mind.
+      </li>
+      <li>
+        <strong>Personal Growth Tracking</strong>
+        Over weeks and months, you begin to see which cards appear most often and which themes recur. This becomes a map of your evolving inner life.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="wrap">
+    <h2>Tips for Your Daily Reading</h2>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <h3>Read Before You Rush</h3>
+        <p>Pull your card first thing in the morning, before checking your phone. A calm mind receives the card's message more clearly.</p>
+      </div>
+      <div class="tip-card">
+        <h3>Ask a Question</h3>
+        <p>Even a simple "What should I focus on today?" gives the card context and makes the reading feel personal and directed.</p>
+      </div>
+      <div class="tip-card">
+        <h3>Journal Your Card</h3>
+        <p>Write down the card and one sentence about what it means to you right now. At month's end, review your entries for patterns.</p>
+      </div>
+      <div class="tip-card">
+        <h3>Revisit at Night</h3>
+        <p>Before bed, recall the morning's card. Did its energy show up during the day? This reflection deepens your connection to the practice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="wrap">
+    <h2 id="todayMeaningTitle">Today's Card Meaning</h2>
+    <div id="todayMeaningBody"></div>
+  </div>
+</section>
+
+<div class="sunrise-accent"></div>
+
+<section class="monthly-section">
+  <div class="wrap">
+    <div class="monthly-badge" id="monthBadge"></div>
+    <h2>Monthly Tarot Energy</h2>
+    <p id="monthText"></p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap">
+    <h2>Get Your Personalized Forecast</h2>
+    <p>Go beyond the daily card. Spin the full 22-card carousel, choose your zodiac sign, and receive a detailed forecast tailored to you.</p>
+    <a class="btn btn-primary" href="https://tarocarousel.online/">Open Tarot Carousel</a>
+  </div>
+</section>
+
+<nav class="internal-links" aria-label="Related pages">
+  <a href="https://tarocarousel.online/">Home — Interactive Carousel</a>
+  <a href="https://tarocarousel.online/tarot-card-meanings/">Tarot Card Meanings</a>
+  <a href="https://tarocarousel.online/yes-or-no/">Yes or No Tarot</a>
+  <a href="https://tarocarousel.online/love-reading/">Love Tarot Reading</a>
+</nav>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 <a href="https://tarocarousel.online/">Tarot Carousel</a> — Free Online Tarot Readings</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var CARDS=[
+    {id:0,name:"The Fool",emoji:"\ud83c\udccf",upright:"New beginnings and spontaneity define The Fool. It invites you to step into the unknown with trust and an open heart.",daily:"Today embraces fresh starts."},
+    {id:1,name:"The Magician",emoji:"\ud83c\udfa9",upright:"Manifestation and resourcefulness are at your fingertips. The Magician reminds you that you already possess every tool you need.",daily:"Your skills are ready to shine."},
+    {id:2,name:"The High Priestess",emoji:"\ud83c\udf19",upright:"Intuition and hidden knowledge surface with The High Priestess. She asks you to look beyond the obvious and trust your inner wisdom.",daily:"Listen to your inner voice today."},
+    {id:3,name:"The Empress",emoji:"\ud83d\udc51",upright:"Abundance and nurturing energy flow through The Empress. She encourages creativity, comfort, and caring for yourself and others.",daily:"Nurture what matters most."},
+    {id:4,name:"The Emperor",emoji:"\ud83c\udff0",upright:"Structure and authority ground The Emperor's energy. He calls you to take command, set boundaries, and build something lasting.",daily:"Take charge of your path."},
+    {id:5,name:"The Hierophant",emoji:"\u26ea",upright:"Tradition and spiritual guidance define The Hierophant. He points toward mentors, established wisdom, and the value of shared beliefs.",daily:"Seek wisdom from mentors."},
+    {id:6,name:"The Lovers",emoji:"\ud83d\udc95",upright:"Love, harmony, and meaningful choices converge in The Lovers. This card calls for alignment between your heart and your values.",daily:"Follow your heart's true desire."},
+    {id:7,name:"The Chariot",emoji:"\ud83c\udfce\ufe0f",upright:"Willpower and determination drive The Chariot forward. It signals a time to harness your focus and push through any obstacle.",daily:"Stay determined, victory awaits."},
+    {id:8,name:"Strength",emoji:"\ud83e\udd81",upright:"Courage and quiet patience define true Strength. This card reminds you that gentleness and resilience are not opposites but partners.",daily:"Inner strength guides you."},
+    {id:9,name:"The Hermit",emoji:"\ud83c\udfd4\ufe0f",upright:"Reflection and inner solitude light The Hermit's lantern. Step back from the noise and seek the answers that only silence can offer.",daily:"Take time for quiet reflection."},
+    {id:10,name:"Wheel of Fortune",emoji:"\ud83c\udfa1",upright:"Change and destiny turn the great Wheel. Cycles end and begin — what rises must also transform, and that is where opportunity lives.",daily:"Change brings new opportunities."},
+    {id:11,name:"Justice",emoji:"\u2696\ufe0f",upright:"Fairness and truth stand at the heart of Justice. Decisions made now carry weight — act with integrity and clarity of purpose.",daily:"Balance and truth lead the way."},
+    {id:12,name:"The Hanged Man",emoji:"\ud83d\ude43",upright:"Pause and surrender are The Hanged Man's gifts. By releasing control and shifting perspective, new understanding flows in.",daily:"See things from a new angle."},
+    {id:13,name:"Death",emoji:"\ud83d\udc80",upright:"Transformation and endings clear the path for renewal. Death is not destruction — it is composting the old so new life can grow.",daily:"Release the old, welcome renewal."},
+    {id:14,name:"Temperance",emoji:"\u2697\ufe0f",upright:"Balance and moderation blend opposing forces into harmony. Temperance asks you to find the middle way and trust the process.",daily:"Find harmony in all things."},
+    {id:15,name:"The Devil",emoji:"\ud83d\ude08",upright:"Temptation and shadow work surface with The Devil. Recognize what binds you — awareness is the first step toward liberation.",daily:"Break free from what holds you."},
+    {id:16,name:"The Tower",emoji:"\ud83d\uddfc",upright:"Upheaval and sudden revelation shake The Tower's foundations. What crumbles was never built to last — breakthroughs follow breakdowns.",daily:"Breakthroughs come through change."},
+    {id:17,name:"The Star",emoji:"\u2b50",upright:"Hope and inspiration pour from The Star like healing water. After turmoil, this card promises calm, clarity, and renewed faith.",daily:"Hope lights your path forward."},
+    {id:18,name:"The Moon",emoji:"\ud83c\udf15",upright:"Illusion and deep intuition walk together under The Moon. Not everything is as it seems — trust your feelings over appearances.",daily:"Trust your intuition today."},
+    {id:19,name:"The Sun",emoji:"\u2600\ufe0f",upright:"Joy and radiant success illuminate The Sun. This is a card of celebration, vitality, and the confidence that comes from being truly yourself.",daily:"Joy and success surround you."},
+    {id:20,name:"Judgement",emoji:"\ud83d\udcef",upright:"Reflection and a higher calling ring through Judgement. It is time to evaluate your journey honestly and answer the call to rise.",daily:"Answer your higher calling."},
+    {id:21,name:"The World",emoji:"\ud83c\udf0d",upright:"Completion and wholeness crown The World. A cycle has fulfilled itself — honor the journey and prepare for the next chapter.",daily:"Celebrate how far you've come."}
+  ];
+
+  var DEEP_MEANINGS=[
+    "The Fool marks the very start of the soul's journey through the Major Arcana. Numbered zero, it exists outside the ordinary sequence — a pure potentiality before any path has been chosen. When The Fool appears as your daily card, the universe encourages you to approach today without rigid expectations. Embrace curiosity, welcome surprises, and remember that every expert was once a beginner. The Fool does not ask you to be reckless; it asks you to be courageous enough to begin.",
+    "The Magician channels all four elements — fire, water, air, earth — into focused intention. As Card I, it represents the conscious mind at its sharpest. Today, your ability to communicate, create, and transform is amplified. Pay attention to the resources already around you: a conversation, a skill, a half-finished idea. The Magician reminds you that willpower directed with clarity can turn potential into reality before the day is done.",
+    "The High Priestess sits between the pillars of the known and unknown, guarding the threshold of the subconscious. As your card today, she invites you to slow down and listen — to dreams, hunches, and that quiet feeling you often dismiss. Logic has its place, but today wisdom arrives through intuition. Let silence speak. The answers you seek are already within you; The High Priestess simply asks you to trust them.",
+    "The Empress overflows with creative and nurturing energy, connecting you to the natural world and the body's wisdom. Today is a day for growth — whether that means tending a relationship, a project, or yourself. Cook a nourishing meal, take a walk in nature, or simply allow yourself the pleasure of beauty. The Empress teaches that abundance is not something you chase; it is something you cultivate by caring deeply.",
+    "The Emperor represents order, structure, and the power of disciplined action. When this card rules your day, it asks you to lead — yourself first, then others. Set clear goals, establish boundaries, and follow through on commitments. The Emperor does not micromanage; he builds systems that sustain. Today, think about the foundations you are laying for the future and whether they are solid enough to hold your ambitions.",
+    "The Hierophant bridges the spiritual and the material through tradition and teaching. Today favors learning from those who have walked the path before you — a mentor, a book, a time-tested practice. This card also asks whether you are living in alignment with your own core beliefs. Conformity for its own sake stifles the soul, but honoring genuine values provides a compass that never fails.",
+    "The Lovers present a crossroads where heart and mind must come into alignment. This is not only about romance — it is about any choice that defines who you are. Today, examine where your actions match your deepest values. Authentic partnerships, whether personal or professional, thrive when both sides choose each other honestly. Let love — in all its forms — be a conscious, courageous decision.",
+    "The Chariot surges forward with unstoppable will, harnessing opposing forces into a single direction. When this card drives your day, obstacles become fuel. The key is control — not suppression, but skillful navigation. Channel any tension or conflict into productive momentum. The Chariot does not promise an easy road, but it promises that your determination is strong enough to reach the destination.",
+    "Strength asks you to master yourself with compassion rather than force. The lion on this card is not conquered — it is befriended. Today, patience and gentleness are your greatest powers. Where anger or frustration arises, meet it with calm understanding. True strength is not about overpowering others; it is about knowing you can, and choosing kindness instead. That quiet confidence will carry you further than any roar.",
+    "The Hermit withdraws from the world not to escape it, but to understand it more deeply. Today is ideal for solitary reflection — even a few minutes of quiet journaling or a meditative walk can yield profound clarity. The Hermit's lantern lights only the next step, not the entire path, and that is enough. Trust that the insights you discover in stillness will illuminate the way forward.",
+    "The Wheel of Fortune reminds you that nothing is permanent — not hardship, not comfort, not stagnation. Change is the only constant, and today that turning wheel is especially active. If things are going well, savor the moment. If difficulties arise, know that the rotation continues. The deepest lesson of the Wheel is to find your still center while the world spins around you.",
+    "Justice asks for radical honesty. Today, the truth — about a situation, a relationship, or yourself — demands your attention. This card does not punish; it clarifies. Decisions made with integrity now will produce fair outcomes later. If you have been avoiding a difficult conversation or an inconvenient fact, Justice gently insists that facing it head-on will free you from its weight.",
+    "The Hanged Man invites you to surrender the need to act and instead allow understanding to arrive. Today may feel slow or stalled, and that is exactly the point. By pausing, you see what constant motion hides. Let go of one fixed opinion or expectation and notice how the world rearranges itself. The sacrifice is small — a little ego, a little control — but the reward is a perspective shift that changes everything.",
+    "Death is the great transformer, clearing away what has reached its natural end. Today, something — a habit, a mindset, a chapter — is ready to be released. This card does not predict literal loss; it celebrates the compost from which new growth springs. Honor what was, grieve if needed, and then turn toward the open space that remains. Endings are beginnings in disguise.",
+    "Temperance blends fire and water, action and rest, ambition and acceptance into a golden middle path. Today is about proportion. Where have you been overextending? Where have you been holding back? This card asks you to pour your energy deliberately, mixing just the right amounts of effort and ease. The result is a day that feels balanced, purposeful, and surprisingly serene.",
+    "The Devil shines a light on the chains you wear voluntarily — habits, fears, attachments that feel too comfortable to question. Today, notice where you tell yourself 'I have no choice' and ask whether that is really true. The Devil's chains are loose; you can slip them off any time. Awareness is freedom. Name the pattern, and it loses half its power over you.",
+    "The Tower strikes when structures built on shaky foundations can no longer stand. Today may bring a surprise — an unexpected truth, a disruption, a moment of clarity that feels like lightning. Rather than resist, let the walls fall. What remains after The Tower's storm is always more authentic than what came before. Rebuilding from truth is liberating, even when the initial shock feels overwhelming.",
+    "The Star follows the storm of The Tower with gentle, healing light. Today carries a message of hope, inspiration, and quiet confidence that everything will work out. Pour your energy into what nurtures you — creative pursuits, acts of kindness, moments of beauty. The Star does not shout; it glows. Let its calm radiance remind you that even after the darkest night, dawn always arrives.",
+    "The Moon illuminates the landscape of the subconscious — dreams, fears, and illusions emerge from the shadows. Today, not everything is as it appears. Rather than forcing clarity, allow ambiguity. Pay attention to your dreams, your emotional reactions, and the stories you tell yourself. The Moon teaches that sometimes the way forward is to walk gently through the fog, trusting each step.",
+    "The Sun radiates pure, uncomplicated joy. Today is a day to be yourself without apology — to laugh, to create, to celebrate the simple fact of being alive. The Sun card asks no riddles and hides no shadows. It simply shines. Let its warmth burn away self-doubt and remind you that at your core, you are made of light. Share that light generously.",
+    "Judgement calls from the heights, asking you to review your journey with honesty and compassion. Today is a day of reckoning — not punishment, but evaluation. What have you learned? What old version of yourself are you ready to release? Judgement offers resurrection: the chance to rise renewed, carrying only the wisdom and leaving behind the weight. Answer the call with an open heart.",
+    "The World completes the Major Arcana's cycle with a dance of fulfillment. Today, honor everything that brought you here — the struggles, the breakthroughs, the quiet perseverance. A chapter is closing, and within that completion lies the seed of the next adventure. The World does not mean the end of growth; it means you have earned a moment of wholeness before the spiral begins again."
+  ];
+
+  var MONTH_THEMES=[
+    "January brings the energy of The Hermit — a time for introspection, goal-setting, and quiet determination as the year begins.",
+    "February resonates with The Lovers — themes of connection, self-love, and meaningful choices dominate the month.",
+    "March carries The Star's energy — hope and renewal emerge as winter fades and new possibilities take root.",
+    "April pulses with The Emperor's structure — spring demands discipline to turn fresh inspiration into tangible progress.",
+    "May blooms under The Empress's nurturing gaze — growth, abundance, and creative expression flourish naturally.",
+    "June spins The Wheel of Fortune — change accelerates at the year's midpoint, opening unexpected doors.",
+    "July roars with Strength — the heart of summer asks for courage, patience, and the quiet power of perseverance.",
+    "August blazes with The Sun — joy, vitality, and self-expression reach their peak under the brightest light.",
+    "September weighs in with Justice — as autumn approaches, balance, truth, and fair decisions take center stage.",
+    "October veils itself in The Moon's mystery — intuition sharpens and the boundary between seen and unseen thins.",
+    "November transforms under Death's watchful eye — release, renewal, and deep inner change prepare you for closure.",
+    "December culminates with The World — completion, gratitude, and the celebration of a full cycle achieved."
+  ];
+
+  var GUIDANCE_TEMPLATES=[
+    "Let {name}'s energy shape your morning. {daily} Carry this sense of {theme} with you into every conversation and decision today. When doubt arises, return to the card's core message and let it steady you.",
+    "Today, {name} invites you to pause and reflect. {daily} Whether you face a challenge or an opportunity, approach it with the spirit of {theme}. Small, intentional actions aligned with this energy can transform an ordinary day into something meaningful.",
+    "{name} sets the tone for the day ahead. {daily} Embrace the quality of {theme} in both your inner world and your interactions with others. Notice where this energy already exists in your life — and where you might invite more of it."
+  ];
+
+  var THEMES=[
+    "new beginnings","focused creation","deep intuition","nurturing growth","disciplined leadership",
+    "trusted wisdom","heartfelt alignment","unstoppable drive","gentle courage","quiet reflection",
+    "embracing change","honest clarity","patient surrender","transformative release","harmonious balance",
+    "conscious liberation","revelatory truth","healing hope","intuitive trust","radiant joy",
+    "honest awakening","fulfilled wholeness"
+  ];
+
+  var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  function getDailyCard(){
+    var d=new Date();
+    var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+    return seed%22;
+  }
+
+  function formatDate(d){
+    return DAYS[d.getDay()]+", "+MONTHS[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+  }
+
+  function renderCard(card,isDaily){
+    document.getElementById("cardEmoji").textContent=card.emoji;
+    document.getElementById("cardNumber").textContent="Major Arcana — "+toRoman(card.id);
+    document.getElementById("cardName").textContent=card.name;
+    document.getElementById("cardMeaning").textContent=card.upright;
+    document.getElementById("cardDailyMsg").textContent=card.daily;
+
+    var d=new Date();
+    var guidanceIdx=(d.getFullYear()+d.getMonth()+d.getDate())%GUIDANCE_TEMPLATES.length;
+    var guidance=GUIDANCE_TEMPLATES[guidanceIdx]
+      .replace(/\{name\}/g,card.name)
+      .replace(/\{daily\}/g,card.daily)
+      .replace(/\{theme\}/g,THEMES[card.id]);
+    document.getElementById("cardGuidance").textContent=guidance;
+
+    if(isDaily){
+      document.getElementById("todayMeaningTitle").textContent="Today\u2019s Card Meaning — "+card.name;
+      document.getElementById("todayMeaningBody").innerHTML="<p>"+DEEP_MEANINGS[card.id]+"</p>";
+    }
+  }
+
+  function toRoman(n){
+    var r=[["X",10],["IX",9],["V",5],["IV",4],["I",1]];
+    var s="";
+    for(var i=0;i<r.length;i++){while(n>=r[i][1]){s+=r[i][0];n-=r[i][1]}}
+    return s||"0";
+  }
+
+  // Init
+  var today=new Date();
+  document.getElementById("dateBadge").textContent=formatDate(today);
+
+  var dailyIdx=getDailyCard();
+  renderCard(CARDS[dailyIdx],true);
+
+  // Month section
+  var mi=today.getMonth();
+  document.getElementById("monthBadge").textContent="Tarot for "+MONTHS[mi]+" "+today.getFullYear();
+  document.getElementById("monthText").textContent=MONTH_THEMES[mi];
+
+  // Draw Another
+  document.getElementById("btnDrawAnother").addEventListener("click",function(){
+    var rnd=Math.floor(Math.random()*22);
+    renderCard(CARDS[rnd],false);
+    document.querySelector(".card-display").classList.remove("fade-up");
+    void document.querySelector(".card-display").offsetWidth;
+    document.querySelector(".card-display").classList.add("fade-up");
+    this.textContent="Draw Another Card";
+  });
+})();
+</script>
+
+</body>
+</html>
