@@ -73,8 +73,8 @@
     step: 0,        // 0=nothing, 1=zodiac chosen, 2=period chosen, 3=after spin
     isSpinning: false
   };
-  // Auto-restore if zodiac was saved
-  if (selectedZodiac !== null) stepState.step = 1;
+  // Auto-restore: zodiac saved → step 2 (period defaults to 'today' which is already active)
+  if (selectedZodiac !== null) stepState.step = 2;
   var ZODIAC_NAMES = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
   var ZODIAC_SYMBOLS = ['\u2648','\u2649','\u264A','\u264B','\u264C','\u264D','\u264E','\u264F','\u2650','\u2651','\u2652','\u2653'];
 
@@ -822,8 +822,8 @@
       b.classList.toggle('active', i === index);
     });
 
-    // Advance step
-    if (stepState.step < 1) stepState.step = 1;
+    // Advance step: period already defaults to 'today' (visually active), so go straight to step 2
+    if (stepState.step < 2) stepState.step = 2;
     updateUIState();
 
     // Re-render forecast if already shown
@@ -912,8 +912,8 @@
     document.getElementById('t22Counter').classList.remove('show');
     updateDrawnPanel();
 
-    // Keep zodiac selection but reset step to match
-    stepState.step = selectedZodiac !== null ? 1 : 0;
+    // Keep zodiac selection but reset step — period defaults to 'today' so zodiac → step 2
+    stepState.step = selectedZodiac !== null ? 2 : 0;
     stepState.isSpinning = false;
     updateUIState();
 
@@ -1008,7 +1008,7 @@
       zodiacPanelOpen = false;
       angle = 0;
       speed = 0;
-      stepState.step = selectedZodiac !== null ? 1 : 0;
+      stepState.step = selectedZodiac !== null ? 2 : 0;
       stepState.isSpinning = false;
     },
     newReading: newReading,
