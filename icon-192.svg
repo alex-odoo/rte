@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <rect width="192" height="192" rx="32" fill="#0d0b1a"/>
+  <circle cx="96" cy="80" r="50" fill="none" stroke="#c4a265" stroke-width="2" opacity="0.3"/>
+  <text x="96" y="100" text-anchor="middle" font-size="72" fill="#c4a265" font-family="serif">&#x2726;</text>
+  <text x="96" y="155" text-anchor="middle" font-size="18" fill="#c4a265" font-family="serif" letter-spacing="3">TAROT</text>
+</svg>

@@ -172,6 +172,12 @@
 </script>
 <meta name="theme-color" content="#0d0b1a">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👼</text></svg>">
+<!-- PWA manifest + icons -->
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.svg">
+<!-- Pinterest verification -->
+<meta name="pinterest" content="noblock">
+<meta name="pinterest-rich-pin" content="true">
 <!-- Performance: preconnect to Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1135,6 +1141,10 @@ function switchMode(mode) {
     // Cleanup tarot state
     if (window.tarot22) window.tarot22.cleanup();
   }
+}
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(function(){});
 }
 </script>
 </body>
