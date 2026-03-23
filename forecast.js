@@ -305,6 +305,31 @@
     return sentences.slice(0, 5).join(' ').trim();
   }
 
+  // ── Lazy-load forecast language data ──
+  var _loadedLangs = {};
+  function ensureForecastLang(lang, cb) {
+    var key = lang.toUpperCase();
+    // EN is always loaded via forecast-data.js
+    if (key === 'EN' || window['FORECAST_DATA_' + key]) {
+      if (cb) cb();
+      return;
+    }
+    // Already loading
+    if (_loadedLangs[key] === 'loading') {
+      var check = setInterval(function() {
+        if (_loadedLangs[key] === 'done') { clearInterval(check); if (cb) cb(); }
+      }, 50);
+      return;
+    }
+    var file = 'forecast-data-' + lang.toLowerCase() + '.js';
+    _loadedLangs[key] = 'loading';
+    var s = document.createElement('script');
+    s.src = file;
+    s.onload = function() { _loadedLangs[key] = 'done'; if (cb) cb(); };
+    s.onerror = function() { _loadedLangs[key] = 'done'; if (cb) cb(); };
+    document.head.appendChild(s);
+  }
+
   // ── Public API ──
   window.forecast = {
     generate: generateForecast,
@@ -312,6 +337,7 @@
     getMoonIcon: getMoonIcon,
     getPlanetSymbol: getPlanetSymbol,
     getISOWeek: getISOWeek,
+    ensureLang: ensureForecastLang,
     ZODIAC_SIGNS: ZODIAC_SIGNS,
     MAJOR_ARCANA: MAJOR_ARCANA,
     PLANETARY_DAYS: PLANETARY_DAYS

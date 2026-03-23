@@ -369,6 +369,46 @@
     zh:{title:'塔罗旋转木马 — 天使的信息 | 免费在线塔罗牌占卜',desc:'免费在线塔罗牌和天使卡占卜。选择您的神秘天使卡，从守护天使那里获得信息和指引。44张卡牌附有详细解释说明。',kw:'塔罗牌, 天使信息, 免费塔罗, 在线占卜, 天使卡, 塔罗旋转木马, 占卜, 大阿卡纳',locale:'zh_CN',geo:'CN'}
   };
 
+  // ── SEO Content Blocks (EN default in HTML, RU/UK localized via JS) ──
+  var SEO_CONTENT = {
+    en: {
+      h2: 'Free Online Tarot Reading & Angel Card Messages — Tarot Carousel',
+      h3a: 'Free Tarot Card Reading — 22 Major Arcana',
+      h3b: 'Angel Card Reading — 44 Guardian Angel Messages',
+      h3c: 'Daily Tarot & Horoscope Forecast 2026',
+      h3d: 'How Does Online Tarot Reading Work?',
+      p1: 'Welcome to Tarot Carousel — your free online tarot reading and angel card oracle. Get instant spiritual guidance with our interactive 3D card carousel. Draw from 44 angel message cards or 22 Major Arcana tarot cards with personalized daily, weekly, monthly and yearly forecasts based on your zodiac sign. No registration required — completely free tarot reading available on any device.',
+      p2: 'Our tarot reading features all 22 Major Arcana cards: The Fool, The Magician, The High Priestess, The Empress, The Emperor, The Hierophant, The Lovers, The Chariot, Strength, The Hermit, Wheel of Fortune, Justice, The Hanged Man, Death, Temperance, The Devil, The Tower, The Star, The Moon, The Sun, Judgement, and The World. Each card includes original hand-crafted SVG artwork and detailed interpretations. Choose your zodiac sign and get a personalized forecast powered by moon phases, planetary alignments, and element compatibility.',
+      p3: 'Receive divine guidance from 44 unique angel message cards. Each card carries a special message from guardian angels — advice, support, and inspiration for every day. Cards include Angel of Healing, Angel of Love, Angel of Wisdom, Angel of Strength, Angel of Protection, Archangel Michael, Archangel Raphael, and many more. Spin the mystical 3D carousel to reveal your angel\'s message.',
+      p4: 'Get your personal tarot forecast for today, tomorrow, this week, this month, or the entire year 2026. Our hybrid numerological-astrological model combines your zodiac sign, the drawn tarot card, current moon phase (New Moon, Full Moon, Waxing/Waning), and planetary day energy to generate unique, meaningful predictions. Available in 23 languages including English, Ukrainian, Russian, Spanish, French, German, Japanese, Korean, Chinese, and Arabic.',
+      p5: 'Tap the screen to spin the 3D card carousel. The carousel stops and reveals your mystical card with its full meaning. Every reading is unique — cards are shuffled randomly each time. You can repeat readings as many times as you wish. Choose between Angel Messages mode (44 cards) or Tarot 22 mode (Major Arcana with personal forecasts). Works on smartphones, tablets, and desktop computers.'
+    },
+    ru: {
+      h2: 'Бесплатное онлайн гадание на Таро и Послания Ангелов — Таро Карусель',
+      h3a: 'Гадание на картах Таро — 22 Старших Аркана',
+      h3b: 'Карты Ангелов — 44 Послания от Ангелов-Хранителей',
+      h3c: 'Ежедневный Таро-прогноз и гороскоп 2026',
+      h3d: 'Как работает онлайн гадание на Таро?',
+      p1: 'Добро пожаловать в Таро Карусель — бесплатное онлайн гадание на картах Таро и оракул ангельских посланий. Получите духовное руководство с помощью интерактивной 3D карусели карт. Вытяните карту из 44 ангельских посланий или 22 Старших Арканов Таро с персональным прогнозом на сегодня, неделю, месяц и год по вашему знаку зодиака. Регистрация не требуется — полностью бесплатное гадание на любом устройстве.',
+      p2: 'Расклад включает все 22 Старших Аркана: Шут, Маг, Верховная Жрица, Императрица, Император, Иерофант, Влюблённые, Колесница, Сила, Отшельник, Колесо Фортуны, Справедливость, Повешенный, Смерть, Умеренность, Дьявол, Башня, Звезда, Луна, Солнце, Суд и Мир. Каждая карта с уникальной SVG-иллюстрацией и подробным толкованием. Выберите знак зодиака и получите персональный прогноз на основе фаз Луны, планетарных влияний и совместимости стихий.',
+      p3: 'Получите божественное руководство от 44 уникальных карт ангельских посланий. Каждая карта несёт особое послание от ангелов-хранителей — совет, поддержку и вдохновение на каждый день. В колоде: Ангел Исцеления, Ангел Любви, Ангел Мудрости, Ангел Силы, Ангел Защиты, Архангел Михаил, Архангел Рафаэль и многие другие. Вращайте мистическую 3D карусель, чтобы получить послание.',
+      p4: 'Получите персональный таро-прогноз на сегодня, завтра, эту неделю, месяц или весь 2026 год. Наша гибридная нумеро-астрологическая модель сочетает ваш знак зодиака, вытянутую карту Таро, текущую фазу Луны (новолуние, полнолуние, растущая/убывающая) и планетарную энергию дня для создания уникальных предсказаний. Доступно на 23 языках.',
+      p5: 'Нажмите на экран, чтобы вращать 3D карусель карт. Карусель остановится и откроет вашу мистическую карту с полным значением. Каждое гадание уникально — карты перемешиваются случайным образом. Повторяйте гадание сколько угодно раз. Выбирайте между режимом Послания Ангелов (44 карты) или Таро 22 (Старшие Арканы с прогнозом). Работает на смартфонах, планшетах и компьютерах.'
+    },
+    uk: {
+      h2: 'Безкоштовне онлайн ворожіння на Таро та Послання Ангелів — Таро Карусель',
+      h3a: 'Ворожіння на картах Таро — 22 Старші Аркани',
+      h3b: 'Карти Ангелів — 44 Послання від Ангелів-Хоронителів',
+      h3c: 'Щоденний Таро-прогноз та гороскоп 2026',
+      h3d: 'Як працює онлайн ворожіння на Таро?',
+      p1: 'Ласкаво просимо до Таро Карусель — безкоштовного онлайн ворожіння на картах Таро та оракулу ангельських послань. Отримайте духовне керівництво за допомогою інтерактивної 3D карусель карт. Витягніть карту з 44 ангельських послань або 22 Старших Арканів Таро з персональним прогнозом на сьогодні, тиждень, місяць та рік за вашим знаком зодіаку. Реєстрація не потрібна — повністю безкоштовне ворожіння на будь-якому пристрої.',
+      p2: 'Розклад включає всі 22 Старші Аркани: Блазень, Маг, Верховна Жриця, Імператриця, Імператор, Ієрофант, Закохані, Колісниця, Сила, Відлюдник, Колесо Фортуни, Справедливість, Повішений, Смерть, Поміркованість, Диявол, Вежа, Зірка, Місяць, Сонце, Суд і Світ. Кожна карта з унікальною SVG-ілюстрацією та детальним тлумаченням. Оберіть знак зодіаку і отримайте персональний прогноз на основі фаз Місяця, планетарних впливів та сумісності стихій.',
+      p3: 'Отримайте божественне керівництво від 44 унікальних карт ангельських послань. Кожна карта несе особливе послання від ангелів-хоронителів — пораду, підтримку та натхнення на кожен день. У колоді: Ангел Зцілення, Ангел Любові, Ангел Мудрості, Ангел Сили, Ангел Захисту, Архангел Михаїл, Архангел Рафаїл та багато інших. Обертайте містичну 3D карусель, щоб отримати послання.',
+      p4: 'Отримайте персональний таро-прогноз на сьогодні, завтра, цей тиждень, місяць або весь 2026 рік. Наша гібридна нумеро-астрологічна модель поєднує ваш знак зодіаку, витягнуту карту Таро, поточну фазу Місяця (новомісяччя, повня, зростаючий/спадаючий) та планетарну енергію дня для створення унікальних передбачень. Доступно 23 мовами.',
+      p5: 'Натисніть на екран, щоб обертати 3D карусель карт. Карусель зупиниться та відкриє вашу містичну карту з повним значенням. Кожне ворожіння унікальне — карти перемішуються випадковим чином. Повторюйте ворожіння скільки завгодно. Обирайте між режимом Послання Ангелів (44 карти) або Таро 22 (Старші Аркани з прогнозом). Працює на смартфонах, планшетах та комп\'ютерах.'
+    }
+  };
+
   // ── Angel Cards: 44 cards × 7 languages [displayName, meaning] ──
   var ANGEL = {
     en:[
@@ -2089,6 +2129,19 @@
     // canonical URL keeps base, no lang param (canonical = default)
     var canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.href = 'https://tarocarousel.online/';
+
+    // Update SEO content block (headings + paragraphs)
+    var sc = SEO_CONTENT[lang] || SEO_CONTENT['en'];
+    var ids = {seoH2:'h2',seoH3a:'h3a',seoH3b:'h3b',seoH3c:'h3c',seoH3d:'h3d',seoP1:'p1',seoP2:'p2',seoP3:'p3',seoP4:'p4',seoP5:'p5'};
+    for (var elId in ids) {
+      var el = document.getElementById(elId);
+      if (el) el.textContent = sc[ids[elId]];
+    }
+    // Also update the visible H1 in Angel mode
+    var h1El = document.querySelector('#container .title h1');
+    var subEl = document.querySelector('#container .title p');
+    if (h1El) h1El.textContent = t('angelTitle');
+    if (subEl) subEl.textContent = t('angelSub');
   }
 
   // ── Build language dropdown ──

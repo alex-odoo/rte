@@ -702,6 +702,13 @@
     }
     if (prompt) prompt.style.display = 'none';
 
+    // Lazy-load forecast language data if needed
+    var lang = (window.i18n && window.i18n.getLang) ? window.i18n.getLang() : 'en';
+    if (lang !== 'en' && !window['FORECAST_DATA_' + lang.toUpperCase()]) {
+      window.forecast.ensureLang(lang, function() { renderForecast(); });
+      return;
+    }
+
     var card = drawnCards[drawnCards.length - 1]; // last drawn card
     var signName = ZODIAC_NAMES[zodiacIdx];
     var result = window.forecast.generate(signName, card.id, currentFcPeriod);

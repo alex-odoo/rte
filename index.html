@@ -89,6 +89,79 @@
   }
 }
 </script>
+<!-- Schema.org: WebSite with SearchAction (enables sitelinks search box) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Tarot Carousel",
+  "alternateName": ["Таро Карусель", "Carrusel del Tarot", "Carrousel du Tarot"],
+  "url": "https://tarocarousel.online/",
+  "inLanguage": ["en","uk","ru","fr","es","de","it","ro","ja","ko","zh","ar","he","pl","pt","hu","cs","th","sw","ha","be","am","mt"],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://tarocarousel.online/?lang={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<!-- Schema.org: FAQPage — improves AI citation and rich results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Tarot Carousel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tarot Carousel is a free online tarot reading and angel card oracle. It features an interactive 3D card carousel with 22 Major Arcana tarot cards and 44 angel message cards. You can get personalized forecasts based on your zodiac sign, including daily, weekly, monthly, and yearly predictions. Available in 23 languages."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does online tarot reading work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tap the screen to spin the 3D card carousel. The carousel randomly stops and reveals your card with its full meaning and interpretation. In Tarot 22 mode, you can select your zodiac sign and forecast period (today, tomorrow, week, month, year) to receive a personalized prediction based on moon phases, planetary alignments, and element compatibility."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the tarot reading completely free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Tarot Carousel is 100% free with no registration, no subscriptions, and no hidden costs. You can do unlimited readings — both angel card messages and tarot card readings — on any device including smartphones, tablets, and computers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the 22 Major Arcana tarot cards?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 22 Major Arcana are the most significant cards in a tarot deck: The Fool (0), The Magician (I), The High Priestess (II), The Empress (III), The Emperor (IV), The Hierophant (V), The Lovers (VI), The Chariot (VII), Strength (VIII), The Hermit (IX), Wheel of Fortune (X), Justice (XI), The Hanged Man (XII), Death (XIII), Temperance (XIV), The Devil (XV), The Tower (XVI), The Star (XVII), The Moon (XVIII), The Sun (XIX), Judgement (XX), and The World (XXI). Each represents a major life lesson or spiritual archetype."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What languages are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tarot Carousel supports 23 languages: English, Ukrainian, Russian, French, Spanish, German, Italian, Romanian, Polish, Portuguese, Czech, Hungarian, Maltese, Japanese, Korean, Chinese, Thai, Arabic, Hebrew, Amharic, Belarusian, Hausa, and Swahili. All card meanings, UI elements, and forecasts are fully translated."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is the tarot forecast?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tarot Carousel uses a hybrid numerological-astrological model combining your zodiac sign, the drawn tarot card, current moon phase, element compatibility (Fire, Water, Earth, Air), and planetary day energy. The forecast is generated deterministically — the same person with the same card on the same day gets the same reading, making it consistent and meaningful for self-reflection and spiritual guidance."
+      }
+    }
+  ]
+}
+</script>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BGN3PSYMDL"></script>
 <script>
@@ -99,8 +172,11 @@
 </script>
 <meta name="theme-color" content="#0d0b1a">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👼</text></svg>">
+<!-- Performance: preconnect to Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Marck+Script&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Marck+Script&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
     --gold:#c4a265;--gold-light:#e8d5a3;--gold-dark:#9a7a3f;
@@ -1001,32 +1077,37 @@
   <div class="instruction" id="instruction">Натисніть, щоб отримати послання</div>
   <div class="tap-again" id="tapAgain">Натисніть, щоб перемішати</div>
 </div>
-<!-- SEO: Hidden semantic content for search engine crawlers -->
-<div class="seo-content" role="complementary" aria-label="Опис сайту">
-  <h2>Таро Карусель та Послання Ангелів — Безкоштовне Онлайн Ворожіння</h2>
-  <p>Ласкаво просимо до Таро Карусель — магічного онлайн оракулу послань ангелів. Цей безкоштовний сервіс пропонує 44 унікальні карти ангелів з тлумаченнями українською мовою. Кожна карта несе особливе послання від ангелів-хранителів — пораду, підтримку та натхнення на кожен день.</p>
-  <h3>Як працює Таро Карусель</h3>
-  <p>Натисніть на екран, щоб запустити обертання карусель з картами ангелів. Карусель автоматично зупиниться та відкриє вашу магічну карту з посланням від ангелів. Кожне ворожіння унікальне — карти перемішуються випадковим чином. Ви можете повторювати ворожіння скільки завгодно разів.</p>
-  <h3>44 Карти Послань Ангелів</h3>
-  <p>Колода містить 44 магічні карти, кожна з яких представляє ангельське послання: Ангел Віри, Ангел Надії, Ангел Любові, Ангел Мудрості, Ангел Сили, Ангел Захисту, Ангел Зцілення, Ангел Достатку та багато інших. Кожна карта має унікальну ілюстрацію та тлумачення українською мовою.</p>
-  <h3>Безкоштовне ворожіння онлайн українською</h3>
-  <p>Таро Карусель — це повністю безкоштовний онлайн оракул, доступний на будь-якому пристрої: смартфоні, планшеті чи комп'ютері. Не потрібна реєстрація. Отримайте магічне послання ангелів прямо зараз!</p>
-  <nav aria-label="Навігація">
-    <a href="https://tarocarousel.online/">Головна — Таро Карусель та Послання Ангелів</a>
+<!-- SEO: Semantic content for search engines and AI crawlers (EN default, updated by JS per language) -->
+<div class="seo-content" role="complementary" aria-label="About this application" id="seoContent">
+  <h2 id="seoH2">Free Online Tarot Reading &amp; Angel Card Messages — Tarot Carousel</h2>
+  <p id="seoP1">Welcome to Tarot Carousel — your free online tarot reading and angel card oracle. Get instant spiritual guidance with our interactive 3D card carousel. Draw from 44 angel message cards or 22 Major Arcana tarot cards with personalized daily, weekly, monthly and yearly forecasts based on your zodiac sign. No registration required — completely free tarot reading available on any device.</p>
+
+  <h3 id="seoH3a">Free Tarot Card Reading — 22 Major Arcana</h3>
+  <p id="seoP2">Our tarot reading features all 22 Major Arcana cards: The Fool, The Magician, The High Priestess, The Empress, The Emperor, The Hierophant, The Lovers, The Chariot, Strength, The Hermit, Wheel of Fortune, Justice, The Hanged Man, Death, Temperance, The Devil, The Tower, The Star, The Moon, The Sun, Judgement, and The World. Each card includes original hand-crafted SVG artwork and detailed interpretations. Choose your zodiac sign and get a personalized forecast powered by moon phases, planetary alignments, and element compatibility.</p>
+
+  <h3 id="seoH3b">Angel Card Reading — 44 Guardian Angel Messages</h3>
+  <p id="seoP3">Receive divine guidance from 44 unique angel message cards. Each card carries a special message from guardian angels — advice, support, and inspiration for every day. Cards include Angel of Healing, Angel of Love, Angel of Wisdom, Angel of Strength, Angel of Protection, Archangel Michael, Archangel Raphael, and many more. Spin the mystical 3D carousel to reveal your angel's message.</p>
+
+  <h3 id="seoH3c">Daily Tarot &amp; Horoscope Forecast 2026</h3>
+  <p id="seoP4">Get your personal tarot forecast for today, tomorrow, this week, this month, or the entire year 2026. Our hybrid numerological-astrological model combines your zodiac sign, the drawn tarot card, current moon phase (New Moon, Full Moon, Waxing/Waning), and planetary day energy to generate unique, meaningful predictions. Available in 23 languages including English, Ukrainian, Russian, Spanish, French, German, Japanese, Korean, Chinese, and Arabic.</p>
+
+  <h3 id="seoH3d">How Does Online Tarot Reading Work?</h3>
+  <p id="seoP5">Tap the screen to spin the 3D card carousel. The carousel stops and reveals your mystical card with its full meaning. Every reading is unique — cards are shuffled randomly each time. You can repeat readings as many times as you wish. Choose between Angel Messages mode (44 cards) or Tarot 22 mode (Major Arcana with personal forecasts). Works on smartphones, tablets, and desktop computers.</p>
+
+  <nav aria-label="Navigation">
+    <a href="https://tarocarousel.online/">Tarot Carousel — Free Online Tarot &amp; Angel Card Reading</a>
   </nav>
 </div>
 <!-- Tarot 22 Section (hidden by default) -->
 <div id="tarotSection"></div>
 
-<script src="i18n.js"></script>
-<script src="cards.js"></script>
-<script src="app.js"></script>
-<script src="tarot22-art.js"></script>
-<script src="forecast-data.js"></script>
-<script src="forecast-data-ru.js"></script>
-<script src="forecast-data-uk.js"></script>
-<script src="forecast.js"></script>
-<script src="tarot22.js"></script>
+<script defer src="i18n.js"></script>
+<script defer src="cards.js"></script>
+<script defer src="app.js"></script>
+<script defer src="tarot22-art.js"></script>
+<script defer src="forecast-data.js"></script>
+<script defer src="forecast.js"></script>
+<script defer src="tarot22.js"></script>
 <script>
 // ── Mode switching logic ──
 function switchMode(mode) {
