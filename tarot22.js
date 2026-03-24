@@ -316,9 +316,9 @@
       if (periodSec) periodSec.style.display = 'none';
       if (spinSec) spinSec.style.display = 'none';
     } else {
-      if (zodiacSec) zodiacSec.style.display = '';
-      if (periodSec) periodSec.style.display = '';
-      if (spinSec) spinSec.style.display = '';
+      if (zodiacSec) zodiacSec.style.display = 'block';
+      if (periodSec) periodSec.style.display = 'block';
+      if (spinSec) spinSec.style.display = 'block';
     }
   }
 

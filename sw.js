@@ -1,5 +1,5 @@
-// Tarot Carousel — Service Worker (Cache-First for static, Network-First for pages)
-var CACHE_NAME = 'tarot-v4';
+// Tarot Carousel — Service Worker (Network-First for JS, Cache-First for images/fonts)
+var CACHE_NAME = 'tarot-v5';
 var STATIC_ASSETS = [
   '/',
   '/manifest.json',
@@ -44,8 +44,9 @@ self.addEventListener('fetch', function(e) {
   // Skip non-GET and external requests
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // HTML pages: network-first (fresh content)
-  if (e.request.headers.get('accept') && e.request.headers.get('accept').indexOf('text/html') !== -1) {
+  // JS files + HTML: network-first (always fresh code)
+  if (url.pathname.endsWith('.js') ||
+      e.request.headers.get('accept') && e.request.headers.get('accept').indexOf('text/html') !== -1) {
     e.respondWith(
       fetch(e.request).then(function(res) {
         var clone = res.clone();
@@ -58,7 +59,7 @@ self.addEventListener('fetch', function(e) {
     return;
   }
 
-  // Static assets: cache-first
+  // Static assets (images, manifest, icons): cache-first
   e.respondWith(
     caches.match(e.request).then(function(cached) {
       return cached || fetch(e.request).then(function(res) {
