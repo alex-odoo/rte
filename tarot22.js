@@ -73,7 +73,7 @@
     step: 0,        // 0=nothing, 1=zodiac chosen, 2=period chosen, 3=after spin
     isSpinning: false
   };
-  // Auto-restore: zodiac saved → step 2 (period defaults to 'today' which is already active)
+  // Auto-restore if zodiac was saved — period defaults to 'today', so step=2 immediately
   if (selectedZodiac !== null) stepState.step = 2;
   var ZODIAC_NAMES = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
   var ZODIAC_SYMBOLS = ['\u2648','\u2649','\u264A','\u264B','\u264C','\u264D','\u264E','\u264F','\u2650','\u2651','\u2652','\u2653'];
@@ -742,12 +742,15 @@
     toneEl.textContent = toneLabels[result.tone] || '';
     toneEl.className = 'fc-tone fc-tone-' + result.tone;
 
-    // Show block with animation
+    // Show block: reset animation then add visible class + scroll into view
     block.classList.remove('visible');
-    block.style.animation = 'none';
-    block.offsetHeight; // force reflow
-    block.style.animation = '';
-    setTimeout(function() { block.classList.add('visible'); }, 30);
+    void block.offsetWidth; // force reflow for transition restart
+    setTimeout(function() {
+      block.classList.add('visible');
+      // Scroll t22BottomArea to show the forecast block
+      var bottomEl = document.getElementById('t22BottomArea');
+      if (bottomEl) bottomEl.scrollTop = block.offsetTop - 20;
+    }, 50);
   }
 
   // ── Moon phase localized names ──
@@ -822,7 +825,7 @@
       b.classList.toggle('active', i === index);
     });
 
-    // Advance step: period already defaults to 'today' (visually active), so go straight to step 2
+    // Advance step — period defaults to 'today', so go straight to step=2
     if (stepState.step < 2) stepState.step = 2;
     updateUIState();
 
@@ -912,7 +915,9 @@
     document.getElementById('t22Counter').classList.remove('show');
     updateDrawnPanel();
 
-    // Keep zodiac selection but reset step — period defaults to 'today' so zodiac → step 2
+    // Keep zodiac selection but reset step to match
+    // revealed must be false BEFORE updateUIState, otherwise hideSteps=true hides zodiac/period
+    revealed = false;
     stepState.step = selectedZodiac !== null ? 2 : 0;
     stepState.isSpinning = false;
     updateUIState();
