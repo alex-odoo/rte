@@ -1,5 +1,5 @@
 // Tarot Carousel — Service Worker (Cache-First for static, Network-First for pages)
-var CACHE_NAME = 'tarot-v3';
+var CACHE_NAME = 'tarot-v4';
 var STATIC_ASSETS = [
   '/',
   '/manifest.json',
