@@ -399,13 +399,38 @@
   }
   .t22-instruction.hidden{display:none}
   .t22-tap-again{
-    position:absolute;bottom:5%;width:100%;text-align:center;z-index:25;
-    color:rgba(196,162,101,.85);font-size:clamp(.88rem,3.5vw,1.05rem);
+    position:absolute;bottom:9%;left:50%;transform:translateX(-50%);
+    width:clamp(240px,72vw,400px);text-align:center;z-index:25;
+    color:rgba(196,162,101,1);font-size:clamp(.9rem,3.8vw,1.1rem);
     font-family:'Cormorant Garamond',serif;
-    letter-spacing:clamp(2px,.6vw,3px);text-transform:uppercase;
+    letter-spacing:clamp(2px,.6vw,3.5px);text-transform:uppercase;
     opacity:0;transition:opacity .5s ease 1.5s;
+    padding:clamp(11px,2.8vw,15px) clamp(18px,5vw,32px);
+    border:1px solid rgba(196,162,101,.4);border-radius:3px;
+    background:rgba(8,4,20,.65);backdrop-filter:blur(4px);
+    cursor:pointer;overflow:hidden;
   }
-  .t22-tap-again.show{opacity:1}
+  .t22-tap-again.show{
+    opacity:1;
+    animation:tapRevealPulse 2.8s ease-in-out 2s infinite;
+  }
+  .t22-tap-again.show::before{
+    content:'';position:absolute;top:0;left:-100%;
+    width:55%;height:100%;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(196,162,101,.18),transparent);
+    animation:tapRevealShimmer 3.5s ease 2.5s infinite;
+  }
+  @keyframes tapRevealPulse{
+    0%,100%{border-color:rgba(196,162,101,.4);color:rgba(196,162,101,.85);
+      box-shadow:0 0 8px rgba(196,162,101,.1),inset 0 0 6px rgba(196,162,101,.04)}
+    50%{border-color:rgba(196,162,101,.95);color:rgba(220,185,120,1);
+      box-shadow:0 0 22px rgba(196,162,101,.38),0 0 50px rgba(196,162,101,.14),inset 0 0 14px rgba(196,162,101,.08)}
+  }
+  @keyframes tapRevealShimmer{
+    0%,100%{left:-100%;opacity:0}
+    10%{opacity:1}
+    65%,100%{left:120%;opacity:0}
+  }
   /* Counter badge */
   .t22-counter{
     position:absolute;top:4%;right:20px;z-index:15;
