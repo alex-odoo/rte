@@ -689,6 +689,61 @@
   }
 
   // ── Render forecast into the block ──
+  // ── Inner forecast renderer — called after lang data is ready (or EN fallback) ──
+  function _drawForecastBlock(block) {
+    var zodiacIdx = selectedZodiac !== null ? parseInt(selectedZodiac) : null;
+    if (zodiacIdx === null || drawnCards.length === 0) return;
+
+    var card = drawnCards[drawnCards.length - 1];
+    var signName = ZODIAC_NAMES[zodiacIdx];
+    var result = window.forecast.generate(signName, card.id, currentFcPeriod);
+
+    if (!result) {
+      block.classList.remove('visible');
+      return;
+    }
+
+    // Moon badge
+    var moonBadge = document.getElementById('fcMoonBadge');
+    var moonNames = getMoonPhaseNames();
+    if (moonBadge) moonBadge.innerHTML = result.moonIcon + ' ' + (moonNames[result.moonPhase.name] || result.moonPhase.energy);
+
+    // Planet badge
+    var planetBadge = document.getElementById('fcPlanetBadge');
+    var dayNames = getPlanetaryDayNames();
+    if (planetBadge) planetBadge.innerHTML = result.planetSymbol + ' ' + (dayNames[result.planetaryDay] || result.planetaryDay);
+
+    // Forecast text
+    var fcTextEl = document.getElementById('fcText');
+    if (fcTextEl) fcTextEl.textContent = result.text;
+
+    // Footer: sign + date + tone
+    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
+    var signLabel = signs[zodiacIdx] ? (ZODIAC_SYMBOLS[zodiacIdx] + ' ' + signs[zodiacIdx].name) : (ZODIAC_SYMBOLS[zodiacIdx] + ' ' + signName);
+    var fcSignEl = document.getElementById('fcSignLabel');
+    var fcDateEl = document.getElementById('fcDateLabel');
+    var toneEl = document.getElementById('fcToneLabel');
+    if (fcSignEl) fcSignEl.textContent = signLabel;
+    if (fcDateEl) fcDateEl.textContent = getFcDateLabel(currentFcPeriod);
+
+    if (toneEl) {
+      var toneLabels = { positive: '\u{1F7E2}', neutral: '\u{1F7E1}', warning: '\u{1F534}' };
+      toneEl.textContent = toneLabels[result.tone] || '';
+      toneEl.className = 'fc-tone fc-tone-' + result.tone;
+    }
+
+    // Show block with transition
+    block.classList.remove('visible');
+    void block.offsetWidth;
+    setTimeout(function() {
+      var b = document.getElementById('fcBlock');
+      if (!b) return;
+      b.classList.add('visible');
+      var bottomEl = document.getElementById('t22BottomArea');
+      if (bottomEl) bottomEl.scrollTop = b.offsetTop - 20;
+    }, 50);
+  }
+
   function renderForecast() {
     var block = document.getElementById('fcBlock');
     var prompt = document.getElementById('fcPrompt');
@@ -702,55 +757,17 @@
     }
     if (prompt) prompt.style.display = 'none';
 
-    // Lazy-load forecast language data if needed
+    // Lazy-load lang data once — then call _drawForecastBlock directly (no re-entry)
     var lang = (window.i18n && window.i18n.getLang) ? window.i18n.getLang() : 'en';
     if (lang !== 'en' && !window['FORECAST_DATA_' + lang.toUpperCase()]) {
-      window.forecast.ensureLang(lang, function() { renderForecast(); });
+      window.forecast.ensureLang(lang, function() {
+        // After load (success or 404 fallback), render directly — avoids infinite loop
+        var b = document.getElementById('fcBlock');
+        if (b) _drawForecastBlock(b);
+      });
       return;
     }
-
-    var card = drawnCards[drawnCards.length - 1]; // last drawn card
-    var signName = ZODIAC_NAMES[zodiacIdx];
-    var result = window.forecast.generate(signName, card.id, currentFcPeriod);
-
-    if (!result) {
-      block.classList.remove('visible');
-      return;
-    }
-
-    // Moon badge
-    var moonBadge = document.getElementById('fcMoonBadge');
-    var moonNames = getMoonPhaseNames();
-    moonBadge.innerHTML = result.moonIcon + ' ' + (moonNames[result.moonPhase.name] || result.moonPhase.energy);
-
-    // Planet badge
-    var planetBadge = document.getElementById('fcPlanetBadge');
-    var dayNames = getPlanetaryDayNames();
-    planetBadge.innerHTML = result.planetSymbol + ' ' + (dayNames[result.planetaryDay] || result.planetaryDay);
-
-    // Forecast text
-    document.getElementById('fcText').textContent = result.text;
-
-    // Footer: sign + date + tone
-    var signs = window.i18n ? window.i18n.getZodiacSigns() : [];
-    var signLabel = signs[zodiacIdx] ? (ZODIAC_SYMBOLS[zodiacIdx] + ' ' + signs[zodiacIdx].name) : (ZODIAC_SYMBOLS[zodiacIdx] + ' ' + signName);
-    document.getElementById('fcSignLabel').textContent = signLabel;
-    document.getElementById('fcDateLabel').textContent = getFcDateLabel(currentFcPeriod);
-
-    var toneEl = document.getElementById('fcToneLabel');
-    var toneLabels = { positive: '\u{1F7E2}', neutral: '\u{1F7E1}', warning: '\u{1F534}' };
-    toneEl.textContent = toneLabels[result.tone] || '';
-    toneEl.className = 'fc-tone fc-tone-' + result.tone;
-
-    // Show block: reset animation then add visible class + scroll into view
-    block.classList.remove('visible');
-    void block.offsetWidth; // force reflow for transition restart
-    setTimeout(function() {
-      block.classList.add('visible');
-      // Scroll t22BottomArea to show the forecast block
-      var bottomEl = document.getElementById('t22BottomArea');
-      if (bottomEl) bottomEl.scrollTop = block.offsetTop - 20;
-    }, 50);
+    _drawForecastBlock(block);
   }
 
   // ── Moon phase localized names ──
@@ -996,6 +1013,10 @@
     if (!section.classList.contains('active')) return;
     // Re-render the full page with new translations
     buildPage();
+    // If user was viewing the meanings/forecast panel, restore it in the new language
+    if (showMeanings && drawnCards.length > 0) {
+      showMeaningsPanel();
+    }
   }
 
   // ── Public API ──
