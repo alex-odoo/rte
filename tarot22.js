@@ -592,7 +592,7 @@
       '</div>';
     }
 
-    html += '<button class="t22-btn-new-reading" onclick="window.tarot22.newReading()">' + t('newReading') + '</button>';
+    html += '<button class="t22-btn-new-reading" onclick="event.stopPropagation();window.tarot22.newReading()">' + t('newReading') + '</button>';
     html += '</div>';
 
     bottom.innerHTML = html;
