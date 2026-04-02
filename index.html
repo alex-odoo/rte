@@ -289,7 +289,7 @@
   .t22-title-decor svg{width:16px;height:16px}
   /* 3D Carousel Scene */
   .t22-scene{
-    position:absolute;top:70%;left:50%;transform:translate(-50%,-50%);
+    position:absolute;top:58%;left:50%;transform:translate(-50%,-50%);
     width:clamp(160px,50vw,220px);height:clamp(220px,45vh,300px);
     perspective:900px;z-index:5;
   }
@@ -981,8 +981,9 @@
     transition:opacity .4s ease,filter .4s ease,transform .4s ease;
   }
   .t22-step-spin{
-    position:absolute;top:42%;left:0;right:0;
-    text-align:center;padding:8px 10px 4px;
+    position:absolute;top:58%;left:0;right:0;
+    transform:translateY(-50%);
+    text-align:center;padding:0 10px;
     z-index:12;
   }
 
@@ -1041,14 +1042,14 @@
   @media(max-width:768px){
     .t22-step-zodiac{top:12%;padding:4px 8px 8px}
     .t22-step-period{top:33%}
-    .t22-step-spin{top:40%}
-    .t22-scene{top:74%}
+    .t22-step-spin{top:62%}
+    .t22-scene{top:62%}
   }
   @media(max-width:480px){
     .t22-step-zodiac{top:11%}
     .t22-step-period{top:30%}
-    .t22-step-spin{top:36%}
-    .t22-scene{top:70%;height:clamp(180px,40vh,260px)}
+    .t22-step-spin{top:60%}
+    .t22-scene{top:60%;height:clamp(180px,40vh,260px)}
     .t22-spin-btn{padding:14px 32px;font-size:15px;letter-spacing:1.5px}
     .t22-step-zodiac .fc-zodiac-row{
       flex-wrap:nowrap;justify-content:flex-start;
